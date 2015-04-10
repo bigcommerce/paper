@@ -4,7 +4,7 @@
   "description": "A stencil plugin to register partials and helpers from handlebars and returns the compiled version for the stencil platform.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "lab"
   },
   "repository": {
     "type": "git",

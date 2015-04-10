@@ -12,7 +12,11 @@ var Paper = require('stencil-paper'),
     }, 
     data = {
        'variable': 'hello world'
-    };
+    },
+    compiled;
 
-Paper.compile('pages/product', source, data); 
+compiled = Paper.compile('pages/product', source, data);
+ 
+console.log(compiled.err); // undefined
+console.log(compiled.template); // "<html>hello world</html>"
 ```
