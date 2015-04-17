@@ -4,7 +4,7 @@
   "description": "A stencil plugin to register partials and helpers from handlebars and returns the compiled version for the stencil platform.",
   "main": "index.js",
   "scripts": {
-    "test": "lab"
+    "test": "lab -t 100"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/bigcommerce/paper",
   "dependencies": {
     "handlebars": "^3.0.1",
+    "hoek": "^2.12.0",
     "lodash": "^3.6.0"
   }
 }

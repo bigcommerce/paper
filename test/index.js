@@ -1,5 +1,6 @@
 var Code = require('code'),
     Lab = require('lab'),
+    Handlebars = require('Handlebars'),
     Paper = require('../lib'),
     lab = exports.lab = Lab.script(),
     describe = lab.experiment,
