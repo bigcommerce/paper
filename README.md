@@ -15,8 +15,15 @@ var Paper = require('stencil-paper'),
     },
     compiled;
 
-compiled = Paper.compile('pages/product', source, data);
+// Async
+Paper.compile('pages/product', source, data, function(err, compiled) {
+    console.log(err);      // null
+    console.log(compiled); // "<html>hello world</html>"
+});
+
+// Sync
+compiled = Paper.compileSync('pages/product', source, data);
+console.log(compiled); // "<html>hello world</html>"
+
  
-console.log(compiled.err); // undefined
-console.log(compiled.template); // "<html>hello world</html>"
 ```
