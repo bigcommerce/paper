@@ -22,7 +22,10 @@ module.exports = function (paper) {
             'typeof': function (l, r) { return typeof l == r; }
         };
 
-        if (!operators[operator]) {
+        // getOwnPropertyNames is used because checking the property 
+        // directly (like operators[x]) is insecure
+        // (we could use switch instead)
+        if (Object.getOwnPropertyNames(operators).indexOf(operator) === -1) {
             throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
         }
 
