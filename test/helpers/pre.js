@@ -23,7 +23,7 @@ describe('pre helper', function() {
     it('should scape html entities', function(done) {
 
         expect(c('{{{pre var}}}', {var: "<div>&\"500\"</div>"}))
-            .to.be.equal('<pre>&#34;&lt;div&gt;&amp;\\&#34;500\\&#34;&lt;/div&gt;&#34;</pre>');
+            .to.be.equal('<pre>&quot;&lt;div&gt;&amp;\\&quot;500\\&quot;&lt;/div&gt;&quot;</pre>');
 
         done();
     });
