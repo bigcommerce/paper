@@ -1,18 +1,16 @@
 var _ = require('lodash'),
     Localizer = require('./lib/localizer'),
     Path = require('path'),
-    Glob = require('glob'),
+    Fs = require('fs'),
     internals = {
         handlebars: require('handlebars'),
         options: {
             preventIndent: true
-        },
-        translations: {}
+        }
     };
 
-Glob.sync(__dirname + '/helpers/*.js').forEach(function (file) {
-    // load helpers
-    require(file)(internals);
+Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function(file) {
+  require('./helpers/' + file)(internals);
 });
 
 /**
