@@ -7,11 +7,11 @@ module.exports = function (paper) {
         var pathToPartial,
             partialTemplate;
 
-        if (! _.isString(prop)) {
+        if (!_.isString(prop)) {
             prop = 'partial';
         }
 
-        if (! this[prop]) {
+        if (!this[prop]) {
             return '';
         }
 
