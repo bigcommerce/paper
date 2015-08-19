@@ -1,70 +1,64 @@
 var Code = require('code'),
     Lab = require('lab'),
     Handlebars = require('Handlebars'),
-    Paper = require('../lib'),
+    Paper = require('../index'),
     lab = exports.lab = Lab.script(),
     describe = lab.experiment,
     expect = Code.expect,
-    it = lab.it,
-    sourceMock = {
-        'pages/product': '<html>{{> pages/partial }}</html>',
-        'pages/partial': '{{ variable }}'
-    },
-    data = {
-        'variable': 'hello world'
-    };
+    it = lab.it;
+
 
 describe('compile()', function() {
-    it('should compile pages/product without errors', function(done) {
-        Paper.compile('pages/product', sourceMock, data, function(err, compiled) {
-            expect(compiled).to.be.equal('<html>hello world</html>');
-            done();
-        });
-    });
-
-    it('should compile pages/partial without errors', function(done) {
-        Paper.compile('pages/partial', sourceMock, data, function(err, compiled) {
-            expect(compiled).to.be.equal('hello world');
-            done();
-        });
-    });
-
-    it('should compile with errors', function(done) {
-        var sourceErrorMock = {
-                'errorPage': '{{'
+    var templates = {
+            'pages/product': '<html>{{> pages/partial}}</html>',
+            'pages/partial': '<p>{{variable}}</p>',
+            'pages/greet': '<h1>{{lang \'good\'}} {{lang \'morning\'}}</h1>',
+            'pages/pre': '{{{pre object}}}',
+        },
+        context = {
+            variable: 'hello world',
+            object: {}
+        },
+        translations = {
+            good: function (hash) {
+                return 'buen';
             },
-            data = {};
+            morning: function (hash) {
+                return 'dia';
+            }
+        };
 
-        Paper.compile('errorPage', sourceErrorMock, data, function(err, compiled) {
-            expect(err).to.not.be.null();
-            expect(compiled).to.not.exist();
-            done();
-        });
-    });
-});
-
-describe('compileSync()', function() {
-    it('should compile pages/product without errors', function(done) {
-        var compiled = Paper.compileSync('pages/product', sourceMock, data);
-        expect(compiled).to.be.equal('<html>hello world</html>');
+    it('should compile pages/product', function(done) {
+        var compiled = Paper.compile('pages/product', templates, context);
+        expect(compiled).to.be.equal('<html><p>hello world</p></html>');
         done();
     });
 
-    it('should compile pages/partial without errors', function(done) {
-        var compiled = Paper.compileSync('pages/partial', sourceMock, data);
-        expect(compiled).to.be.equal('hello world');
+    it('should compile pages/partial', function(done) {
+        var compiled = Paper.compile('pages/partial', templates, context);
+        expect(compiled).to.be.equal('<p>hello world</p>');
+        done();
+    });
+
+    it('should properly translate lang helpers', function(done) { 
+        var compiled = Paper.compile('pages/greet', templates, context, translations);
+        expect(compiled).to.be.equal('<h1>buen dia</h1>');
+        done();
+    });
+
+    it('should use external helper', function(done) { 
+        var compiled = Paper.compile('pages/pre', templates, context, translations);
+        expect(compiled).to.be.equal('<pre>{}</pre>');
         done();
     });
 
     it('should compile with errors', function(done) {
-        var sourceErrorMock = {
-                'errorPage': '{{'
-            },
-            data = {},
-            compiled;
+        var templates = {
+            'errorPage': '{{'
+        };
 
         try {
-            compiled = Paper.compileSync('errorPage', sourceErrorMock, data);
+            var compiled = Paper.compile('errorPage', templates, context);
             expect(compiled).not.to.exist();
         } catch (ex) {
             expect(ex).to.exist();
@@ -75,43 +69,41 @@ describe('compileSync()', function() {
 });
 
 describe('compileTranslations()', function() {
-    var mockTranslations = {
-        'en': JSON.stringify({
-            'this': {
-                'is': {
-                    'a_nested': 'english',
-                    'a_dynamic': 'A very {adj} string'
+    var rootLocale = 'en',
+        translations = {
+            'en': JSON.stringify({
+                'this': {
+                    'is': {
+                        'a_nested': 'english',
+                        'a_dynamic': 'A very {adj} string'
+                    }
+                },
+                'hello': 'world',
+                'complex': "{GENDER, select, male {He} female {She} other {They}} found {NUM_RESULTS, plural, one {1 result} other {# results} } in {NUM_CATEGORIES, plural, one {1 category} other {# categories}}.",
+                'cats': 'I just wanted to {verb}... {cat_count, plural, =0{There are no cats} one {There is one cat} other {There are # cats}}'
+            }),
+            'en-CA': JSON.stringify({
+                'this': {
+                    'is': {
+                        'a_nested': 'canadian'
+                    }
                 }
-            },
-            'hello': 'world',
-            'complex': "{GENDER, select, male {He} female {She} other {They}} found {NUM_RESULTS, plural, one {1 result} other {# results} } in {NUM_CATEGORIES, plural, one {1 category} other {# categories}}.",
-            'cats': 'I just wanted to {verb}... {cat_count, plural, =0{There are no cats} one {There is one cat} other {There are # cats}}'
-        }),
-        'en-CA': JSON.stringify({
-            'this': {
-                'is': {
-                    'a_nested': 'canadian'
-                }
-            }
-        }),
-        'fr': JSON.stringify({
-            'test': 'tester',
-            'cats': 'Je juste veux {verb}... {cat_count, plural, =0{Il n\'y a pas de chat} one {Il y a un chat} other {Il y a # chats}}'
-        }),
-        'fr-CA': JSON.stringify({
-            'hello': 'Bonjour',
-            'cats': 'Cats in Canada'
-        }),
-        'fr-CA-QB': JSON.stringify({'hello': 'Bonjour from Quebec'})
-    },
-    rootLocale = 'en';
+            }),
+            'fr': JSON.stringify({
+                'test': 'tester',
+                'cats': 'Je juste veux {verb}... {cat_count, plural, =0{Il n\'y a pas de chat} one {Il y a un chat} other {Il y a # chats}}'
+            }),
+            'fr-CA': JSON.stringify({
+                'hello': 'Bonjour',
+                'cats': 'Cats in Canada'
+            }),
+            'fr-CA-QB': JSON.stringify({'hello': 'Bonjour from Quebec'})
+        };
 
 
+    it('should compile valid translations', function(done) {
+        var compiled = Paper.compileTranslations(rootLocale, translations);
 
-
-
-    it('should compile valid translations without errors', function(done) {
-        var compiled = Paper.compileTranslations(rootLocale, mockTranslations);
         expect(compiled).to.contain('en');
         expect(compiled).to.contain('en-CA');
         expect(compiled).to.contain('fr');
