@@ -29,13 +29,12 @@ function Paper(templates, translations) {
     // make transalations available to the helpers
     internals.translations = translations;
 
+    // Clean the inject context
+    internals.inject = {};
+
     this.compile = function (path, context) {
         var template = internals.handlebars.compile(templates[path], internals.options),
             content = template(context);
-
-        if (!content) {
-            throw new Error('Empty content');
-        }
 
         return content;
     };

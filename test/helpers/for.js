@@ -35,6 +35,12 @@ describe('for helper', function() {
             expect(ex).to.exist();
         }
 
+        try {
+            c('{{#for -1 9 this}}.{{/for}}', context);
+        } catch (ex) {
+            expect(ex).to.exist();
+        }
+
         done();
     });
 
@@ -45,5 +51,18 @@ describe('for helper', function() {
 
         done();
     });
-});
 
+    it('should render w/o context', function(done) {
+
+        expect(c('{{#for 10}}{{$index}} {{/for}}', context))
+            .to.be.equal('1 2 3 4 5 6 7 8 9 10 ');
+
+        expect(c('{{#for 1 10}}{{$index}} {{/for}}', context))
+            .to.be.equal('1 2 3 4 5 6 7 8 9 10 ');
+
+        expect(c('{{#for 0 9}}{{$index}} {{/for}}', context))
+            .to.be.equal('0 1 2 3 4 5 6 7 8 9 ');
+
+        done();
+    });
+});

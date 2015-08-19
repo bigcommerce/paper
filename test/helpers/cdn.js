@@ -31,4 +31,12 @@ describe('cdn helper', function() {
 
         done();
     });
+
+    it('should properly render url', function(done) {
+
+        expect(c('{{cdn "assets/js/app.js"}}', context))
+            .to.be.equal('https://cdn.bcapp/3dsf74g/assets/js/app.js');
+
+        done();
+    });
 });

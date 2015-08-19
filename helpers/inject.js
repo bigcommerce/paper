@@ -1,13 +1,17 @@
 module.exports = function (paper) {
-    var jsContext = {};
 
     paper.handlebars.registerHelper('inject', function (key, value) {
-        jsContext[key] = value;
-
-        return '';
+        if (typeof value === 'function') {
+            return;
+        }
+        
+        paper.inject[key] = value;
     });
 
     paper.handlebars.registerHelper('jsContext', function (options) {
-        return new paper.handlebars.SafeString(JSON.stringify(JSON.stringify(jsContext)));
+        
+        var jsContext = JSON.stringify(JSON.stringify(paper.inject));
+
+        return new paper.handlebars.SafeString(jsContext);
     });
 };

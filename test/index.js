@@ -46,12 +46,6 @@ describe('compile()', function() {
         done();
     });
 
-    it('should use external helper', function(done) { 
-        var compiled = Paper.compile('pages/pre', templates, context, translations);
-        expect(compiled).to.be.equal('<pre>{}</pre>');
-        done();
-    });
-
     it('should compile with errors', function(done) {
         var templates = {
             'errorPage': '{{'

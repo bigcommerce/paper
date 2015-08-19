@@ -1,18 +1,29 @@
 var _ = require('lodash');
 
+function isOptions(obj) {
+    return _.isObject(obj) && obj.fn;
+}
+
 module.exports = function (paper) {
     paper.handlebars.registerHelper('for', function(from, to, context, options) {
         var output = '',
             maxIterations = 100;
 
-        if (_.isObject(to)) {
-            options = context;
-            context = to;
+        if (isOptions(to)) {
+            options = to;
+            context = {};
             to = from;
             from = 1;
-        }
 
-        context = context || {};
+        } else if (isOptions(context)) {
+            options = context;
+
+            if (_.isObject(to)) {
+                context = to;
+                to = from;
+                from = 1;
+            }
+        }
 
         if (from < 0 || from > 1) {
             throw new Error("the parameter 'from' can only be 0 or 1");
@@ -25,6 +36,7 @@ module.exports = function (paper) {
 
         for (var i = from; i < to + 1; i += 1) {
             context.$index = i;
+            // console.log(context);
             output += options.fn(context);
         }
 
