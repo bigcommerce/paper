@@ -1,32 +1,30 @@
 var Path = require('path'),
     _ = require('lodash');
 
-
 module.exports = function (paper) {
-    paper.handlebars.registerHelper('dynamicComponent', function(componentsPath, prop) {
-        var pathToPartial,
-            partialTemplate;
+    paper.handlebars.registerHelper('dynamicComponent', function(path) {
+        var template;
 
-        if (!_.isString(prop)) {
-            prop = 'partial';
+        if (!this['partial']) {
+            return;
         }
 
-        if (!this[prop]) {
-            return '';
-        }
+        // prevent access to __proto__ 
+        // or any hidden object properties
+        path = path.replace('__', '');
 
         // We don't want a slash as a prefix
-        if (componentsPath[0] === '/') {
-            componentsPath = componentsPath.substr(1);
+        if (path[0] === '/') {
+            path = path.substr(1);
         }
 
-        pathToPartial = Path.join(componentsPath, this[prop]);
+        path = Path.join(path, this['partial']);
 
-        if (paper.handlebars.partials[pathToPartial]) {
+        if (paper.handlebars.partials[path]) {
 
-            partialTemplate = paper.handlebars.partials[pathToPartial];
+            template = paper.handlebars.partials[path];
 
-            return paper.handlebars.compile(partialTemplate, paper.options)(this);
+            return paper.handlebars.compile(template, paper.options)(this);
         }
     });
 };

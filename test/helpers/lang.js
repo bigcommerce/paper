@@ -23,7 +23,6 @@ describe('lang helper', function() {
             },
         };
 
-
     it('should translate the key', function(done) {
 
         expect(c('{{lang "title"}}', context, translations))
