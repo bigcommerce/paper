@@ -4,4 +4,8 @@ module.exports = function (paper) {
         var partial = paper.handlebars.partials[name] || options.fn;
         return partial(this, {data: options.hash});
     });
+        
+    paper.handlebars.registerHelper('partial', function (name, options) {
+        paper.handlebars.registerPartial(name, options.fn);
+    });
 };

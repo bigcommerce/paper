@@ -1,10 +1,6 @@
 var _ = require('lodash');
 
 module.exports = function (paper) {
-    
-    paper.handlebars.registerHelper('partial', function (name, options) {
-        paper.handlebars.registerPartial(name, options.fn);
-    });
 
     paper.handlebars.registerHelper('json', function (data) {
         return JSON.stringify(data);
