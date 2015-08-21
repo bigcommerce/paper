@@ -2,10 +2,6 @@ var _ = require('lodash');
 
 module.exports = function (paper) {
 
-    paper.handlebars.registerHelper('json', function (data) {
-        return JSON.stringify(data);
-    });
-
     paper.handlebars.registerHelper('toLowerCase', function(string) {
       return string.toLowerCase();
     });
