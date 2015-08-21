@@ -12,7 +12,7 @@ function c(template, context) {
 
 describe('json helper', function() {
 
-    it('render object to json format', function(done) {
+    it('should render object to json format', function(done) {
         var context = {
             object: {a: 1, b: "hello"}
         };

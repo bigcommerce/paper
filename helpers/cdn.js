@@ -3,6 +3,10 @@ module.exports = function (paper) {
     paper.handlebars.registerHelper('cdn', function(assetPath) {
         var ret;
 
+        if (/^(?:https?:)?\/\//.test(assetPath)) {
+            return assetPath;
+        }
+
         if (assetPath[0] !== '/') {
             assetPath = '/' + assetPath;
         }

@@ -19,7 +19,7 @@ describe('toLowerCase helper', function() {
         array: [1, 2, 3]
     };
 
-    it('convert string to lower case', function(done) {
+    it('should convert string to lower case', function(done) {
 
         expect(c('{{toLowerCase string}}', context))
             .to.contain('i love pizza');
@@ -30,7 +30,7 @@ describe('toLowerCase helper', function() {
         done();
     });
 
-    it('properly handle not strings', function(done) {
+    it('should properly handle values other than strings', function(done) {
         
         expect(c('{{toLowerCase number}}', context))
             .to.contain('365');

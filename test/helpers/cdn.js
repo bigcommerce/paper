@@ -39,4 +39,18 @@ describe('cdn helper', function() {
 
         done();
     });
+
+    it('should return the same value if it is a full url', function(done) {
+
+        expect(c('{{cdn "https://example.com/app.js"}}', context))
+            .to.be.equal('https://example.com/app.js');
+
+        expect(c('{{cdn "http://example.com/app.js"}}', context))
+            .to.be.equal('http://example.com/app.js');
+
+        expect(c('{{cdn "//example.com/app.js"}}', context))
+            .to.be.equal('//example.com/app.js');
+
+        done();
+    });
 });
