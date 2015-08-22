@@ -2,14 +2,14 @@ var _ = require('lodash');
 
 module.exports = function (paper) {
 
-    function isOptions(obj) {
-        return _.isObject(obj) && obj.fn;
-    }
-
     paper.handlebars.registerHelper('if', function (lvalue, operator, rvalue, options) {
         var operator,
             operators,
             result;
+
+        function isOptions(obj) {
+            return _.isObject(obj) && obj.fn;
+        }
 
         if (isOptions(operator)) {
             options = operator;
@@ -17,6 +17,8 @@ module.exports = function (paper) {
         } else {
 
             if (isOptions(rvalue)) {
+                // @TODO: this is block is for backwards compatibility with 'compare' helper
+                // Remove after operator='==' is removed from stencil theme
                 options = rvalue;
                 rvalue = operator;
                 operator = options.hash.operator || "==";

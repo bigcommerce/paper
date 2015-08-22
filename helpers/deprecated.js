@@ -6,18 +6,9 @@ module.exports = function (paper) {
         return _.pick.apply(null, arguments);
     });
 
-    paper.handlebars.registerHelper('enumerate', function(start, end, options) {
-        var out = '',
-            i = start,
-            iOut;
-
-        for (i; i <= end; i++) {
-            out = out + options.fn(i);
-        }
-
-        return out + '';
-    });
-
+    /**
+     * @deprecate Use lang + concat
+     */
     paper.handlebars.registerHelper('getShortMonth', function (index) {
 
         switch (index) {
@@ -50,6 +41,9 @@ module.exports = function (paper) {
         return '';
     });
 
+    /**
+     * @deprecate Use {{#if val1 '==' val2}}...{{/if}}
+     */
     paper.handlebars.registerHelper('equals', function (val1, val2, options) {
         if (val1 != val2) {
             return '';
@@ -58,6 +52,9 @@ module.exports = function (paper) {
         return options.fn();
     });
 
+    /**
+     * @deprecate Use {{#for start end (context)}}...{{/for}}
+     */
     paper.handlebars.registerHelper('enumerate', function(start, end, options) {
         var out = '',
             i = start,

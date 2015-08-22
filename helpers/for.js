@@ -1,13 +1,13 @@
 var _ = require('lodash');
 
-function isOptions(obj) {
-    return _.isObject(obj) && obj.fn;
-}
-
 module.exports = function (paper) {
     paper.handlebars.registerHelper('for', function(from, to, context, options) {
         var output = '',
             maxIterations = 100;
+
+        function isOptions(obj) {
+            return _.isObject(obj) && obj.fn;
+        }
 
         if (isOptions(to)) {
             options = to;
