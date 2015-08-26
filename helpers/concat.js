@@ -3,8 +3,18 @@
  * @example
  *  {{@lang (concat 'products.reviews.rating.' this) }}
  */
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('concat', function (value, otherValue) {
-        return new paper.handlebars.SafeString(value + otherValue);
+var internals = {};
+
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context) {
+    var self = this;
+
+    this.handlebars.registerHelper('concat', function (value, otherValue) {
+        return new self.handlebars.SafeString(value + otherValue);
     });
 };
+
+module.exports = internals.implementation;

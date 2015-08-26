@@ -1,5 +1,11 @@
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('lang', function(translationKey, options) {
+var internals = {};
+
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context, paper) {
+    this.handlebars.registerHelper('lang', function(translationKey, options) {
 
         if (typeof paper.translations[translationKey] === 'function') {
             return paper.translations[translationKey](options.hash);
@@ -8,3 +14,5 @@ module.exports = function (paper) {
         return translationKey;
     });
 };
+
+module.exports = internals.implementation;

@@ -1,10 +1,19 @@
-module.exports = function (paper) {
-    
-    paper.handlebars.registerHelper('pre', function (value) {
+var internals = {};
+
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context) {
+    var self = this;
+
+    this.handlebars.registerHelper('pre', function (value) {
         var string = JSON.stringify(value, null, 2);
 
-        string = paper.handlebars.Utils.escapeExpression(string);
+        string = self.handlebars.Utils.escapeExpression(string);
 
         return '<pre>' + string + '</pre>';
     });
 };
+
+module.exports = internals.implementation;

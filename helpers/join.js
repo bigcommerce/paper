@@ -1,5 +1,11 @@
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('join', function(array, separator, options) {
+var internals = {};
+
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context) {
+    this.handlebars.registerHelper('join', function(array, separator, options) {
         var config = options.hash || {};
 
         array = array.slice();
@@ -20,3 +26,5 @@ module.exports = function (paper) {
         return array.join(separator);
     });
 };
+
+module.exports = internals.implementation;

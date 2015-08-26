@@ -1,12 +1,19 @@
-var _ = require('lodash');
+var _ = require('lodash'),
+    internals = {};
+
 /**
  * Yield block if any object within a collection matches supplied predicate
  *
  * @example
  * {{#any items selected=true}} ... {{/any}}
  */
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('any', function(collection, options) {
+
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context) {
+    this.handlebars.registerHelper('any', function(collection, options) {
         var predicate = options.hash,
             any = _.any(collection, predicate);
 
@@ -17,3 +24,5 @@ module.exports = function (paper) {
         return options.inverse(this);
     });
 };
+
+module.exports = internals.implementation;

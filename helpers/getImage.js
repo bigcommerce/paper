@@ -1,8 +1,13 @@
-var _ = require('lodash');
+var _ = require('lodash'),
+    internals = {};
 
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('getImage', function (image, preset, defaultImage) {
-        var presets = this.theme_images || {},
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context) {
+    this.handlebars.registerHelper('getImage', function (image, preset, defaultImage) {
+        var presets = context.theme_images || {},
             width,
             height,
             size,
@@ -25,3 +30,5 @@ module.exports = function (paper) {
         return url.replace('{:size}', size);
     });
 };
+
+module.exports = internals.implementation;

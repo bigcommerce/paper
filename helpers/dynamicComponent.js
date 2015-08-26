@@ -1,8 +1,15 @@
 var Path = require('path'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    internals = {};
 
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('dynamicComponent', function(path) {
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context, paper) {
+    var self = this;
+
+    this.handlebars.registerHelper('dynamicComponent', function(path) {
         var template;
 
         if (!this['partial']) {
@@ -20,11 +27,13 @@ module.exports = function (paper) {
 
         path = Path.join(path, this['partial']);
 
-        if (paper.handlebars.partials[path]) {
+        if (self.handlebars.partials[path]) {
 
-            template = paper.handlebars.partials[path];
+            template = self.handlebars.partials[path];
 
-            return paper.handlebars.compile(template, paper.options)(this);
+            return self.handlebars.compile(template, paper.options)(this);
         }
     });
 };
+
+module.exports = internals.implementation;
