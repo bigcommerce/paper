@@ -1,8 +1,8 @@
 var _ = require('lodash');
 
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('getImage', function (image, preset, defaultImage) {
-        var presets = this.theme_images || {},
+module.exports = function (paper, handlebars, context) {
+    handlebars.registerHelper('getImage', function (image, preset, defaultImage) {
+        var presets = context.theme_images || {},
             width,
             height,
             size,

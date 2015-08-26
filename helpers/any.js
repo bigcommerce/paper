@@ -5,8 +5,8 @@ var _ = require('lodash');
  * @example
  * {{#any items selected=true}} ... {{/any}}
  */
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('any', function(collection, options) {
+module.exports = function (paper, handlebars) {
+    handlebars.registerHelper('any', function(collection, options) {
         var predicate = options.hash,
             any = _.any(collection, predicate);
 

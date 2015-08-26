@@ -14,9 +14,9 @@ function numberFormat(value, n, s, c) {
     return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
 };
 
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('money', function (value) {
-        var money = this.settings.money;
+module.exports = function (paper, handlebars, context) {
+    handlebars.registerHelper('money', function (value) {
+        var money = context.settings.money;
 
         if (!_.isNumber(value)) {
             return '';

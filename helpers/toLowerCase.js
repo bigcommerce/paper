@@ -1,6 +1,6 @@
-module.exports = function (paper) {
+module.exports = function (paper, handlebars) {
 
-    paper.handlebars.registerHelper('toLowerCase', function(string) {
+    handlebars.registerHelper('toLowerCase', function(string) {
 
         if (typeof string !== 'string') {
             return string;

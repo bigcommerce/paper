@@ -1,8 +1,8 @@
 var _ = require('lodash');
 
-module.exports = function (paper) {
+module.exports = function (paper, handlebars) {
 
-    paper.handlebars.registerHelper('if', function (lvalue, operator, rvalue, options) {
+    handlebars.registerHelper('if', function (lvalue, operator, rvalue, options) {
         var operator,
             operators,
             result;

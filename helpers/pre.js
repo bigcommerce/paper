@@ -1,9 +1,9 @@
-module.exports = function (paper) {
+module.exports = function (paper, handlebars) {
     
-    paper.handlebars.registerHelper('pre', function (value) {
+    handlebars.registerHelper('pre', function (value) {
         var string = JSON.stringify(value, null, 2);
 
-        string = paper.handlebars.Utils.escapeExpression(string);
+        string = handlebars.Utils.escapeExpression(string);
 
         return '<pre>' + string + '</pre>';
     });

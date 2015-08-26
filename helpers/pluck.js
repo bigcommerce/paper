@@ -1,8 +1,8 @@
 var _ = require('lodash');
 
-module.exports = function (paper) {
+module.exports = function (paper, handlebars) {
 
-    paper.handlebars.registerHelper('pluck', function(collection, path) {
+    handlebars.registerHelper('pluck', function(collection, path) {
         return _.pluck(collection, path);
     });
 };

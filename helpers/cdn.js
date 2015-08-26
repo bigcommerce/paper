@@ -1,6 +1,5 @@
-module.exports = function (paper) {
-
-    paper.handlebars.registerHelper('cdn', function(assetPath) {
+module.exports = function (paper, handlebars, context) {
+    handlebars.registerHelper('cdn', function(assetPath) {
         var ret;
 
         if (/^(?:https?:)?\/\//.test(assetPath)) {
@@ -12,9 +11,11 @@ module.exports = function (paper) {
         }
 
         if (assetPath.substr(-4) === '.css') {
-            ret = this.cdn_url_with_settings_hash + assetPath;
+            ret = context.cdn_url_with_settings_hash + assetPath;
+        } else if (context.cdn_url) {
+            ret = context.cdn_url + assetPath;
         } else {
-            ret = this.cdn_url + assetPath;
+            ret = assetPath;
         }
 
         return ret;
