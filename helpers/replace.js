@@ -1,5 +1,5 @@
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('replace', function(needle, haystack, options) {
+module.exports = function (paper, handlebars) {
+    handlebars.registerHelper('replace', function(needle, haystack, options) {
         var contains = haystack.indexOf(needle) > -1;
 
         // Yield block if true

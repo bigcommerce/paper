@@ -1,8 +1,8 @@
 var Path = require('path'),
     _ = require('lodash');
 
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('dynamicComponent', function(path) {
+module.exports = function (paper, handlebars) {
+    handlebars.registerHelper('dynamicComponent', function(path) {
         var template;
 
         if (!this['partial']) {
@@ -20,11 +20,11 @@ module.exports = function (paper) {
 
         path = Path.join(path, this['partial']);
 
-        if (paper.handlebars.partials[path]) {
+        if (handlebars.partials[path]) {
 
-            template = paper.handlebars.partials[path];
+            template = handlebars.partials[path];
 
-            return paper.handlebars.compile(template, paper.options)(this);
+            return handlebars.compile(template, paper.options)(this);
         }
     });
 };

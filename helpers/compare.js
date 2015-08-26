@@ -1,5 +1,5 @@
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
+module.exports = function (paper, handlebars) {
+    handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
         var operator,
             operators,
             result;

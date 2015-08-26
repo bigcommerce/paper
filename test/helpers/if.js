@@ -169,9 +169,20 @@ describe('if helper', function() {
             num1: 1,
             num2: 2,
             product: {a: 1, b: 2},
-            string: 'yolo'
+            string: 'yolo',
+            emptyArray: [],
+            emptyObject: {}
         };
-        
+
+        expect(c('{{#if emptyObject}}big{{/if}}', context))
+            .to.be.equal('');
+
+        expect(c('{{#if emptyArray}}big{{/if}}', context))
+            .to.be.equal('');
+
+        expect(c('{{#if emptyArray.length}}big{{/if}}', context))
+            .to.be.equal('');
+
         expect(c('{{#if "2" num1 operator="=="}}big{{/if}}', context))
             .to.be.equal('');
 

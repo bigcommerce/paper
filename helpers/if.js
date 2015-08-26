@@ -1,19 +1,30 @@
 var _ = require('lodash');
 
-module.exports = function (paper) {
+module.exports = function (paper, handlebars) {
 
-    paper.handlebars.registerHelper('if', function (lvalue, operator, rvalue, options) {
-        var operator,
-            operators,
-            result;
+    handlebars.registerHelper('if', function (lvalue, operator, rvalue, options) {
+        var result;
 
         function isOptions(obj) {
             return _.isObject(obj) && obj.fn;
         }
 
+        // Only parameter
         if (isOptions(operator)) {
             options = operator;
-            result = lvalue;
+
+            // If an array is passed as the only parameter
+            if (_.isArray(lvalue)) {
+                result = lvalue.length;
+            }
+            // If an empty object is passed, treat as false
+            else if (_.isEmpty(lvalue) && _.isObject(lvalue)) {
+                result = false;
+            }
+            // Everything else
+            else {
+                result = lvalue;
+            }
         } else {
 
             if (isOptions(rvalue)) {

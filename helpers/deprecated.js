@@ -1,15 +1,15 @@
 var _ = require('lodash');
 
-module.exports = function (paper) {
+module.exports = function (paper, handlebars) {
 
-    paper.handlebars.registerHelper('pick', function(object, predicate) {
+    handlebars.registerHelper('pick', function(object, predicate) {
         return _.pick.apply(null, arguments);
     });
 
     /**
      * @deprecate Use lang + concat
      */
-    paper.handlebars.registerHelper('getShortMonth', function (index) {
+    handlebars.registerHelper('getShortMonth', function (index) {
 
         switch (index) {
             case 1:
@@ -44,7 +44,7 @@ module.exports = function (paper) {
     /**
      * @deprecate Use {{#if val1 '==' val2}}...{{/if}}
      */
-    paper.handlebars.registerHelper('equals', function (val1, val2, options) {
+    handlebars.registerHelper('equals', function (val1, val2, options) {
         if (val1 != val2) {
             return '';
         }
@@ -55,7 +55,7 @@ module.exports = function (paper) {
     /**
      * @deprecate Use {{#for start end (context)}}...{{/for}}
      */
-    paper.handlebars.registerHelper('enumerate', function(start, end, options) {
+    handlebars.registerHelper('enumerate', function(start, end, options) {
         var out = '',
             i = start,
             iOut;

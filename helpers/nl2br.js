@@ -1,7 +1,7 @@
-module.exports = function (paper) {
+module.exports = function (paper, handlebars) {
     // https://github.com/danharper/Handlebars-Helpers/blob/master/src/helpers.js#L89
-    paper.handlebars.registerHelper('nl2br', function(text) {
-        var nl2br = (paper.handlebars.escapeExpression(text) + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br>' + '$2');
-        return new paper.handlebars.SafeString(nl2br);
+    handlebars.registerHelper('nl2br', function(text) {
+        var nl2br = (handlebars.escapeExpression(text) + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br>' + '$2');
+        return new handlebars.SafeString(nl2br);
     });
 };

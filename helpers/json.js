@@ -1,6 +1,6 @@
-module.exports = function (paper) {
+module.exports = function (paper, handlebars) {
 
-    paper.handlebars.registerHelper('json', function (data) {
+    handlebars.registerHelper('json', function (data) {
         return JSON.stringify(data);
     });
 };

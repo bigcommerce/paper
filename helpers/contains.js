@@ -7,8 +7,8 @@ var _ = require('lodash');
  * {{#contains fonts "Roboto"}} ... {{/contains}}
  * {{#contains font_path "Roboto"}} ... {{/contains}}
  */
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('contains', function(value, targetValue) {
+module.exports = function (paper, handlebars) {
+    handlebars.registerHelper('contains', function(value, targetValue) {
         var args = Array.prototype.slice.call(arguments, 0, -1),
             options = _.last(arguments),
             contained = _.contains.apply(_, args);

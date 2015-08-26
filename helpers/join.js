@@ -1,5 +1,5 @@
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('join', function(array, separator, options) {
+module.exports = function (paper, handlebars) {
+    handlebars.registerHelper('join', function(array, separator, options) {
         var config = options.hash || {};
 
         array = array.slice();
