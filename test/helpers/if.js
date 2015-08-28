@@ -15,10 +15,14 @@ describe('if helper', function() {
         num1: 1,
         num2: 2,
         product: {a: 1, b: 2},
-        string: 'yolo'
+        string: 'yolo',
+        alwaysTrue: true,
+        big: 'big'
     };
 
-    it('should have the same behaivor as the original if helper', function(done) {
+    it('should have the same behavior as the original if helper', function(done) {
+        expect(c('{{#if 1}}{{big}}{{/if}}', context))
+            .to.be.equal('big');
 
         expect(c('{{#if 1}}big{{/if}}', context))
             .to.be.equal('big');
@@ -169,9 +173,20 @@ describe('if helper', function() {
             num1: 1,
             num2: 2,
             product: {a: 1, b: 2},
-            string: 'yolo'
+            string: 'yolo',
+            emptyArray: [],
+            emptyObject: {}
         };
-        
+
+        expect(c('{{#if emptyObject}}big{{/if}}', context))
+            .to.be.equal('');
+
+        expect(c('{{#if emptyArray}}big{{/if}}', context))
+            .to.be.equal('');
+
+        expect(c('{{#if emptyArray.length}}big{{/if}}', context))
+            .to.be.equal('');
+
         expect(c('{{#if "2" num1 operator="=="}}big{{/if}}', context))
             .to.be.equal('');
 

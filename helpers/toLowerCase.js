@@ -1,6 +1,11 @@
-module.exports = function (paper) {
+var internals = {};
 
-    paper.handlebars.registerHelper('toLowerCase', function(string) {
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context) {
+    this.handlebars.registerHelper('toLowerCase', function(string) {
 
         if (typeof string !== 'string') {
             return string;
@@ -9,3 +14,5 @@ module.exports = function (paper) {
         return string.toLowerCase();
     });
 };
+
+module.exports = internals.implementation;

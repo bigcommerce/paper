@@ -1,7 +1,12 @@
-var _ = require('lodash');
+var _ = require('lodash'),
+    internals = {};
 
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('for', function(from, to, context, options) {
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context) {
+    this.handlebars.registerHelper('for', function(from, to, context, options) {
         var output = '',
             maxIterations = 100;
 
@@ -31,10 +36,11 @@ module.exports = function (paper) {
 
         for (var i = from; i < to + 1; i += 1) {
             context.$index = i;
-            // console.log(context);
             output += options.fn(context);
         }
 
         return output;
     });
 };
+
+module.exports = internals.implementation;

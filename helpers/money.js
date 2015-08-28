@@ -1,4 +1,5 @@
-var _ = require('lodash');
+var _ = require('lodash'),
+    internals = {};
 
 /**
  * Format numbers
@@ -14,9 +15,13 @@ function numberFormat(value, n, s, c) {
     return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
 };
 
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('money', function (value) {
-        var money = this.settings.money;
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context) {
+    this.handlebars.registerHelper('money', function (value) {
+        var money = context.settings.money;
 
         if (!_.isNumber(value)) {
             return '';
@@ -34,3 +39,5 @@ module.exports = function (paper) {
             : value + ' ' + money.currency_token;
     });
 };
+
+module.exports = internals.implementation;

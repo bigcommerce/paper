@@ -2,15 +2,18 @@ var _ = require('lodash'),
     Localizer = require('./lib/localizer'),
     Path = require('path'),
     Fs = require('fs'),
+    Handlebars = require('handlebars'),
     internals = {
-        handlebars: require('handlebars'),
         options: {
             preventIndent: true
         }
-    };
+    },
+    helpers = [];
 
+// Load Helpers
 Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function(file) {
-  require('./helpers/' + file)(internals);
+    var helper = require('./helpers/' + file);
+    helpers.push(helper);
 });
 
 /**
@@ -18,20 +21,28 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function(file) {
  * @param {object} templates
  * @param {object} translations
  */
-function Paper(templates, translations) {
+function Paper(templates, translations, context) {
 
-    _.forOwn(templates, function (content, fileName) {
-        internals.handlebars.registerPartial(fileName, content);
-    });
+    var handlebars = Handlebars.create();
 
-    // make transalations available to the helpers
+    // Make translations available to the helpers
     internals.translations = translations;
 
     // Clean the inject context
     internals.inject = {};
 
-    this.compile = function (path, context) {
-        var template = internals.handlebars.compile(templates[path], internals.options),
+    _.each(helpers, function(Helper) {
+        var helper = new Helper(handlebars);
+        helper.register(context, internals);
+    });
+
+    // Register Partials
+    _.forOwn(templates, function (content, fileName) {
+        handlebars.registerPartial(fileName, content);
+    });
+
+    this.compile = function (path) {
+        var template = handlebars.compile(templates[path], internals.options),
             content = template(context);
 
         return content;
@@ -49,10 +60,10 @@ function Paper(templates, translations) {
  * @return {Object}
  */
 exports.compile = function (path, templates, context, translations) {
-    
-    var paper = new Paper(templates, translations);
 
-    return paper.compile(path, context);
+    var paper = new Paper(templates, translations, context);
+
+    return paper.compile(path);
 };
 
 /**

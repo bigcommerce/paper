@@ -1,5 +1,11 @@
-module.exports = function (paper) {
-    paper.handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
+var internals = {};
+
+internals.implementation = function(handlebars) {
+    this.handlebars = handlebars;
+};
+
+internals.implementation.prototype.register = function(context) {
+    this.handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
         var operator,
             operators,
             result;
@@ -38,3 +44,5 @@ module.exports = function (paper) {
         }
     });
 };
+
+module.exports = internals.implementation;
