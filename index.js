@@ -8,70 +8,97 @@ var _ = require('lodash'),
             preventIndent: true
         }
     },
-    helpers = [];
+    Helpers = [];
 
 // Load Helpers
 Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function(file) {
-    var helper = require('./helpers/' + file);
-    helpers.push(helper);
+    Helpers.push(require('./helpers/' + file));
 });
 
+
 /**
- * Paper constructor
- * @param {object} templates
- * @param {object} translations
+ * Theme renderer constructor
+ * @param {Object} templates
+ * @param {String} themeId
+ * @param {Object} cache
  */
-function Paper(templates, translations, context) {
+function Theme(templates, themeId, cache) {
+    var self = this,
+        handlebars = Handlebars.create();
 
-    var handlebars = Handlebars.create();
+    handlebars.templates = {};
 
-    // Make translations available to the helpers
-    internals.translations = translations;
+    self.options = internals.options;
+    self.translations = {};
+    self.inject = {};
+    self.helpers = [];
 
-    // Clean the inject context
-    internals.inject = {};
-
-    _.each(helpers, function(Helper) {
-        var helper = new Helper(handlebars);
-        helper.register(context, internals);
-    });
-
-    // Register Partials
+    // Register Partials/Templates and optionally cache them
     _.forOwn(templates, function (content, fileName) {
-        handlebars.registerPartial(fileName, content);
+        var precompiled,
+            cacheKey = 'theme:' + themeId + ':' + fileName;
+
+        if (cache) {
+            if (cache.has(cacheKey)) {
+                precompiled = cache.get(cacheKey);
+            } else {
+                precompiled = handlebars.precompile(content, self.options);
+                cache.set(cacheKey, precompiled);
+            }
+            
+            eval('var template = ' + precompiled);
+            handlebars.templates[fileName] = handlebars.template(template);
+
+        } else {
+            handlebars.templates[fileName] = handlebars.compile(content, self.options);
+        }
     });
 
-    this.compile = function (path) {
-        var template = handlebars.compile(templates[path], internals.options),
-            content = template(context);
+    _.each(Helpers, function(Helper) {
+        self.helpers.push(new Helper(handlebars));
+    });
 
-        return content;
+    /**
+     * @param {String} acceptLanguage
+     * @param {Object} translations
+     */
+    self.loadTranslations = function (acceptLanguage, translations) {
+        // Make translations available to the helpers
+        self.translations =  Localizer(acceptLanguage, translations);
+    };
+
+    /**
+     * @param {String} path
+     * @param {Object} context
+     * @return {String}
+     */
+    self.render = function (path, context) {
+
+        _.each(self.helpers, function(helper) {
+            helper.register(context, self);
+        });
+
+        handlebars.partials = handlebars.templates;
+
+        return handlebars.templates[path](context);
     };
 }
 
+
 /**
- * Wrapper for the handlebars compile function
- * This is the async version
- *
- * @param {String} path
- * @param {Object} templates
- * @param {Object} context
- * @param {Object} translations
+ * @param {Object} cache
  * @return {Object}
  */
-exports.compile = function (path, templates, context, translations) {
-
-    var paper = new Paper(templates, translations, context);
-
-    return paper.compile(path);
-};
-
-/**
- * Compiles translation JSON files with messageformat.js
- * @param rootLocale
- * @param translations
- * @returns {*}
- */
-exports.compileTranslations = function (rootLocale, translations) {
-    return Localizer.compileTranslations(rootLocale, translations);
+module.exports = function (cache) {
+    return {
+        /**
+         * @param {Object} templates
+         * @param {String} themeId
+         * @param {Object} cache
+         * @return {Object}
+         */
+        make: function (templates, themeId) {
+            return new Theme(templates, themeId || '1', cache);
+        }
+    };
 };

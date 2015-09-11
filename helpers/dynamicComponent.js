@@ -29,9 +29,7 @@ internals.implementation.prototype.register = function(context, paper) {
 
         if (self.handlebars.partials[path]) {
 
-            template = self.handlebars.partials[path];
-
-            return self.handlebars.compile(template, paper.options)(this);
+            return self.handlebars.partials[path](this);
         }
     });
 };
