@@ -6,12 +6,9 @@ internals.implementation = function(handlebars) {
 
 internals.implementation.prototype.register = function(context, paper) {
     this.handlebars.registerHelper('lang', function(translationKey, options) {
-
-        if (typeof paper.translations[translationKey] === 'function') {
-            return paper.translations[translationKey](options.hash);
+    	if (typeof paper.translate === 'function') {
+        	return paper.translate(translationKey, options.hash);
         }
-
-        return translationKey;
     });
 };
 

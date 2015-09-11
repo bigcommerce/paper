@@ -18,14 +18,6 @@ describe('compile()', function() {
         context = {
             variable: 'hello world',
             object: {}
-        },
-        translations = {
-            good: function (hash) {
-                return 'buen';
-            },
-            morning: function (hash) {
-                return 'dia';
-            }
         };
 
     it('should compile pages/product', function(done) {
@@ -37,18 +29,6 @@ describe('compile()', function() {
     it('should compile pages/partial', function(done) {
         var compiled = Paper.make(templates).render('pages/partial', context);
         expect(compiled).to.be.equal('<p>hello world</p>');
-        done();
-    });
-
-    it('should properly translate lang helpers', function(done) { 
-        var theme = Paper.make(templates),
-            compiled;
-
-        theme.translations = translations;
-
-        compiled = theme.render('pages/greet', context);
-
-        expect(compiled).to.be.equal('<h1>buen dia</h1>');
         done();
     });
 

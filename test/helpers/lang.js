@@ -6,39 +6,25 @@ var Code = require('code'),
     expect = Code.expect,
     it = lab.it;
 
-function c(template, context, translations) {
+function c(template, context) {
     var theme = Paper.make({template: template})
 
-    theme.translations = translations;
-    
+    theme.translate = function (key, params) {
+        return 'Powered By ' + params.name;
+    };
+
     return theme.render('template', context);
 }
 
 describe('lang helper', function() {
     var context = {
-            company: 'BigCommerce'
-        },
-        translations = {
-            title: function () {
-                return 'Titulo';
-            },
-            powered_by: function (obj) {
-                return 'Powered by ' + obj.company;
-            },
-        };
-
-    it('should translate the key', function(done) {
-
-        expect(c('{{lang "title"}}', context, translations))
-            .to.be.equal('Titulo');
-
-        done();
-    });
+        name: 'BigCommerce'
+    };
 
     it('should translate the key with attributes', function(done) {
 
-        expect(c('{{lang "powered_by" company=company}}', context, translations))
-            .to.be.equal('Powered by BigCommerce');
+        expect(c('{{lang "powered_by" name=name}}', context))
+            .to.be.equal('Powered By BigCommerce');
 
         done();
     });

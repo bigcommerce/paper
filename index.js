@@ -29,7 +29,7 @@ function Theme(templates, themeId, cache) {
     handlebars.templates = {};
 
     self.options = internals.options;
-    self.translations = {};
+    self.translate;
     self.inject = {};
     self.helpers = [];
     self.decorators = [];
@@ -65,7 +65,7 @@ function Theme(templates, themeId, cache) {
      */
     self.loadTranslations = function (acceptLanguage, translations) {
         // Make translations available to the helpers
-        self.translations =  Localizer(acceptLanguage, translations);
+        self.translate =  Localizer(acceptLanguage, translations);
     };
 
     /**
