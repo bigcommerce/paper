@@ -3,6 +3,7 @@ var _ = require('lodash'),
     Path = require('path'),
     Fs = require('fs'),
     Handlebars = require('handlebars'),
+    Async = require('async'),
     internals = {
         options: {
             preventIndent: true
@@ -34,30 +35,40 @@ function Theme(templates, themeId, cache) {
     self.helpers = [];
     self.decorators = [];
 
-    // Register Partials/Templates and optionally cache them
-    _.forOwn(templates, function (content, fileName) {
-        var precompiled,
-            cacheKey = 'theme:' + themeId + ':' + fileName;
-
-        if (cache) {
-            if (cache.has(cacheKey)) {
-                precompiled = cache.get(cacheKey);
-            } else {
-                precompiled = handlebars.precompile(content, self.options);
-                cache.set(cacheKey, precompiled);
-            }
-            
-            eval('var template = ' + precompiled);
-            handlebars.templates[fileName] = handlebars.template(template);
-
-        } else {
-            handlebars.templates[fileName] = handlebars.compile(content, self.options);
-        }
-    });
-
     _.each(Helpers, function(Helper) {
         self.helpers.push(new Helper(handlebars));
     });
+
+    self.loadTemplates = function(templates, callback) {
+        // Register Partials/Templates and optionally cache them
+        Async.forEachOf(templates, function (content, fileName, next) {
+            var precompiled,
+                cacheKey = 'theme:' + themeId + ':' + fileName;
+
+            if (cache) {
+
+                cache.get(cacheKey, function (error, precompiled) {
+                    if (!precompiled) {
+                        precompiled = handlebars.precompile(content, self.options);
+                        cache.set(cacheKey, precompiled, function() {
+                            eval('var template = ' + precompiled);
+                            handlebars.templates[fileName] = handlebars.template(template);
+                            next();
+                        });
+                    } else {
+                        eval('var template = ' + precompiled);
+                        handlebars.templates[fileName] = handlebars.template(template);
+                        next();
+                    }
+                });
+
+            } else {
+                handlebars.templates[fileName] = handlebars.compile(content, self.options);
+                next();
+            }
+        }, callback);
+    }
+
 
     /**
      * @param {String} acceptLanguage
