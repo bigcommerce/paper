@@ -1,13 +1,13 @@
 var Code = require('code'),
     Lab = require('lab'),
-    Paper = require('../../index'),
+    Paper = require('../../index')(),
     lab = exports.lab = Lab.script(),
     describe = lab.experiment,
     expect = Code.expect,
     it = lab.it;
 
 function c(template) {
-    return Paper.compile('template', {template: template});
+    return Paper.make({template: template}).render('template');
 }
 
 describe('getShortMonth helper', function() {

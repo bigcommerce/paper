@@ -1,13 +1,17 @@
 var Code = require('code'),
     Lab = require('lab'),
-    Paper = require('../../index'),
+    Paper = require('../../index')(),
     lab = exports.lab = Lab.script(),
     describe = lab.experiment,
     expect = Code.expect,
     it = lab.it;
 
 function c(template, context, translations) {
-    return Paper.compile('template', {template: template}, context, translations);
+    var theme = Paper.make({template: template})
+
+    theme.translations = translations;
+    
+    return theme.render('template', context);
 }
 
 describe('lang helper', function() {

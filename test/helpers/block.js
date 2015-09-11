@@ -1,13 +1,13 @@
 var Code = require('code'),
     Lab = require('lab'),
-    Paper = require('../../index'),
+    Paper = require('../../index')(),
     lab = exports.lab = Lab.script(),
     describe = lab.experiment,
     expect = Code.expect,
     it = lab.it;
 
 function c(templates, context) {
-    return Paper.compile('template', templates, context);
+    return Paper.make(templates).render('template', context);
 }
 
 describe('partial and block helpers', function() {
