@@ -32,6 +32,7 @@ function Theme(templates, themeId, cache) {
     self.translations = {};
     self.inject = {};
     self.helpers = [];
+    self.decorators = [];
 
     // Register Partials/Templates and optionally cache them
     _.forOwn(templates, function (content, fileName) {
@@ -68,11 +69,19 @@ function Theme(templates, themeId, cache) {
     };
 
     /**
+     * @param {Function} decorator
+     */
+    self.addDecorator = function (decorator) {
+        self.decorators.push(decorator);
+    }
+
+    /**
      * @param {String} path
      * @param {Object} context
      * @return {String}
      */
     self.render = function (path, context) {
+        var output;
 
         _.each(self.helpers, function(helper) {
             helper.register(context, self);
@@ -80,7 +89,13 @@ function Theme(templates, themeId, cache) {
 
         handlebars.partials = handlebars.templates;
 
-        return handlebars.templates[path](context);
+        output = handlebars.templates[path](context);
+
+        _.each(self.decorators, function (decorator) {
+            output = decorator(output);
+        });
+
+        return output;
     };
 }
 
