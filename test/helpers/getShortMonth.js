@@ -7,7 +7,7 @@ var Code = require('code'),
     it = lab.it;
 
 function c(template) {
-    return Paper.make({template: template}).render('template');
+    return Paper.make(1).loadTemplatesSync({template: template}).render('template');
 }
 
 describe('getShortMonth helper', function() {

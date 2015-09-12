@@ -7,7 +7,7 @@ var Code = require('code'),
     it = lab.it;
 
 function c(template, context) {
-    return Paper.make({template: template}).render('template', context);
+    return Paper.make(1).loadTemplatesSync({template: template}).render('template', context);
 }
 
 describe('toLowerCase helper', function() {

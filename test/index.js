@@ -21,13 +21,13 @@ describe('compile()', function() {
         };
 
     it('should compile pages/product', function(done) {
-        var compiled = Paper.make(templates).render('pages/product', context);
+        var compiled = Paper.make(1).loadTemplatesSync(templates).render('pages/product', context);
         expect(compiled).to.be.equal('<html><p>hello world</p></html>');
         done();
     });
 
     it('should compile pages/partial', function(done) {
-        var compiled = Paper.make(templates).render('pages/partial', context);
+        var compiled = Paper.make(1).loadTemplatesSync(templates).render('pages/partial', context);
         expect(compiled).to.be.equal('<p>hello world</p>');
         done();
     });
@@ -38,7 +38,7 @@ describe('compile()', function() {
         };
 
         try {
-            var compiled = Paper.make(templates).render('errorPage', context);
+            var compiled = Paper.make(1).loadTemplatesSync(templates).render('errorPage', context);
             expect(compiled).not.to.exist();
         } catch (ex) {
             expect(ex).to.exist();

@@ -7,7 +7,7 @@ var Code = require('code'),
     it = lab.it;
 
 function c(templates, context) {
-    return Paper.make(templates).render('template', context);
+    return Paper.make(1).loadTemplatesSync(templates).render('template', context);
 }
 
 describe('partial and block helpers', function() {

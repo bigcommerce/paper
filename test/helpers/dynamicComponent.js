@@ -8,7 +8,7 @@ var Code = require('code'),
 
 function c(template, templates, context) {
     templates.template = template;
-    return Paper.make(templates).render('template', context);
+    return Paper.make(1).loadTemplatesSync(templates).render('template', context);
 }
 
 describe('dynamicComponent helper', function() {

@@ -39,8 +39,12 @@ function Theme(templates, themeId, cache) {
         self.helpers.push(new Helper(handlebars));
     });
 
+    /**
+     * Load Partials/Templates 
+     * @param  {Object}   templates
+     * @param  {Function} callback
+     */
     self.loadTemplates = function(templates, callback) {
-        // Register Partials/Templates and optionally cache them
         Async.forEachOf(templates, function (content, fileName, next) {
             var precompiled,
                 cacheKey = 'theme:' + themeId + ':' + fileName;
@@ -67,8 +71,20 @@ function Theme(templates, themeId, cache) {
                 next();
             }
         }, callback);
-    }
+    };
 
+    /**
+     * Load Partials/Templates used for test cases and stencil-cli
+     * @param  {Object}   templates
+     * @return {Object}
+     */
+    self.loadTemplatesSync = function(templates) {
+        _.each(templates, function (content, fileName) {          
+            handlebars.templates[fileName] = handlebars.compile(content, self.options);
+        });
+
+        return self;
+    };
 
     /**
      * @param {String} acceptLanguage

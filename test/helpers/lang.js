@@ -7,7 +7,7 @@ var Code = require('code'),
     it = lab.it;
 
 function c(template, context) {
-    var theme = Paper.make({template: template})
+    var theme = Paper.make(1).loadTemplatesSync({template: template})
 
     theme.translate = function (key, params) {
         return 'Powered By ' + params.name;
