@@ -30,7 +30,7 @@ function Theme(templates, themeId, cache) {
     handlebars.templates = {};
 
     self.options = internals.options;
-    self.translate;
+    self.translate = null;
     self.inject = {};
     self.helpers = [];
     self.decorators = [];
