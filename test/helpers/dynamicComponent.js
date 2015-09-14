@@ -1,6 +1,6 @@
 var Code = require('code'),
     Lab = require('lab'),
-    Paper = require('../../index'),
+    Paper = require('../../index')(),
     lab = exports.lab = Lab.script(),
     describe = lab.experiment,
     expect = Code.expect,
@@ -8,7 +8,7 @@ var Code = require('code'),
 
 function c(template, templates, context) {
     templates.template = template;
-    return Paper.compile('template', templates, context);
+    return Paper.make(1).loadTemplatesSync(templates).render('template', context);
 }
 
 describe('dynamicComponent helper', function() {
