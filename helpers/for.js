@@ -30,11 +30,18 @@ internals.implementation.prototype.register = function(context) {
             }
         }
 
+        if (to <= from) {
+            return;
+        }
+
+        from = parseInt(from, 10);
+        to = parseInt(to, 10);
+
         if ((to - from) >= maxIterations) {
             to = from + maxIterations - 1;
         }
 
-        for (var i = from; i < to + 1; i += 1) {
+        for (var i = from; i <= to; i++) {
             context.$index = i;
             output += options.fn(context);
         }
