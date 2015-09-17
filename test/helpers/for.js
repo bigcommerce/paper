@@ -67,4 +67,27 @@ describe('for helper', function() {
 
         done();
     });
+
+
+    it('should convert strings to integers and iterate 10 times', function(done) {
+        var context = {
+            start: '1',
+            end: '10'
+        }
+
+        expect(c('{{#for start end}}{{$index}} {{/for}}', context))
+            .to.be.equal('1 2 3 4 5 6 7 8 9 10 ');
+        done();
+    });
+
+    it('should not iterate if "from" is less than "to"', function(done) {
+        var context = {
+            start: 10,
+            end: 1
+        }
+
+        expect(c('{{#for start end}}{{$index}} {{/for}}', context))
+            .to.be.equal('');
+        done();
+    });
 });
