@@ -16,13 +16,11 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function(file) {
     Helpers.push(require('./helpers/' + file));
 });
 
-
 /**
  * Theme renderer constructor
- * @param {String} themeVersionId
- * @param {Object} cache
+ * @param {Object} assembler
  */
-function Theme(themeVersionId, cache) {
+module.exports = function (assembler) {
     var self = this,
         handlebars = Handlebars.create();
 
@@ -38,38 +36,56 @@ function Theme(themeVersionId, cache) {
         self.helpers.push(new Helper(handlebars));
     });
 
+    self.loadTheme = function (paths, acceptLanguage, done) {
+        if (!_.isArray(paths)) {
+            paths = paths ? [paths] : [];
+        }
+
+        Async.parallel([
+            function (next) {
+                self.loadTranslations(acceptLanguage, next);
+            },
+            function (next) {
+                Async.map(paths, self.loadTemplates, next);
+            }
+        ], done);
+    };
+
     /**
      * Load Partials/Templates 
      * @param  {Object}   templates
      * @param  {Function} callback
      */
-    self.loadTemplates = function(templates, callback) {
-        Async.forEachOf(templates, function (content, fileName, next) {
-            var precompiled,
-                cacheKey = 'theme:' + themeVersionId + ':' + fileName;
+    self.loadTemplates = function(path, callback) {
+        var processor = self.getTemplateProcessor();
 
-            if (cache) {
-
-                cache.get(cacheKey, function (error, precompiled) {
-                    if (!precompiled) {
-                        precompiled = handlebars.precompile(content, self.options);
-                        cache.set(cacheKey, precompiled, function() {
-                            eval('var template = ' + precompiled);
-                            handlebars.templates[fileName] = handlebars.template(template);
-                            next();
-                        });
-                    } else {
-                        eval('var template = ' + precompiled);
-                        handlebars.templates[fileName] = handlebars.template(template);
-                        next();
-                    }
-                });
-
-            } else {
-                handlebars.templates[fileName] = handlebars.compile(content, self.options);
-                next();
+        assembler.getTemplates(path, processor, function(error, templates) {
+            if (error) {
+                return callback(error);
             }
-        }, callback);
+
+            _.each(templates, function (precompiled, path) {
+
+                if (!handlebars.templates[path]) {
+                    eval('var template = ' + precompiled);
+                    handlebars.templates[path] = handlebars.template(template);
+                }
+            });
+
+            callback();
+        });
+    };
+
+    self.getTemplateProcessor = function() {
+        return function (templates) {
+            var precompiledTemplates = {};
+
+            _.each(templates, function (content, path) {
+                precompiledTemplates[path] = handlebars.precompile(content, self.options);
+            });
+
+            return precompiledTemplates;
+        }
     };
 
     /**
@@ -89,9 +105,17 @@ function Theme(themeVersionId, cache) {
      * @param {String} acceptLanguage
      * @param {Object} translations
      */
-    self.loadTranslations = function (acceptLanguage, translations) {
-        // Make translations available to the helpers
-        self.translate =  Localizer(acceptLanguage, translations);
+    self.loadTranslations = function (acceptLanguage, callback) {
+
+        assembler.getTranslations(function (error, translations) {
+            if (error) {
+                return callback(error);
+            }
+            // Make translations available to the helpers
+            self.translate =  Localizer(acceptLanguage, translations);
+
+            callback();
+        });
     };
 
     /**
@@ -124,20 +148,3 @@ function Theme(themeVersionId, cache) {
         return output;
     };
 }
-
-
-/**
- * @param {Object} cache
- * @return {Object}
- */
-module.exports = function (cache) {
-    return {
-        /**
-         * @param {String} themeVersionId
-         * @return {Object}
-         */
-        make: function (themeVersionId) {
-            return new Theme(themeVersionId, cache);
-        }
-    };
-};
