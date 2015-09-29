@@ -21,10 +21,11 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function(file) {
  * @param {Object} assembler
  */
 module.exports = function (assembler) {
-    var self = this,
-        handlebars = Handlebars.create();
+    var self = this;
 
-    handlebars.templates = {};
+    self.handlebars = Handlebars.create();
+
+    self.handlebars.templates = {};
 
     self.options = internals.options;
     self.translate = null;
@@ -33,7 +34,7 @@ module.exports = function (assembler) {
     self.decorators = [];
 
     _.each(Helpers, function(Helper) {
-        self.helpers.push(new Helper(handlebars));
+        self.helpers.push(new Helper(self.handlebars));
     });
 
     self.loadTheme = function (paths, acceptLanguage, done) {
@@ -66,9 +67,9 @@ module.exports = function (assembler) {
 
             _.each(templates, function (precompiled, path) {
 
-                if (!handlebars.templates[path]) {
+                if (!self.handlebars.templates[path]) {
                     eval('var template = ' + precompiled);
-                    handlebars.templates[path] = handlebars.template(template);
+                    self.handlebars.templates[path] = self.handlebars.template(template);
                 }
             });
 
@@ -81,7 +82,7 @@ module.exports = function (assembler) {
             var precompiledTemplates = {};
 
             _.each(templates, function (content, path) {
-                precompiledTemplates[path] = handlebars.precompile(content, self.options);
+                precompiledTemplates[path] = self.handlebars.precompile(content, self.options);
             });
 
             return precompiledTemplates;
@@ -95,7 +96,7 @@ module.exports = function (assembler) {
      */
     self.loadTemplatesSync = function(templates) {
         _.each(templates, function (content, fileName) {          
-            handlebars.templates[fileName] = handlebars.compile(content, self.options);
+            self.handlebars.templates[fileName] = self.handlebars.compile(content, self.options);
         });
 
         return self;
@@ -137,9 +138,9 @@ module.exports = function (assembler) {
             helper.register(context, self);
         });
 
-        handlebars.partials = handlebars.templates;
+        self.handlebars.partials = self.handlebars.templates;
 
-        output = handlebars.templates[path](context);
+        output = self.handlebars.templates[path](context);
 
         _.each(self.decorators, function (decorator) {
             output = decorator(output);
