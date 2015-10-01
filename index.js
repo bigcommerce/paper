@@ -20,10 +20,10 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function(file) {
 /**
  * Theme renderer constructor
  * @param {Object} templates
- * @param {String} themeId
+ * @param {String} themeVersionId
  * @param {Object} cache
  */
-function Theme(templates, themeId, cache) {
+function Theme(themeVersionId, cache) {
     var self = this,
         handlebars = Handlebars.create();
 
@@ -47,7 +47,7 @@ function Theme(templates, themeId, cache) {
     self.loadTemplates = function(templates, callback) {
         Async.forEachOf(templates, function (content, fileName, next) {
             var precompiled,
-                cacheKey = 'theme:' + themeId + ':' + fileName;
+                cacheKey = 'theme:' + themeVersionId + ':' + fileName;
 
             if (cache) {
 
@@ -134,13 +134,11 @@ function Theme(templates, themeId, cache) {
 module.exports = function (cache) {
     return {
         /**
-         * @param {Object} templates
-         * @param {String} themeId
-         * @param {Object} cache
+         * @param {String} themeVersionId
          * @return {Object}
          */
-        make: function (templates, themeId) {
-            return new Theme(templates, themeId || '1', cache);
+        make: function (themeVersionId) {
+            return new Theme(themeVersionId, cache);
         }
     };
 };
