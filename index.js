@@ -19,7 +19,6 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function(file) {
 
 /**
  * Theme renderer constructor
- * @param {Object} templates
  * @param {String} themeVersionId
  * @param {Object} cache
  */
