@@ -134,9 +134,7 @@ function Theme(themeVersionId, cache) {
 module.exports = function (cache) {
     return {
         /**
-         * @param {Object} templates
          * @param {String} themeVersionId
-         * @param {Object} cache
          * @return {Object}
          */
         make: function (themeVersionId) {
