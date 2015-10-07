@@ -20,9 +20,7 @@ internals.implementation.prototype.register = function(context) {
             assetPath = '/' + assetPath;
         }
 
-        if (assetPath.substr(-4) === '.css') {
-            ret = context.cdn_url_with_settings_hash + assetPath;
-        } else if (context.cdn_url) {
+        if (context.cdn_url) {
             ret = context.cdn_url + assetPath;
         } else {
             ret = assetPath;
