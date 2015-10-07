@@ -12,30 +12,39 @@ function c(template, context) {
 
 describe('cdn helper', function() {
     var context = {
-        cdn_url_with_settings_hash: 'https://cdn.bcapp/sfge342',
-        cdn_url: 'https://cdn.bcapp/3dsf74g',
-    };
+        settings: {
+            cdn_url: 'https://cdn.bcapp/3dsf74g',
+            theme_version_id: '123',
+            theme_config_id: '3245',
+        }
+    }
 
-    it('should render an object properly', function(done) {
+    it('should render the css cdn url', function(done) {
+        expect(c('{{cdn "assets/css/style.css"}}', context))
+            .to.be.equal('https://cdn.bcapp/3dsf74g/stencil/123/3245/css/style.css');
 
         expect(c('{{cdn "/assets/css/style.css"}}', context))
-            .to.be.equal('https://cdn.bcapp/sfge342/assets/css/style.css');
+            .to.be.equal('https://cdn.bcapp/3dsf74g/stencil/123/3245/css/style.css');
 
         done();
     });
 
-    it('should render normal url', function(done) {
-
-        expect(c('{{cdn "/assets/js/app.js"}}', context))
-            .to.be.equal('https://cdn.bcapp/3dsf74g/assets/js/app.js');
-
-        done();
-    });
-
-    it('should properly render url', function(done) {
-
+    it('should render normal assets cdn url', function(done) {
         expect(c('{{cdn "assets/js/app.js"}}', context))
-            .to.be.equal('https://cdn.bcapp/3dsf74g/assets/js/app.js');
+            .to.be.equal('https://cdn.bcapp/3dsf74g/stencil/123/js/app.js');
+
+        expect(c('{{cdn "assets/img/image.jpg"}}', context))
+            .to.be.equal('https://cdn.bcapp/3dsf74g/stencil/123/img/image.jpg');
+
+        done();
+    });
+
+    it('should not use the cdn url', function(done) {
+        expect(c('{{cdn "assets/img/image.jpg"}}', {}))
+            .to.be.equal('/assets/img/image.jpg');
+
+        expect(c('{{cdn "assets/img/image.jpg"}}', {}))
+            .to.be.equal('/assets/img/image.jpg');
 
         done();
     });
