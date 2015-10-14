@@ -7,20 +7,24 @@ internals.implementation = function(handlebars) {
 
 internals.implementation.prototype.register = function(context) {
     this.handlebars.registerHelper('getFontsUrl', function() {
-        var regex = new RegExp(/\w+_font$/),
+        var fontKeyFormat = new RegExp(/\w+_font$/),
             url = '';
 
         _.each(context.theme_settings, function(value, key) {
-            var pair;
+            var family,
+                pair,
+                weight;
 
-            if (regex.test(key)) {
+            if (fontKeyFormat.test(key)) {
                 pair = value.split('_');
+                family = pair[0];
+                weight = pair[1];
 
-                if (pair.length !== 2) {
-                    return;
+                if (pair.length === 1) {
+                    url += family + '|';
+                } else if (pair.length === 2) {
+                    url += family + ':' + weight + '|';
                 }
-
-                url += pair[0] + ':' + pair[1] + '|';
             }
         });
 
