@@ -1,13 +1,13 @@
 var Code = require('code'),
     Lab = require('lab'),
-    Paper = require('../../index')(),
+    Paper = require('../../index'),
     lab = exports.lab = Lab.script(),
     describe = lab.experiment,
     expect = Code.expect,
     it = lab.it;
 
 function c(template, context) {
-    return Paper.make(1).loadTemplatesSync({template: template}).render('template', context);
+    return new Paper().loadTemplatesSync({template: template}).render('template', context);
 }
 
 describe('fonts helper', function() {
