@@ -6,9 +6,9 @@ internals.implementation = function(handlebars) {
 };
 
 internals.implementation.prototype.register = function(context) {
-    this.handlebars.registerHelper('getFontsUrl', function() {
+    this.handlebars.registerHelper('getGoogleFontsCollection', function() {
         var fontKeyFormat = new RegExp(/\w+-font$/),
-            url = '';
+            collection = '';
 
         _.each(context.theme_settings, function(value, key) {
             var family,
@@ -20,15 +20,18 @@ internals.implementation.prototype.register = function(context) {
                 family = pair[0];
                 weight = pair[1];
 
+                family = family.trim();
+                family = family.replace(' ', '+');
+
                 if (pair.length === 1) {
-                    url += family + '|';
+                    collection += family + '|';
                 } else if (pair.length === 2) {
-                    url += family + ':' + weight + '|';
+                    collection += family + ':' + weight + '|';
                 }
             }
         });
 
-        return 'https://fonts.googleapis.com/css?family=' + url;
+        return collection;
     });
 };
 
