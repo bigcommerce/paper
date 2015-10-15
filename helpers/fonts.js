@@ -7,7 +7,7 @@ internals.implementation = function(handlebars) {
 
 internals.implementation.prototype.register = function(context) {
     this.handlebars.registerHelper('getFontsUrl', function() {
-        var fontKeyFormat = new RegExp(/\w+_font$/),
+        var fontKeyFormat = new RegExp(/\w+-font$/),
             url = '';
 
         _.each(context.theme_settings, function(value, key) {
