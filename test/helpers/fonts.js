@@ -13,9 +13,9 @@ function c(template, context) {
 describe('fonts helper', function() {
     var context = {
         theme_settings: {
-            header_test_font: 'Open+Sans_400',
-            body_font: 'Karla_700',
-            random_property: 'not a font'
+            'header-test-font': 'Open+Sans_400',
+            'body-font': 'Karla_700',
+            'random-property': 'not a font'
         }
     };
 
