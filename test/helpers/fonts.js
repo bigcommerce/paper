@@ -13,17 +13,17 @@ function c(template, context) {
 describe('fonts helper', function() {
     var context = {
         theme_settings: {
-            'header-test-font': 'Open+Sans_400',
+            'header-test-font': 'Open Sans_400',
             'body-font': 'Karla_700',
             'random-property': 'not a font'
         }
     };
 
     it('should return the expected font url', function(done) {
-        var template = "{{getFontsUrl}}";
+        var template = "{{getGoogleFontsCollection}}";
 
         expect(c(template, context))
-            .to.be.equal('https://fonts.googleapis.com/css?family=Open+Sans:400|Karla:700|');
+            .to.be.equal('Open+Sans:400|Karla:700|');
 
         done();
     });
