@@ -35,7 +35,19 @@ describe('loadTheme()', function() {
                 process.nextTick(function() {
                     var translations = {
                         'en': {
-                            hello: 'Hello {name}'
+                            hello: 'Hello {name}',
+                            level1: {
+                                level2: 'we are in the second level'
+                            }
+                        },
+                        'fr': {
+                            hello: 'Bonjour {name}',
+                            level1: {
+                                level2: 'nous sommes dans le deuxième niveau'
+                            }
+                        },
+                        'fr-CA': {
+                            hello: 'Salut {name}'
                         }
                     };
 
@@ -46,16 +58,17 @@ describe('loadTheme()', function() {
 
         var paper = new Paper(assembler);
 
-        paper.loadTheme('pages/product', 'en', function () {
+        paper.loadTheme('pages/product', 'fr-CA;q=0.8, fr, en', function () {
 
             expect(paper.handlebars.templates['pages/product']).to.be.a.function();
             expect(paper.handlebars.templates['pages/partial']).to.be.a.function();
             expect(paper.translate).to.be.a.function();
-            expect(paper.translate('hello', {name: 'Mario'})).to.be.equal('Hello Mario');
+            expect(paper.translate('hello', {name: 'Mario'})).to.be.equal('Bonjour Mario');
+            expect(paper.translate('hello', {name: 'Already Compiled'})).to.be.equal('Bonjour Already Compiled');
+            expect(paper.translate('does_not_exist')).to.be.equal('does_not_exist');
 
             done();
         });
-
     });
 });
 

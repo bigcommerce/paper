@@ -31,11 +31,7 @@ internals.implementation.prototype.register = function(context) {
             assetPath = assetPath.substr(8, assetPath.length);
         }
 
-        if (assetPath.substr(-4) === '.css') {
-            return [cdnUrl,'stencil', versionId, configId, assetPath].join('/');
-        } else {
-            return [cdnUrl,'stencil', versionId, assetPath].join('/');
-        }
+        return [cdnUrl, 'stencil', versionId, configId, assetPath].join('/');
     });
 };
 
