@@ -31,10 +31,10 @@ describe('cdn helper', function() {
 
     it('should render normal assets cdn url', function(done) {
         expect(c('{{cdn "assets/js/app.js"}}', context))
-            .to.be.equal('https://cdn.bcapp/3dsf74g/stencil/123/js/app.js');
+            .to.be.equal('https://cdn.bcapp/3dsf74g/stencil/123/3245/js/app.js');
 
         expect(c('{{cdn "assets/img/image.jpg"}}', context))
-            .to.be.equal('https://cdn.bcapp/3dsf74g/stencil/123/img/image.jpg');
+            .to.be.equal('https://cdn.bcapp/3dsf74g/stencil/123/3245/img/image.jpg');
 
         done();
     });
