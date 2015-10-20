@@ -6,7 +6,9 @@ internals.implementation = function(handlebars) {
 };
 
 internals.implementation.prototype.register = function(context) {
-    this.handlebars.registerHelper('getGoogleFontsCollection', function() {
+    var handlebars = this.handlebars;
+
+    handlebars.registerHelper('getGoogleFontsCollection', function() {
         var fontKeyFormat = new RegExp(/\w+-font$/),
             collection = '';
 
@@ -31,7 +33,7 @@ internals.implementation.prototype.register = function(context) {
             }
         });
 
-        return collection;
+        return new handlebars.SafeString('<link href="//fonts.googleapis.com/css?family=' + collection + '" rel="stylesheet">');
     });
 };
 
