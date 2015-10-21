@@ -6,33 +6,63 @@ internals.implementation = function(handlebars) {
 };
 
 internals.implementation.prototype.register = function(context) {
-    this.handlebars.registerHelper('getGoogleFontsCollection', function() {
+    var handlebars = this.handlebars;
+
+    handlebars.registerHelper('getFontsCollection', function() {
         var fontKeyFormat = new RegExp(/\w+-font$/),
-            collection = '';
+            googleFonts = [],
+            linkElements = [];
 
         _.each(context.theme_settings, function(value, key) {
-            var family,
-                pair,
-                weight;
+            var split;
 
             if (fontKeyFormat.test(key)) {
-                pair = value.split('_');
-                family = pair[0];
-                weight = pair[1];
+                split = value.split('_');
 
-                family = family.trim();
-                family = family.replace(' ', '+');
+                switch (split[0]) {
+                    case 'Google':
+                        googleFonts.push(value);
+                        break;
 
-                if (pair.length === 1) {
-                    collection += family + '|';
-                } else if (pair.length === 2) {
-                    collection += family + ':' + weight + '|';
+                    default:
+                        break;
                 }
             }
         });
 
-        return collection;
+        linkElements.push(internals.googleParser(googleFonts));
+
+        return new handlebars.SafeString(linkElements.join(''));
     });
+};
+
+/**
+ * Parser for Google fonts
+ *
+ * @param fonts - Array of fonts that might look like
+ * Google_Open+Sans or Google_Open+Sans_400 or Google_Open+Sans_400_sans or Google_Open+Sans_400,700_sans
+ * for Shopify compatibility
+ *
+ * @returns {string}
+ */
+
+internals.googleParser = function(fonts) {
+    var collection = '';
+
+    _.each(fonts, function(font) {
+        var split = font.split('_'),
+            family = split[1],
+            weight = split[2];
+
+        if (split.length === 2) {
+            collection += family + '|';
+        } else if (split.length > 2) {
+            weight = weight.split(',')[0];
+            collection += family + ':' + weight + '|';
+        }
+    });
+
+    return '<link href="//fonts.googleapis.com/css?family=' + collection + '" rel="stylesheet">';
 };
 
 module.exports = internals.implementation;
