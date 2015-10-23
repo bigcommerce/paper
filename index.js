@@ -22,6 +22,7 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function (file) {
  */
 module.exports = function (assembler) {
     var self = this;
+    var preLoadHooks;
 
     self.handlebars = Handlebars.create();
 
@@ -33,9 +34,27 @@ module.exports = function (assembler) {
     self.helpers = [];
     self.decorators = [];
 
+    self.hooks = {
+        load: []
+    };
+
     _.each(Helpers, function (Helper) {
         self.helpers.push(new Helper(self.handlebars));
     });
+
+    self.on = function (event, functions) {
+        if (!_.isArray(self.hooks[event])) {
+            return;
+        }
+
+        if (typeof functions === 'function') {
+            functions = [functions];
+        }
+
+        for (var i = 0; i < functions.length; i++) {
+            self.hooks[event].push(functions[i]);
+        };
+    };
 
     self.loadTheme = function (paths, acceptLanguage, done) {
         if (!_.isArray(paths)) {
@@ -43,6 +62,11 @@ module.exports = function (assembler) {
         }
 
         Async.parallel([
+            function (next) {
+                Async.map(self.hooks.load || [], function (fn, done) {
+                    fn(self, done);
+                }, next)
+            },
             function (next) {
                 self.loadTranslations(acceptLanguage, next);
             },
@@ -100,6 +124,15 @@ module.exports = function (assembler) {
         });
 
         return self;
+    };
+
+    /**
+     * Compile a single template
+     * @param  {String} templates
+     * @return {Function} compiled template function
+     */
+    self.compile = function(template) {
+        return self.handlebars.compile(template, self.options);
     };
 
     /**
