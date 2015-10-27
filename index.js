@@ -20,7 +20,7 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function(file) {
  * Theme renderer constructor
  * @param {Object} assembler
  */
-module.exports = function (assembler) {
+function Paper(assembler) {
     var self = this;
 
     self.handlebars = Handlebars.create();
@@ -28,6 +28,7 @@ module.exports = function (assembler) {
     self.handlebars.templates = {};
 
     self.options = internals.options;
+    self.assembler = assembler;
     self.translate = null;
     self.inject = {};
     self.helpers = [];
@@ -36,116 +37,135 @@ module.exports = function (assembler) {
     _.each(Helpers, function(Helper) {
         self.helpers.push(new Helper(self.handlebars));
     });
+}
 
-    self.loadTheme = function (paths, acceptLanguage, done) {
-        if (!_.isArray(paths)) {
-            paths = paths ? [paths] : [];
-        }
 
-        Async.parallel([
-            function (next) {
-                self.loadTranslations(acceptLanguage, next);
-            },
-            function (next) {
-                Async.map(paths, self.loadTemplates, next);
-            }
-        ], done);
-    };
+Paper.prototype.loadTheme = function (paths, acceptLanguage, done) {
+    var self = this;
 
-    /**
-     * Load Partials/Templates 
-     * @param  {Object}   templates
-     * @param  {Function} callback
-     */
-    self.loadTemplates = function(path, callback) {
-        var processor = self.getTemplateProcessor();
-
-        assembler.getTemplates(path, processor, function(error, templates) {
-            if (error) {
-                return callback(error);
-            }
-
-            _.each(templates, function (precompiled, path) {
-
-                if (!self.handlebars.templates[path]) {
-                    eval('var template = ' + precompiled);
-                    self.handlebars.templates[path] = self.handlebars.template(template);
-                }
-            });
-
-            callback();
-        });
-    };
-
-    self.getTemplateProcessor = function() {
-        return function (templates) {
-            var precompiledTemplates = {};
-
-            _.each(templates, function (content, path) {
-                precompiledTemplates[path] = self.handlebars.precompile(content, self.options);
-            });
-
-            return precompiledTemplates;
-        }
-    };
-
-    /**
-     * Load Partials/Templates used for test cases and stencil-cli
-     * @param  {Object}   templates
-     * @return {Object}
-     */
-    self.loadTemplatesSync = function(templates) {
-        _.each(templates, function (content, fileName) {          
-            self.handlebars.templates[fileName] = self.handlebars.compile(content, self.options);
-        });
-
-        return self;
-    };
-
-    /**
-     * @param {String} acceptLanguage
-     * @param {Object} translations
-     */
-    self.loadTranslations = function (acceptLanguage, callback) {
-
-        assembler.getTranslations(function (error, translations) {
-            if (error) {
-                return callback(error);
-            }
-            // Make translations available to the helpers
-            self.translate =  Localizer(acceptLanguage, translations);
-
-            callback();
-        });
-    };
-
-    /**
-     * @param {Function} decorator
-     */
-    self.addDecorator = function (decorator) {
-        self.decorators.push(decorator);
+    if (!_.isArray(paths)) {
+        paths = paths ? [paths] : [];
     }
 
-    /**
-     * @param {String} path
-     * @param {Object} context
-     * @return {String}
-     */
-    self.render = function (path, context) {
-        var output;
+    Async.parallel([
+        function (next) {
+            self.loadTranslations(acceptLanguage, next);
+        },
+        function (next) {
+            Async.map(
+                paths,
+                function (path, cb) {
+                    self.loadTemplates(path, cb)
+                },
+                next
+            );
+        }
+    ], done);
+};
 
-        _.each(self.helpers, function(helper) {
-            helper.register(context, self);
+/**
+ * Load Partials/Templates
+ * @param  {Object}   path
+ * @param  {Function} callback
+ */
+Paper.prototype.loadTemplates = function(path, callback) {
+    var self = this;
+    var processor = self.getTemplateProcessor();
+
+    self.assembler.getTemplates(path, processor, function(error, templates) {
+        if (error) {
+            return callback(error);
+        }
+
+        _.each(templates, function (precompiled, path) {
+
+            if (!self.handlebars.templates[path]) {
+                eval('var template = ' + precompiled);
+                self.handlebars.templates[path] = self.handlebars.template(template);
+            }
         });
 
-        self.handlebars.partials = self.handlebars.templates;
+        callback();
+    });
+};
 
-        output = self.handlebars.templates[path](context);
+Paper.prototype.getTemplateProcessor = function() {
+    var self = this;
 
-        _.each(self.decorators, function (decorator) {
-            output = decorator(output);
+    return function (templates) {
+        var precompiledTemplates = {};
+
+        _.each(templates, function (content, path) {
+            precompiledTemplates[path] = self.handlebars.precompile(content, self.options);
         });
 
-        return output;
-    };
-}
+        return precompiledTemplates;
+    }
+};
+
+
+/**
+ * Load Partials/Templates used for test cases and stencil-cli
+ * @param  {Object}   templates
+ * @return {Object}
+ */
+Paper.prototype.loadTemplatesSync = function(templates) {
+    var self = this;
+
+    _.each(templates, function (content, fileName) {
+        self.handlebars.templates[fileName] = self.handlebars.compile(content, self.options);
+    });
+
+    return self;
+};
+
+/**
+ * @param {String} acceptLanguage
+ * @param {Object} translations
+ */
+Paper.prototype.loadTranslations = function (acceptLanguage, callback) {
+    var self = this;
+
+    this.assembler.getTranslations(function (error, translations) {
+        if (error) {
+            return callback(error);
+        }
+        // Make translations available to the helpers
+        self.translate =  Localizer(acceptLanguage, translations);
+
+        callback();
+    });
+};
+
+/**
+ * @param {Function} decorator
+ */
+Paper.prototype.addDecorator = function (decorator) {
+    this.decorators.push(decorator);
+};
+
+/**
+ * @param {String} path
+ * @param {Object} context
+ * @return {String}
+ */
+Paper.prototype.render = function (path, context) {
+    var output,
+        self = this;
+
+    _.each(self.helpers, function(helper) {
+        helper.register(context, self);
+    });
+
+    self.handlebars.partials = self.handlebars.templates;
+
+    output = self.handlebars.templates[path](context);
+
+    _.each(self.decorators, function (decorator) {
+        output = decorator(output);
+    });
+
+    return output;
+};
+
+module.exports = Paper;
