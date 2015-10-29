@@ -9,16 +9,21 @@ internals.implementation.prototype.register = function(context, paper) {
     this.handlebars.registerHelper('stylesheet', function(assetPath, options) {
         var settings = context.settings || {};
         var url = paper.cdnify(assetPath, settings);
-        var attrs = '';
+        var attrs = {
+            rel: 'stylesheet'
+        };
 
         // check if there is any extra attribute
-        if (Object.getOwnPropertyNames(options.hash).length > 0) {
-            attrs = ' ' + _.map(options.hash, function(value, key) {
-                return key + '="' + value + '"';
-            }).join(" ");
+        if (_.isObject(options.hash)) {
+            attrs = _.merge(attrs, options.hash);
         }
+        
+        attrs = _.map(attrs, function(value, key) {
+            return key + '="' + value + '"';
+        }).join(' ');
 
-        return '<link data-stencil-stylesheet href="' + url + '"' + attrs + '>';
+
+        return '<link data-stencil-stylesheet href="' + url + '" ' + attrs + '>';
     });
 };
 

@@ -21,16 +21,22 @@ describe('stylesheet helper', function() {
 
     it('should render a link tag with the cdn ulr and stencil-stylesheet data tag', function(done) {
         expect(c('{{{stylesheet "assets/css/style.css"}}}', context))
-            .to.be.equal('<link data-stencil-stylesheet href="https://cdn.bcapp/hash/stencil/1/2/css/style.css">');
+            .to.be.equal('<link data-stencil-stylesheet href="https://cdn.bcapp/hash/stencil/1/2/css/style.css" rel="stylesheet">');
 
         done();
     });
 
     it('should render a link tag and all extra attributes with no cdn url', function(done) {
-        expect(c('{{{stylesheet "assets/css/style.css" rel="stylesheet" class="myStyle"}}}', {}))
-            .to.be.equal('<link data-stencil-stylesheet href="/assets/css/style.css" class="myStyle" rel="stylesheet">');
+        expect(c('{{{stylesheet "assets/css/style.css" rel="something" class="myStyle"}}}', {}))
+            .to.be.equal('<link data-stencil-stylesheet href="/assets/css/style.css" rel="something" class="myStyle">');
 
         done();
     });
 
+    it('should render a link with empty href', function(done) {
+        expect(c('{{{stylesheet "" }}}', context))
+            .to.be.equal('<link data-stencil-stylesheet href="" rel="stylesheet">');
+
+        done();
+    });
 });
