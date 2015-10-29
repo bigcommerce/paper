@@ -131,7 +131,7 @@ module.exports = function (assembler) {
         var configId = settings['theme_config_id'];
 
         if (!path) {
-            return;
+            return '';
         }
 
         if (/^(?:https?:)?\/\//.test(path)) {

@@ -62,4 +62,12 @@ describe('cdn helper', function() {
 
         done();
     });
+
+    it('should return  an empty string if no path is provided', function(done) {
+
+        expect(c('{{cdn ""}}', context))
+            .to.be.equal('');
+
+        done();
+    });
 });
