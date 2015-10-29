@@ -6,7 +6,7 @@ internals.implementation = function(handlebars) {
 };
 
 internals.implementation.prototype.register = function(context, paper) {
-    this.handlebars.registerHelper('style', function(assetPath, options) {
+    this.handlebars.registerHelper('stylesheet', function(assetPath, options) {
         var settings = context.settings || {};
         var url = paper.cdnify(assetPath, settings);
         var attrs = '';
@@ -18,7 +18,7 @@ internals.implementation.prototype.register = function(context, paper) {
             }).join(" ");
         }
 
-        return '<link data-stencil-style href="' + url + '"' + attrs + '>';
+        return '<link data-stencil-stylesheet href="' + url + '"' + attrs + '>';
     });
 };
 
