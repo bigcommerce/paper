@@ -120,6 +120,40 @@ module.exports = function (assembler) {
     };
 
     /**
+     * Add CDN base url to the relative path
+     * @param  {String} path     Relative path
+     * @param  {Object} settings Theme settings
+     * @return {String}          Url cdn
+     */
+    self.cdnify = function (path, settings) {
+        var cdnUrl = settings['cdn_url'];
+        var versionId = settings['theme_version_id'];
+        var configId = settings['theme_config_id'];
+
+        if (!path) {
+            return '';
+        }
+
+        if (/^(?:https?:)?\/\//.test(path)) {
+            return path;
+        }
+
+        if (path[0] !== '/') {
+            path = '/' + path;
+        }
+
+        if (!cdnUrl) {
+            return path;
+        }
+
+        if (path.substr(0, 8) === '/assets/') {
+            path = path.substr(8, path.length);
+        }
+
+        return [cdnUrl, 'stencil', versionId, configId, path].join('/');
+    };
+
+    /**
      * @param {Function} decorator
      */
     self.addDecorator = function (decorator) {
