@@ -17,6 +17,10 @@ internals.implementation.prototype.register = function(context, paper) {
         if (_.isObject(options.hash)) {
             attrs = _.merge(attrs, options.hash);
         }
+
+        if (!attrs.id) {
+            attrs.id = url;
+        }
         
         attrs = _.map(attrs, function(value, key) {
             return key + '="' + value + '"';
