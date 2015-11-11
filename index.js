@@ -126,7 +126,7 @@ module.exports = function (assembler) {
      * @return {String}          Url cdn
      */
     self.cdnify = function (path, settings) {
-        var cdnUrl = settings['cdn_url'] || '';
+        var cdnUrl = settings['cdn_url'];
         var versionId = settings['theme_version_id'];
         var configId = settings['theme_config_id'];
 
@@ -142,7 +142,7 @@ module.exports = function (assembler) {
             path = '/' + path;
         }
 
-        if (!versionId || !configId) {
+        if (!cdnUrl) {
             return path;
         }
 
