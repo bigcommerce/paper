@@ -9,7 +9,7 @@ internals.implementation.prototype.register = function(context) {
     var handlebars = this.handlebars;
 
     handlebars.registerHelper('getFontsCollection', function() {
-        var fontKeyFormat = new RegExp(/\w+-font$/),
+        var fontKeyFormat = new RegExp(/\w+(-\w*)*-font$/),
             googleFonts = [],
             linkElements = [];
 
