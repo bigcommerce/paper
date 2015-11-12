@@ -13,12 +13,16 @@ internals.implementation = function(handlebars) {
 };
 
 internals.implementation.prototype.register = function(context) {
-    this.handlebars.registerHelper('limit', function(arr, limit) {
-        if (!_.isArray(arr)) {
+    this.handlebars.registerHelper('limit', function(data, limit) {
+
+        if (_.isString(data)) {
+            return data.substring(0, limit);
+        }
+        if (!_.isArray(data)) {
             return [];
         }
 
-        return arr.slice(0, limit);
+        return data.slice(0, limit);
     });
 };
 
