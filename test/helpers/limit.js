@@ -19,4 +19,13 @@ describe('limit helper', function() {
 
         done();
     });
+
+    it('should limit an string properly', function(done) {
+        var description = "This is longer than the chosen limit";
+
+        expect(c('{{limit var 10}}', {var: description}))
+            .to.be.equal('This is lo');
+
+        done();
+    });
 });
