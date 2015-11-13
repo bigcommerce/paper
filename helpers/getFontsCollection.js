@@ -40,29 +40,49 @@ internals.implementation.prototype.register = function(context) {
  * Parser for Google fonts
  *
  * @param fonts - Array of fonts that might look like
- * Google_Open+Sans or Google_Open+Sans_400 or Google_Open+Sans_400_sans or Google_Open+Sans_400,700_sans
- * for Shopify compatibility
+ * Google_Open+Sans
+ * Google_Open+Sans_400
+ * Google_Open+Sans_400_sans
+ * Google_Open+Sans_400,700_sans
+ * Google_Open+Sans_400,700italic
+ * Google_Open+Sans_400,700italic_sans
  *
  * @returns {string}
  */
 
 internals.googleParser = function(fonts) {
-    var collection = '';
+    var collection = [],
+        familyHash = {};
 
-    _.each(fonts, function(font) {
+    _.each(fonts, function fontsIterator(font) {
         var split = font.split('_'),
-            family = split[1],
-            weight = split[2];
+            familyKey = split[1],  // Eg: Open+Sans
+            weights = split[2];    // Eg: 400,700italic
 
-        if (split.length === 2) {
-            collection += family + '|';
-        } else if (split.length > 2) {
-            weight = weight.split(',')[0];
-            collection += family + ':' + weight + '|';
+        if (_.isEmpty(familyKey)) {
+            return;
         }
+
+        if (_.isUndefined(weights)) {
+            weights = '';
+        }
+
+        if (!_.isArray(familyHash[familyKey])) {
+            familyHash[familyKey] = [];
+        }
+
+        weights = weights.split(',');
+
+        familyHash[familyKey].push(weights);
+        familyHash[familyKey] = _.unique(_.flatten(familyHash[familyKey]));
     });
 
-    return '<link href="//fonts.googleapis.com/css?family=' + collection + '" rel="stylesheet">';
+
+    _.each(familyHash, function fontHashIterator(weights, family) {
+        collection.push(family + ':' + weights.join(','));
+    });
+
+    return '<link href="//fonts.googleapis.com/css?family=' + collection.join('|') + '" rel="stylesheet">';
 };
 
 module.exports = internals.implementation;
