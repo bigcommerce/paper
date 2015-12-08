@@ -7,11 +7,15 @@ internals.implementation = function(handlebars) {
 
 internals.implementation.prototype.register = function(context) {
     this.handlebars.registerHelper('getImage', function (image, preset, defaultImage) {
-        var presets = context.theme_images || {},
+        var presets = {},
             width,
             height,
             size,
             url;
+
+        if (context.theme_settings && context.theme_settings._images) {
+            presets = context.theme_settings._images;
+        }
 
         if (!_.isObject(image)) {
             return _.isString(image) ? image : defaultImage;
