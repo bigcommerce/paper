@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+var Precompiler = require('../lib/precompiler');
+if (process.argv.length < 3) {
+    throw new Error('Must supply a path to an unzipped stencil theme bundle');
+}
+
+new Precompiler(process.argv[2]).precompile();
