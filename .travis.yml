@@ -2,3 +2,9 @@ language: node_js
 sudo: false
 node_js:
   - 0.12
+before_install:
+  - secret=`openssl rsautl -decrypt -inkey ~/.ssh/id_rsa -in .travis.secret.enc`
+  - openssl aes-256-cbc -k $secret -in .travis.key.enc -d -a -out .travis.key
+  - chmod 600 .travis.key
+  - ssh-add -D
+  - ssh-add .travis.key
