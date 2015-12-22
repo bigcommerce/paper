@@ -17,7 +17,7 @@ describe('cdn helper', function() {
             theme_version_id: '123',
             theme_config_id: '3245',
         }
-    }
+    };
 
     it('should render the css cdn url', function(done) {
         expect(c('{{cdn "assets/css/style.css"}}', context))
@@ -67,6 +67,17 @@ describe('cdn helper', function() {
 
         expect(c('{{cdn ""}}', context))
             .to.be.equal('');
+
+        done();
+    });
+
+    it('should return a webDav asset if webdav protocol specified', function(done) {
+
+        expect(c('{{cdn "webdav:img/image.jpg"}}', context))
+            .to.be.equal('https://cdn.bcapp/3dsf74g/content/img/image.jpg');
+
+        expect(c('{{cdn "webdav:/img/image.jpg"}}', context))
+            .to.be.equal('https://cdn.bcapp/3dsf74g/content/img/image.jpg');
 
         done();
     });
