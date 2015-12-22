@@ -53,7 +53,7 @@ module.exports = function (assembler) {
     };
 
     /**
-     * Load Partials/Templates 
+     * Load Partials/Templates
      * @param  {Object}   templates
      * @param  {Function} callback
      */
@@ -95,7 +95,7 @@ module.exports = function (assembler) {
      * @return {Object}
      */
     self.loadTemplatesSync = function(templates) {
-        _.each(templates, function (content, fileName) {          
+        _.each(templates, function (content, fileName) {
             self.handlebars.templates[fileName] = self.handlebars.compile(content, self.options);
         });
 
@@ -136,6 +136,16 @@ module.exports = function (assembler) {
 
         if (/^(?:https?:)?\/\//.test(path)) {
             return path;
+        }
+
+        if (path.substr(0, 7) === 'webdav:') {
+            path = path.slice(7, path.length);
+
+            if (path[0] === '/') {
+                path = path.slice(1, path.length);
+            }
+
+            return [cdnUrl, 'content', path].join('/');
         }
 
         if (path[0] !== '/') {
