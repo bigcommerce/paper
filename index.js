@@ -178,7 +178,7 @@ module.exports = function (assembler) {
      */
     self.addDecorator = function (decorator) {
         self.decorators.push(decorator);
-    }
+    };
 
     /**
      * @param {String} path
@@ -202,4 +202,4 @@ module.exports = function (assembler) {
 
         return output;
     };
-}
+};
