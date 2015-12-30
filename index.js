@@ -12,7 +12,7 @@ var _ = require('lodash'),
     Helpers = [];
 
 // Load Helpers
-Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function(file) {
+Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function (file) {
     Helpers.push(require('./helpers/' + file));
 });
 
@@ -33,7 +33,7 @@ module.exports = function (assembler) {
     self.helpers = [];
     self.decorators = [];
 
-    _.each(Helpers, function(Helper) {
+    _.each(Helpers, function (Helper) {
         self.helpers.push(new Helper(self.handlebars));
     });
 
@@ -57,10 +57,10 @@ module.exports = function (assembler) {
      * @param  {Object}   templates
      * @param  {Function} callback
      */
-    self.loadTemplates = function(path, callback) {
+    self.loadTemplates = function (path, callback) {
         var processor = self.getTemplateProcessor();
 
-        assembler.getTemplates(path, processor, function(error, templates) {
+        assembler.getTemplates(path, processor, function (error, templates) {
             if (error) {
                 return callback(error);
             }
@@ -77,7 +77,7 @@ module.exports = function (assembler) {
         });
     };
 
-    self.getTemplateProcessor = function() {
+    self.getTemplateProcessor = function () {
         return function (templates) {
             var precompiledTemplates = {};
 
@@ -94,7 +94,7 @@ module.exports = function (assembler) {
      * @param  {Object}   templates
      * @return {Object}
      */
-    self.loadTemplatesSync = function(templates) {
+    self.loadTemplatesSync = function (templates) {
         _.each(templates, function (content, fileName) {
             self.handlebars.templates[fileName] = self.handlebars.compile(content, self.options);
         });
@@ -113,7 +113,7 @@ module.exports = function (assembler) {
                 return callback(error);
             }
             // Make translations available to the helpers
-            self.translate =  Localizer(acceptLanguage, translations);
+            self.translate = Localizer(acceptLanguage, translations);
 
             callback();
         });
@@ -129,6 +129,7 @@ module.exports = function (assembler) {
         var cdnUrl = settings['cdn_url'] || '';
         var versionId = settings['theme_version_id'];
         var configId = settings['theme_config_id'];
+        var protocolMatch = /(.*!?:)/;
 
         if (!path) {
             return '';
@@ -138,14 +139,23 @@ module.exports = function (assembler) {
             return path;
         }
 
-        if (path.substr(0, 7) === 'webdav:') {
-            path = path.slice(7, path.length);
+        if (protocolMatch.test(path)) {
+            var match = path.match(protocolMatch);
+            path = path.slice(match[0].length, path.length);
 
             if (path[0] === '/') {
                 path = path.slice(1, path.length);
             }
 
-            return [cdnUrl, 'content', path].join('/');
+            if (match[0] === 'webdav:') {
+                return [cdnUrl, 'content', path].join('/');
+            }
+
+            if (path[0] !== '/') {
+                path = '/' + path;
+            }
+
+            return path;
         }
 
         if (path[0] !== '/') {
@@ -168,7 +178,7 @@ module.exports = function (assembler) {
      */
     self.addDecorator = function (decorator) {
         self.decorators.push(decorator);
-    }
+    };
 
     /**
      * @param {String} path
@@ -178,7 +188,7 @@ module.exports = function (assembler) {
     self.render = function (path, context) {
         var output;
 
-        _.each(self.helpers, function(helper) {
+        _.each(self.helpers, function (helper) {
             helper.register(context, self);
         });
 
@@ -192,4 +202,4 @@ module.exports = function (assembler) {
 
         return output;
     };
-}
+};

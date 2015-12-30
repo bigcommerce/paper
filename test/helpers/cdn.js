@@ -81,4 +81,26 @@ describe('cdn helper', function() {
 
         done();
     });
+
+    it('should not return a webDav asset if webdav protocol is not correct', function(done) {
+
+        expect(c('{{cdn "webbav:img/image.jpg"}}', context))
+            .to.be.equal('/img/image.jpg');
+
+        expect(c('{{cdn "webbav:/img/image.jpg"}}', context))
+            .to.be.equal('/img/image.jpg');
+
+        done();
+    });
+
+    it('should return basic asset URL if protocol is not correct', function(done) {
+
+        expect(c('{{cdn "randomProtocol::img/image.jpg"}}', context))
+            .to.be.equal('/img/image.jpg');
+
+        expect(c('{{cdn "randomProtocol:/img/image.jpg"}}', context))
+            .to.be.equal('/img/image.jpg');
+
+        done();
+    });
 });
