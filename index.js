@@ -56,7 +56,7 @@ module.exports = function (assembler) {
         };
     };
 
-    self.loadTheme = function (paths, acceptLanguage, done) {
+    self.loadTheme = function (paths, data, done) {
         if (!_.isArray(paths)) {
             paths = paths ? [paths] : [];
         }
@@ -64,11 +64,11 @@ module.exports = function (assembler) {
         Async.parallel([
             function (next) {
                 Async.map(self.hooks.load || [], function (fn, done) {
-                    fn(self, done);
+                    fn(self, data, done);
                 }, next)
             },
             function (next) {
-                self.loadTranslations(acceptLanguage, next);
+                self.loadTranslations(data.acceptLanguage, next);
             },
             function (next) {
                 Async.map(paths, self.loadTemplates, next);
