@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A stencil plugin to register partials and helpers from handlebars and returns the compiled version for the stencil platform.",
   "main": "index.js",
-  "author": "Stencil-Eng",
+  "author": "Bigcommerce",
   "license": "BSD-4-Clause",
   "scripts": {
     "test": "lab -l -t 80"
