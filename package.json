@@ -1,5 +1,5 @@
 {
-  "name": "@stencil-eng/stencil-paper",
+  "name": "@bigcommerce/stencil-paper",
   "version": "1.0.4",
   "description": "A stencil plugin to register partials and helpers from handlebars and returns the compiled version for the stencil platform.",
   "main": "index.js",
