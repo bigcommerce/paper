@@ -1,4 +1,5 @@
 # stencil-paper
+[![Build Status](https://travis-ci.org/bigcommerce/paper.svg?branch=master)](https://travis-ci.org/bigcommerce/paper)
 
 *stencil-paper* is a plugin for `stencil-cli` and `stapler`. Its duty is to render the themes using [Handlebars](http://handlebarsjs.com/) template engine.
 
