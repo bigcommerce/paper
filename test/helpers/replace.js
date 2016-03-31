@@ -28,4 +28,12 @@ describe('replace helper', function() {
         done();
     });
 
+    it('should handle undefined values', function(done) {
+        var context = {};
+        expect(c(templates, context))
+            .to.be.equal('');
+
+        done();
+    });
+
 });
