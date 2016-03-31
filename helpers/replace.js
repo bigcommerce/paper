@@ -6,7 +6,11 @@ internals.implementation = function(handlebars) {
 
 internals.implementation.prototype.register = function(context) {
     this.handlebars.registerHelper('replace', function(needle, haystack, options) {
-        var contains = haystack.indexOf(needle) > -1;
+        var contains = false;
+
+        if (typeof(haystack) === 'string') {
+            contains = haystack.indexOf(needle) > -1;
+        }
 
         // Yield block if true
         if (contains) {
