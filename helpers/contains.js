@@ -13,8 +13,8 @@ internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context) {
-    this.handlebars.registerHelper('contains', function(value, targetValue) {
+internals.implementation.prototype.register = function() {
+    this.handlebars.registerHelper('contains', function() {
         var args = Array.prototype.slice.call(arguments, 0, -1),
             options = _.last(arguments),
             contained = _.contains.apply(_, args);

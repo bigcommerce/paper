@@ -31,6 +31,11 @@
   },
   "devDependencies": {
     "code": "^1.4.0",
+    "eslint": "^2.7.0",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-react": "^4.3.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
     "lab": "^5.8.1",
     "sinon": "^1.17.2"
   }

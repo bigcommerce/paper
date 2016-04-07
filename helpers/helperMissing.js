@@ -2,7 +2,7 @@ var helper = function (handlebars) {
     this.handlebars = handlebars;
 };
 
-helper.prototype.register = function (context) {
+helper.prototype.register = function () {
     this.handlebars.registerHelper('helperMissing', function () {
     	return undefined;
     });

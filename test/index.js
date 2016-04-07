@@ -1,6 +1,5 @@
 var Code = require('code'),
     Lab = require('lab'),
-    Handlebars = require('handlebars'),
     Paper = require('../index'),
     lab = exports.lab = Lab.script(),
     describe = lab.experiment,
@@ -8,17 +7,6 @@ var Code = require('code'),
     it = lab.it;
 
 describe('loadTheme()', function() {
-    var templates = {
-            'pages/product': '<html>{{> pages/partial}}</html>',
-            'pages/partial': '<p>{{variable}}</p>',
-            'pages/greet': '<h1>{{lang \'good\'}} {{lang \'morning\'}}</h1>',
-            'pages/pre': '{{{pre object}}}',
-        },
-        context = {
-            variable: 'hello world',
-            object: {}
-        };
-
     it('should use the assembler interface to load templates and translations', function(done) {
         var assembler = {
             getTemplates: function(path, processor, callback) {

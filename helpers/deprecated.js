@@ -5,8 +5,8 @@ internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context) {
-    this.handlebars.registerHelper('pick', function(object, predicate) {
+internals.implementation.prototype.register = function() {
+    this.handlebars.registerHelper('pick', function() {
         return _.pick.apply(null, arguments);
     });
 
@@ -61,8 +61,7 @@ internals.implementation.prototype.register = function(context) {
      */
     this.handlebars.registerHelper('enumerate', function(start, end, options) {
         var out = '',
-            i = start,
-            iOut;
+            i = start;
 
         for (i; i <= end; i++) {
             out = out + options.fn(i);

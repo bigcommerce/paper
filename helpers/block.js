@@ -4,7 +4,7 @@ internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context) {
+internals.implementation.prototype.register = function() {
     var self = this;
 
     this.handlebars.registerHelper('block', function (name, options) {

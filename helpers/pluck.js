@@ -5,7 +5,7 @@ internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context) {
+internals.implementation.prototype.register = function() {
     this.handlebars.registerHelper('pluck', function(collection, path) {
         return _.pluck(collection, path);
     });

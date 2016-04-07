@@ -1,13 +1,12 @@
-var _ = require('lodash'),
-    internals = {};
+var internals = {};
 
 internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context, paper) {
+internals.implementation.prototype.register = function() {
 
-    this.handlebars.registerHelper('snippet', function(location, options) {
+    this.handlebars.registerHelper('snippet', function(location) {
         return '<!-- snippet location ' + location + ' -->';
     });
 };
