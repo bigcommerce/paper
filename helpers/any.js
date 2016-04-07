@@ -33,6 +33,7 @@ internals.implementation.prototype.register = function() {
             // With options hash, we check the contents of first argument
             any = _.any(args[0], predicate);
         } else {
+            // DEPRECATED: Moved to #or helper
             // Without options hash, we check all the arguments
             any = _.any(args, function(arg) {
                 if (_.isArray(arg)) {

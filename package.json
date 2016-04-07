@@ -6,7 +6,7 @@
   "author": "Bigcommerce",
   "license": "BSD-4-Clause",
   "scripts": {
-    "test": "lab -l -t 80"
+    "test": "lab -l -t 90"
   },
   "repository": {
     "type": "git",
