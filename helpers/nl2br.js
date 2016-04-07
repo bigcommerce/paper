@@ -4,7 +4,7 @@ internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context) {
+internals.implementation.prototype.register = function() {
     var self = this;
     // https://github.com/danharper/Handlebars-Helpers/blob/master/src/helpers.js#L89
     this.handlebars.registerHelper('nl2br', function(text) {

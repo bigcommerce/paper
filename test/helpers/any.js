@@ -49,6 +49,7 @@ describe('any helper (with option hash)', function() {
 
 
 describe('any helper (with multiple arguments)', function() {
+    // DEPRECATED: Moved to #or helper
     var context = {
         num1: 1,
         num2: 2,

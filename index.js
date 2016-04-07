@@ -69,7 +69,7 @@ module.exports = function (assembler) {
 
                 if (!self.handlebars.templates[path]) {
                     eval('var template = ' + precompiled);
-                    self.handlebars.templates[path] = self.handlebars.template(template);
+                    self.handlebars.templates[path] = self.handlebars.template(template); // eslint-disable-line no-undef
                 }
             });
 
@@ -113,7 +113,7 @@ module.exports = function (assembler) {
                 return callback(error);
             }
             // Make translations available to the helpers
-            self.translate = Localizer(acceptLanguage, translations);
+            self.translate = Localizer.localize(acceptLanguage, translations);
 
             callback();
         });

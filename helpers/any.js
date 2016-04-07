@@ -12,7 +12,7 @@ internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context) {
+internals.implementation.prototype.register = function() {
     this.handlebars.registerHelper('any', function() {
 
         var args = [],
@@ -33,6 +33,7 @@ internals.implementation.prototype.register = function(context) {
             // With options hash, we check the contents of first argument
             any = _.any(args[0], predicate);
         } else {
+            // DEPRECATED: Moved to #or helper
             // Without options hash, we check all the arguments
             any = _.any(args, function(arg) {
                 if (_.isArray(arg)) {

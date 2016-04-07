@@ -1,17 +1,14 @@
 var Path = require('path'),
-    _ = require('lodash'),
     internals = {};
 
 internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context, paper) {
+internals.implementation.prototype.register = function() {
     var self = this;
 
     this.handlebars.registerHelper('dynamicComponent', function(path) {
-        var template;
-
         if (!this['partial']) {
             return;
         }

@@ -2,20 +2,21 @@ var _ = require('lodash'),
     internals = {};
 
 /**
- * Yield block only if all arguments are valid
+ * Yield block if any object within a collection matches supplied predicate
  *
  * @example
- * {{#all items theme_settings.optionA theme_settings.optionB}} ... {{/all}}
+ * {{#or 1 0 0 0 0 0}} ... {{/or}}
  */
 
 internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function () {
-    this.handlebars.registerHelper('all', function () {
-
-        var args = [], opts, result;
+internals.implementation.prototype.register = function() {
+    this.handlebars.registerHelper('or', function() {
+        var args = [],
+        opts,
+        any;
 
         // Translate arguments to array safely
         for (var i = 0; i < arguments.length; i++) {
@@ -25,8 +26,8 @@ internals.implementation.prototype.register = function () {
         // Take the last argument (content) out of testing array
         opts = args.pop();
 
-        // Check if all the arguments are valid / truthy
-        result = _.all(args, function(arg) {
+        // Without options hash, we check all the arguments
+        any = _.any(args, function(arg) {
             if (_.isArray(arg)) {
                 return !!arg.length;
             }
@@ -40,12 +41,11 @@ internals.implementation.prototype.register = function () {
             }
         });
 
-        // If everything was valid, then "all" condition satisfied
-        if (result) {
+        if (any) {
             return opts.fn(this);
-        } else {
-            return opts.inverse(this);
         }
+
+        return opts.inverse(this);
     });
 };
 

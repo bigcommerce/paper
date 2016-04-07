@@ -4,7 +4,7 @@ internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context) {
+internals.implementation.prototype.register = function() {
     this.handlebars.registerHelper('replace', function(needle, haystack, options) {
         var contains = false;
 

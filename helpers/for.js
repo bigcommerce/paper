@@ -5,7 +5,7 @@ internals.implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context) {
+internals.implementation.prototype.register = function() {
     this.handlebars.registerHelper('for', function(from, to, context, options) {
         var output = '',
             maxIterations = 100;

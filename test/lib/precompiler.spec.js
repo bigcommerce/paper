@@ -108,7 +108,7 @@ describe('Paper precompiler', function() {
 
             if (!handlebars.partials[path]) {
                 eval('var template = ' + precompiled);
-                handlebars.partials[path] = handlebars.template(template);
+                handlebars.partials[path] = handlebars.template(template); // eslint-disable-line no-undef
             }
         });
 

@@ -15,7 +15,7 @@ internals.implementation.prototype.register = function(context, paper) {
         paper.inject[key] = value;
     });
 
-    this.handlebars.registerHelper('jsContext', function (options) {
+    this.handlebars.registerHelper('jsContext', function () {
 
         var jsContext = JSON.stringify(JSON.stringify(paper.inject));
 
