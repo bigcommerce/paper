@@ -18,16 +18,14 @@ describe('getImage helper', function() {
         },
         logoPreset: 'logo',
         theme_settings: {
-            _images: {
-                logo: {
-                    width: 250,
-                    height: 100
+            "_images.logo" : [
+                {
+                    "Max width": 250
                 },
-                gallery: {
-                    width: 300,
-                    height: 300
+                {
+                    "Max height": 100
                 }
-            }
+            ]
         }
     };
 
@@ -60,8 +58,8 @@ describe('getImage helper', function() {
 
     it('should return logo size for logo preset', function(done) {
 
-        var logoPresets = context.theme_settings._images[context.logoPreset];
-        var logoDimension = logoPresets.width + 'x' + logoPresets.height;
+        var logoPreset = context.theme_settings['_images.logo'];
+        var logoDimension = logoPreset[0]['Max width'] + 'x' + logoPreset[1]['Max height'];
         var expectedPath = context.image.data.replace('{:size}', logoDimension);
 
         expect(c('{{getImage image logoPreset}}', context)).to.be.equal(expectedPath);
