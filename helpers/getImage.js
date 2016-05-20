@@ -1,60 +1,37 @@
-var _ = require('lodash'),
-    internals = {};
+var _ = require('lodash');
 
-/**
- * Format Size
- *
- */
-function imageSize(preset, presets) {
-
-    // default image size to 'original'
-    var width,
-        height,
-        size = 'original';
-
-    if (_.isString(preset)) {
-
-        // If preset is provided by the user
-        if (preset.indexOf('x') > 0) {
-            size = preset;
-        }
-
-        // If preset is one of the given presets
-        if (_.isObject(presets[preset])) {
-            width = presets[preset].width || 100;
-            height = presets[preset].height || 100;
-            size = width + 'x' + height;
-        }
-
-    }
-
-    return size;
-}
-
-internals.implementation = function(handlebars) {
+var implementation = function(handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context) {
-    this.handlebars.registerHelper('getImage', function (image, preset, defaultImage) {
-        var presets = {},
-            size,
-            url;
+implementation.prototype.register = function(context) {
+    this.handlebars.registerHelper('getImage', function (image, presetName, defaultImage) {
+        var sizeRegex = /^(\d+?)x(\d+?)$/g;
+        var settings = context.theme_settings || {};
+        var presets = settings._images;
+        var size = 'original';
 
-        if (context.theme_settings && context.theme_settings._images) {
-            presets = context.theme_settings._images;
+        if (!_.isPlainObject(image) || !_.isString(image.data) || image.data.indexOf('{:size}') === -1) {
+            // return empty string if not a valid image object
+            return '';
         }
 
-        if (!_.isObject(image)) {
-            return _.isString(image) ? image : defaultImage;
+        if (_.isPlainObject(presets) && _.isPlainObject(presets[presetName])) {
+            // If preset is one of the given presets in _images
+            width = parseInt(presets[presetName].width, 10) || 4098;
+            height = parseInt(presets[presetName].height, 10) || 4098;
+            size = width + 'x' + height;
+
+        } else if (sizeRegex.test(settings[presetName])) {
+            // If preset name is a setting and match the NNNxNNN format
+            size = settings[presetName];
+
+        } else if (sizeRegex.test(defaultImage)) {
+            size = defaultImage;
         }
 
-        url = image.data || '';
-
-        size = imageSize(preset, presets);
-
-        return url.replace('{:size}', size);
+        return image.data.replace('{:size}', size);
     });
 };
 
-module.exports = internals.implementation;
+module.exports = implementation;
