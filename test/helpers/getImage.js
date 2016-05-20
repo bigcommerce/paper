@@ -11,13 +11,16 @@ function c(template, context) {
 }
 
 describe('getImage helper', function() {
-    var context = {
-        customizedSize: '600x300',
+    var urlData = 'https://cdn.example.com/path/to/{:size}/image.png';
+    var context = {     
+        not_an_image: '#123456',
         image: {
-            data: '/path/to/{:size}/image.png'
+            data: urlData
         },
         logoPreset: 'logo',
         theme_settings: {
+            logo_image: '600x300',
+            gallery: '100x100',
             _images: {
                 logo: {
                     width: 250,
@@ -26,46 +29,79 @@ describe('getImage helper', function() {
                 gallery: {
                     width: 300,
                     height: 300
-                }
+                },
+                missing_values: {},
+                missing_width: {height: 100}
             }
         }
     };
 
-    it('should return original for unregistered image preset', function(done) {
+    it('should return empty if image is invalid', function(done) {
 
-        var expectedPath = context.image.data.replace('{:size}', 'original');
+        expect(c('{{getImage not_existing_image}}', context))
+            .to.be.equal('');
 
-        expect(c('{{getImage image "badPreset"}}', context)).to.be.equal(expectedPath);
+        expect(c('{{getImage "just a string"}}', context))
+            .to.be.equal('');
 
-        done();
-    });
-
-    it('should return original for original image preset', function(done) {
-
-        var expectedPath = context.image.data.replace('{:size}', 'original');
-
-        expect(c('{{getImage image "original"}}', context)).to.be.equal(expectedPath);
+        expect(c('{{getImage not_an_image}}', context))
+            .to.be.equal('');
 
         done();
     });
 
-    it('should return customized size for customized image preset', function(done) {
+    it('should use the preset from _images', function(done) {
 
-        var expectedPath = context.image.data.replace('{:size}', context.customizedSize);
+        expect(c('{{getImage image "logo"}}', context))
+            .to.be.equal(urlData.replace('{:size}', '250x100'));
 
-        expect(c('{{getImage image customizedSize}}', context)).to.be.equal(expectedPath);
+        expect(c('{{getImage image "gallery"}}', context))
+            .to.be.equal(urlData.replace('{:size}', '300x300'));
+
+        done();
+    });
+
+    it('should use the size from the theme_settings', function(done) {
+
+        expect(c('{{getImage image "logo_image"}}', context))
+            .to.be.equal(urlData.replace('{:size}', '600x300'));
 
         done();
     });
 
-    it('should return logo size for logo preset', function(done) {
+    it('should use the default value if is valid otherwise use "original"', function(done) {
 
-        var logoPresets = context.theme_settings._images[context.logoPreset];
-        var logoDimension = logoPresets.width + 'x' + logoPresets.height;
-        var expectedPath = context.image.data.replace('{:size}', logoDimension);
+        expect(c('{{getImage image "bad_preset" "123x123"}}', context))
+            .to.be.equal(urlData.replace('{:size}', '123x123'));
 
-        expect(c('{{getImage image logoPreset}}', context)).to.be.equal(expectedPath);
+        expect(c('{{getImage image "bad_preset" "123V123"}}', context))
+            .to.be.equal(urlData.replace('{:size}', 'original'));
+
+        expect(c('{{getImage image "bad_preset" "original"}}', context))
+            .to.be.equal(urlData.replace('{:size}', 'original'));
 
         done();
     });
+
+    it('should use original size if not default is passed', function(done) {
+
+        expect(c('{{getImage image "bad_preset"}}', context))
+            .to.be.equal(urlData.replace('{:size}', 'original'));
+
+        done();
+    });
+
+    
+    it('should default to max value (width & height) if value is not provided', function(done) {
+
+        expect(c('{{getImage image "missing_values"}}', context))
+            .to.be.equal(urlData.replace('{:size}', '4098x4098'));
+
+        expect(c('{{getImage image "missing_width"}}', context))
+            .to.be.equal(urlData.replace('{:size}', '4098x100'));
+
+        done();
+    });
+
+
 });
