@@ -22,8 +22,8 @@ implementation.prototype.register = function(context) {
 
         if (_.isPlainObject(presets) && _.isPlainObject(presets[presetName])) {
             // If preset is one of the given presets in _images
-            width = parseInt(presets[presetName].width, 10) || 4098;
-            height = parseInt(presets[presetName].height, 10) || 4098;
+            width = parseInt(presets[presetName].width, 10) || 4096;
+            height = parseInt(presets[presetName].height, 10) || 4096;
             size = width + 'x' + height;
 
         } else if (sizeRegex.test(settings[presetName])) {

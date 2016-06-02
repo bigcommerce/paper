@@ -93,10 +93,10 @@ describe('getImage helper', function() {
     it('should default to max value (width & height) if value is not provided', function(done) {
 
         expect(c('{{getImage image "missing_values"}}', context))
-            .to.be.equal(urlData.replace('{:size}', '4098x4098'));
+            .to.be.equal(urlData.replace('{:size}', '4096x4096'));
 
         expect(c('{{getImage image "missing_width"}}', context))
-            .to.be.equal(urlData.replace('{:size}', '4098x100'));
+            .to.be.equal(urlData.replace('{:size}', '4096x100'));
 
         done();
     });
