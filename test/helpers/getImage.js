@@ -13,8 +13,8 @@ function c(template, context) {
 describe('getImage helper', function() {
     var urlData = 'https://cdn.example.com/path/to/{:size}/image.png';
     var context = {
-        image_url: 'http://example.com/image.png',   
-        not_an_image: '#123456',
+        image_url: 'http://example.com/image.png',
+        not_an_image: null,
         image: {
             data: urlData
         },
@@ -37,12 +37,19 @@ describe('getImage helper', function() {
         }
     };
 
+    it('should return a url if a url is passed', function(done) {
+        expect(c('{{getImage "http://example.com/image.jpg"}}', context))
+            .to.be.equal('http://example.com/image.jpg');
+
+        expect(c('{{getImage "https://example.com/image.jpg"}}', context))
+            .to.be.equal('https://example.com/image.jpg');
+
+        done();
+    });
+
     it('should return empty if image is invalid', function(done) {
 
         expect(c('{{getImage not_existing_image}}', context))
-            .to.be.equal('');
-
-        expect(c('{{getImage "just a string"}}', context))
             .to.be.equal('');
 
         expect(c('{{getImage not_an_image}}', context))
@@ -89,7 +96,7 @@ describe('getImage helper', function() {
         done();
     });
 
-    
+
     it('should default to max value (width & height) if value is not provided', function(done) {
 
         expect(c('{{getImage image "missing_values"}}', context))

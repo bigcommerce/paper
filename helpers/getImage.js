@@ -17,7 +17,8 @@ implementation.prototype.register = function(context) {
 
         if (!_.isPlainObject(image) || !_.isString(image.data) || image.data.indexOf('{:size}') === -1) {
             // return empty string if not a valid image object
-            return _.isString(defaultImageUrl) ? defaultImageUrl : '';
+            defaultImageUrl = defaultImageUrl ? defaultImageUrl : '';
+            return _.isString(image) ? image : defaultImageUrl;
         }
 
         if (_.isPlainObject(presets) && _.isPlainObject(presets[presetName])) {
