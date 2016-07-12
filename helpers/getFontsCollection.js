@@ -1,19 +1,19 @@
 var _ = require('lodash'),
     internals = {};
 
-internals.implementation = function(handlebars) {
+internals.implementation = function (handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context) {
+internals.implementation.prototype.register = function (paper) {
     var handlebars = this.handlebars;
 
-    handlebars.registerHelper('getFontsCollection', function() {
+    handlebars.registerHelper('getFontsCollection', function () {
         var fontKeyFormat = new RegExp(/\w+(-\w*)*-font$/),
             googleFonts = [],
             linkElements = [];
 
-        _.each(context.theme_settings, function(value, key) {
+        _.each(paper.themeSettings, function (value, key) {
             var split;
 
             if (fontKeyFormat.test(key)) {
@@ -50,7 +50,7 @@ internals.implementation.prototype.register = function(context) {
  * @returns {string}
  */
 
-internals.googleParser = function(fonts) {
+internals.googleParser = function (fonts) {
     var collection = [],
         familyHash = {};
 

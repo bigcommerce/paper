@@ -4,10 +4,8 @@ var _ = require('lodash'),
     Fs = require('fs'),
     Handlebars = require('handlebars'),
     Async = require('async'),
-    internals = {
-        options: {
-            preventIndent: true
-        }
+    handlebarOptions = {
+        preventIndent: true
     },
     Helpers = [];
 
@@ -18,24 +16,37 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function (file) {
 
 /**
  * Theme renderer constructor
+ * @param {Object} settings
+ * @param {Object} themeSettings
  * @param {Object} assembler
  */
-module.exports = function (assembler) {
+module.exports = function (settings, themeSettings, assembler) {
     var self = this;
 
     self.handlebars = Handlebars.create();
 
     self.handlebars.templates = {};
 
-    self.options = internals.options;
+    self.settings = settings || {};
+    self.themeSettings = themeSettings || {};
+
     self.translate = null;
     self.inject = {};
     self.helpers = [];
     self.decorators = [];
 
     _.each(Helpers, function (Helper) {
-        self.helpers.push(new Helper(self.handlebars));
+        new Helper(self.handlebars).register(self);
     });
+
+    /**
+     * Renders a string with the given context
+     * @param  {String} string
+     * @param  {Object} context
+     */
+    self.renderString = function (string, context) {
+        return self.handlebars.compile(string)(context);
+    };
 
     self.loadTheme = function (paths, acceptLanguage, done) {
         if (!_.isArray(paths)) {
@@ -66,12 +77,14 @@ module.exports = function (assembler) {
             }
 
             _.each(templates, function (precompiled, path) {
-
                 if (!self.handlebars.templates[path]) {
-                    eval('var template = ' + precompiled);
-                    self.handlebars.templates[path] = self.handlebars.template(template); // eslint-disable-line no-undef
+                    var template;
+                    eval('template = ' + precompiled);
+                    self.handlebars.templates[path] = self.handlebars.template(template);
                 }
             });
+
+            self.handlebars.partials = self.handlebars.templates;
 
             callback();
         });
@@ -82,7 +95,7 @@ module.exports = function (assembler) {
             var precompiledTemplates = {};
 
             _.each(templates, function (content, path) {
-                precompiledTemplates[path] = self.handlebars.precompile(content, self.options);
+                precompiledTemplates[path] = self.handlebars.precompile(content, handlebarOptions);
             });
 
             return precompiledTemplates;
@@ -96,8 +109,10 @@ module.exports = function (assembler) {
      */
     self.loadTemplatesSync = function (templates) {
         _.each(templates, function (content, fileName) {
-            self.handlebars.templates[fileName] = self.handlebars.compile(content, self.options);
+            self.handlebars.templates[fileName] = self.handlebars.compile(content, handlebarOptions);
         });
+
+        self.handlebars.partials = self.handlebars.templates;
 
         return self;
     };
@@ -122,13 +137,12 @@ module.exports = function (assembler) {
     /**
      * Add CDN base url to the relative path
      * @param  {String} path     Relative path
-     * @param  {Object} settings Theme settings
      * @return {String}          Url cdn
      */
-    self.cdnify = function (path, settings) {
-        var cdnUrl = settings['cdn_url'] || '';
-        var versionId = settings['theme_version_id'];
-        var configId = settings['theme_config_id'];
+    self.cdnify = function (path) {
+        var cdnUrl = self.settings['cdn_url'] || '';
+        var versionId = self.settings['theme_version_id'];
+        var configId = self.settings['theme_config_id'];
         var protocolMatch = /(.*!?:)/;
 
         if (!path) {
@@ -186,15 +200,7 @@ module.exports = function (assembler) {
      * @return {String}
      */
     self.render = function (path, context) {
-        var output;
-
-        _.each(self.helpers, function (helper) {
-            helper.register(context, self);
-        });
-
-        self.handlebars.partials = self.handlebars.templates;
-
-        output = self.handlebars.templates[path](context);
+        var output = self.handlebars.templates[path](context);
 
         _.each(self.decorators, function (decorator) {
             output = decorator(output);

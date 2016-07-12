@@ -1,14 +1,13 @@
 var internals = {};
 var _ = require('lodash');
 
-internals.implementation = function(handlebars) {
+internals.implementation = function (handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context, paper) {
-    this.handlebars.registerHelper('stylesheet', function(assetPath, options) {
-        var settings = context.settings || {};
-        var url = paper.cdnify(assetPath, settings);
+internals.implementation.prototype.register = function (paper) {
+    this.handlebars.registerHelper('stylesheet', function (assetPath, options) {
+        var url = paper.cdnify(assetPath);
         var attrs = {
             rel: 'stylesheet'
         };
@@ -21,8 +20,8 @@ internals.implementation.prototype.register = function(context, paper) {
         if (!attrs.id) {
             attrs.id = url;
         }
-        
-        attrs = _.map(attrs, function(value, key) {
+
+        attrs = _.map(attrs, function (value, key) {
             return key + '="' + value + '"';
         }).join(' ');
 

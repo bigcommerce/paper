@@ -1,10 +1,10 @@
 var internals = {};
 
-internals.implementation = function(handlebars) {
+internals.implementation = function (handlebars) {
     this.handlebars = handlebars;
 };
 
-internals.implementation.prototype.register = function(context, paper) {
+internals.implementation.prototype.register = function (paper) {
     var self = this;
 
     this.handlebars.registerHelper('inject', function (key, value) {

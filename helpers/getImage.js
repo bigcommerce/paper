@@ -2,14 +2,14 @@
 
 var _ = require('lodash');
 
-var implementation = function(handlebars) {
+var implementation = function (handlebars) {
     this.handlebars = handlebars;
 };
 
-implementation.prototype.register = function(context) {
+implementation.prototype.register = function (paper) {
     this.handlebars.registerHelper('getImage', function (image, presetName, defaultImageUrl) {
         var sizeRegex = /^(\d+?)x(\d+?)$/g;
-        var settings = context.theme_settings || {};
+        var settings = paper.themeSettings || {};
         var presets = settings._images;
         var size;
         var width;
