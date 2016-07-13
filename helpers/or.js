@@ -1,5 +1,6 @@
-var _ = require('lodash'),
-    internals = {};
+'use strict';
+
+var _ = require('lodash');
 
 /**
  * Yield block if any object within a collection matches supplied predicate
@@ -7,13 +8,8 @@ var _ = require('lodash'),
  * @example
  * {{#or 1 0 0 0 0 0}} ... {{/or}}
  */
-
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function() {
-    this.handlebars.registerHelper('or', function() {
+function helper(paper) {
+    paper.handlebars.registerHelper('or', function() {
         var args = [],
         opts,
         any;
@@ -47,6 +43,6 @@ internals.implementation.prototype.register = function() {
 
         return opts.inverse(this);
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

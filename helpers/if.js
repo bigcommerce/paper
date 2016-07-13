@@ -1,12 +1,9 @@
-var _ = require('lodash'),
-    internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
+var _ = require('lodash');
 
-internals.implementation.prototype.register = function() {
-    this.handlebars.registerHelper('if', function (lvalue, operator, rvalue, options) {
+function helper(paper) {
+    paper.handlebars.registerHelper('if', function (lvalue, operator, rvalue, options) {
         var result;
 
         function isOptions(obj) {
@@ -89,4 +86,4 @@ internals.implementation.prototype.register = function() {
     });
 }
 
-module.exports = internals.implementation;
+module.exports = helper;

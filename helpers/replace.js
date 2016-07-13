@@ -1,11 +1,7 @@
-var internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function() {
-    this.handlebars.registerHelper('replace', function(needle, haystack, options) {
+function helper(paper) {
+    paper.handlebars.registerHelper('replace', function(needle, haystack, options) {
         var contains = false;
 
         if (typeof(haystack) === 'string') {
@@ -19,6 +15,6 @@ internals.implementation.prototype.register = function() {
             return options.inverse(this);
         }
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

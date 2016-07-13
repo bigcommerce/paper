@@ -1,12 +1,9 @@
-var _ = require('lodash'),
-    internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
+var _ = require('lodash');
 
-internals.implementation.prototype.register = function() {
-    this.handlebars.registerHelper('for', function(from, to, context, options) {
+function helper(paper) {
+    paper.handlebars.registerHelper('for', function(from, to, context, options) {
         var output = '',
             maxIterations = 100;
 
@@ -48,6 +45,6 @@ internals.implementation.prototype.register = function() {
 
         return output;
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

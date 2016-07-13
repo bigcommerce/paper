@@ -2,12 +2,8 @@
 
 var _ = require('lodash');
 
-var implementation = function (handlebars) {
-    this.handlebars = handlebars;
-};
-
-implementation.prototype.register = function (paper) {
-    this.handlebars.registerHelper('getImage', function (image, presetName, defaultImageUrl) {
+function helper(paper) {
+    paper.handlebars.registerHelper('getImage', function (image, presetName, defaultImageUrl) {
         var sizeRegex = /^(\d+?)x(\d+?)$/g;
         var settings = paper.themeSettings || {};
         var presets = settings._images;
@@ -39,4 +35,4 @@ implementation.prototype.register = function (paper) {
     });
 };
 
-module.exports = implementation;
+module.exports = helper;

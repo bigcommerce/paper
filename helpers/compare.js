@@ -1,11 +1,7 @@
-var internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function() {
-    this.handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
+function helper(paper) {
+    paper.handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
         var operator,
             operators,
             result;
@@ -28,7 +24,7 @@ internals.implementation.prototype.register = function() {
             'typeof': function (l, r) { return typeof l == r; }
         };
 
-        // getOwnPropertyNames is used because checking the property 
+        // getOwnPropertyNames is used because checking the property
         // directly (like operators[x]) is insecure
         // (we could use switch instead)
         if (Object.getOwnPropertyNames(operators).indexOf(operator) === -1) {
@@ -43,6 +39,6 @@ internals.implementation.prototype.register = function() {
             return options.inverse(this);
         }
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

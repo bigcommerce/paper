@@ -1,11 +1,7 @@
-var internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function() {
-    this.handlebars.registerHelper('join', function(array, separator, options) {
+function helper(paper) {
+    paper.handlebars.registerHelper('join', function(array, separator, options) {
         var config = options.hash || {};
 
         array = array.slice();
@@ -25,6 +21,6 @@ internals.implementation.prototype.register = function() {
 
         return array.join(separator);
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

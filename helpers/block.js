@@ -1,21 +1,15 @@
-var internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function() {
-    var self = this;
-
-    this.handlebars.registerHelper('block', function (name, options) {
+function helper(paper) {
+    paper.handlebars.registerHelper('block', function (name, options) {
         /* Look for partial by name. */
-        var partial = self.handlebars.partials[name] || options.fn;
+        var partial = paper.handlebars.partials[name] || options.fn;
         return partial(this, {data: options.hash});
     });
-        
-    this.handlebars.registerHelper('partial', function (name, options) {
-        self.handlebars.registerPartial(name, options.fn);
-    });
-};
 
-module.exports = internals.implementation;
+    paper.handlebars.registerHelper('partial', function (name, options) {
+        paper.handlebars.registerPartial(name, options.fn);
+    });
+}
+
+module.exports = helper;

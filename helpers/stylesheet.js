@@ -1,12 +1,9 @@
-var internals = {};
+'use strict';
+
 var _ = require('lodash');
 
-internals.implementation = function (handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function (paper) {
-    this.handlebars.registerHelper('stylesheet', function (assetPath, options) {
+function helper(paper) {
+    paper.handlebars.registerHelper('stylesheet', function (assetPath, options) {
         var url = paper.cdnify(assetPath);
         var attrs = {
             rel: 'stylesheet'
@@ -28,6 +25,6 @@ internals.implementation.prototype.register = function (paper) {
 
         return '<link data-stencil-stylesheet href="' + url + '" ' + attrs + '>';
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

@@ -1,17 +1,19 @@
+'use strict';
+
 var _ = require('lodash'),
     Localizer = require('./lib/localizer'),
     Path = require('path'),
     Fs = require('fs'),
     Handlebars = require('handlebars'),
     Async = require('async'),
-    handlebarOptions = {
+    handlebarsOptions = {
         preventIndent: true
     },
-    Helpers = [];
+    helpers = [];
 
-// Load Helpers
+// Load helpers
 Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function (file) {
-    Helpers.push(require('./helpers/' + file));
+    helpers.push(require('./helpers/' + file));
 });
 
 /**
@@ -35,8 +37,8 @@ module.exports = function (settings, themeSettings, assembler) {
     self.helpers = [];
     self.decorators = [];
 
-    _.each(Helpers, function (Helper) {
-        new Helper(self.handlebars).register(self);
+    _.each(helpers, function (helper) {
+        helper(self);
     });
 
     /**
@@ -95,7 +97,7 @@ module.exports = function (settings, themeSettings, assembler) {
             var precompiledTemplates = {};
 
             _.each(templates, function (content, path) {
-                precompiledTemplates[path] = self.handlebars.precompile(content, handlebarOptions);
+                precompiledTemplates[path] = self.handlebars.precompile(content, handlebarsOptions);
             });
 
             return precompiledTemplates;
@@ -109,7 +111,7 @@ module.exports = function (settings, themeSettings, assembler) {
      */
     self.loadTemplatesSync = function (templates) {
         _.each(templates, function (content, fileName) {
-            self.handlebars.templates[fileName] = self.handlebars.compile(content, handlebarOptions);
+            self.handlebars.templates[fileName] = self.handlebars.compile(content, handlebarsOptions);
         });
 
         self.handlebars.partials = self.handlebars.templates;

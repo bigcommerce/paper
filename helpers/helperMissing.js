@@ -1,11 +1,9 @@
-var helper = function (handlebars) {
-    this.handlebars = handlebars;
-};
+'use strict';
 
-helper.prototype.register = function () {
-    this.handlebars.registerHelper('helperMissing', function () {
+function helper(paper) {
+    paper.handlebars.registerHelper('helperMissing', function () {
     	return undefined;
     });
-};
+}
 
 module.exports = helper;

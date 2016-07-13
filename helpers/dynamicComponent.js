@@ -1,19 +1,14 @@
-var Path = require('path'),
-    internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
+var Path = require('path');
 
-internals.implementation.prototype.register = function() {
-    var self = this;
-
-    this.handlebars.registerHelper('dynamicComponent', function(path) {
+function helper(paper) {
+    paper.handlebars.registerHelper('dynamicComponent', function(path) {
         if (!this['partial']) {
             return;
         }
 
-        // prevent access to __proto__ 
+        // prevent access to __proto__
         // or any hidden object properties
         path = path.replace('__', '');
 
@@ -24,11 +19,11 @@ internals.implementation.prototype.register = function() {
 
         path = Path.join(path, this['partial']);
 
-        if (self.handlebars.partials[path]) {
+        if (paper.handlebars.partials[path]) {
 
-            return self.handlebars.partials[path](this);
+            return paper.handlebars.partials[path](this);
         }
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

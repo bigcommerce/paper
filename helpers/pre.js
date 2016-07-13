@@ -1,19 +1,13 @@
-var internals = {};
+'use restrict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function() {
-    var self = this;
-
-    this.handlebars.registerHelper('pre', function (value) {
+function helper(paper) {
+    paper.handlebars.registerHelper('pre', function (value) {
         var string = JSON.stringify(value, null, 2);
 
-        string = self.handlebars.Utils.escapeExpression(string);
+        string = paper.handlebars.Utils.escapeExpression(string);
 
         return '<pre>' + string + '</pre>';
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

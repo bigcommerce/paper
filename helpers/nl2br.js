@@ -1,16 +1,11 @@
-var internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function() {
-    var self = this;
+function helper(paper) {
     // https://github.com/danharper/Handlebars-Helpers/blob/master/src/helpers.js#L89
-    this.handlebars.registerHelper('nl2br', function(text) {
-        var nl2br = (self.handlebars.escapeExpression(text) + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br>' + '$2');
-        return new self.handlebars.SafeString(nl2br);
+    paper.handlebars.registerHelper('nl2br', function(text) {
+        var nl2br = (paper.handlebars.escapeExpression(text) + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br>' + '$2');
+        return new paper.handlebars.SafeString(nl2br);
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

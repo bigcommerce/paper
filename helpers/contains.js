@@ -1,5 +1,6 @@
-var _ = require('lodash'),
-    internals = {};
+'use strict';
+
+var _ = require('lodash');
 
 /**
  * Is any value included in a collection or a string?
@@ -8,13 +9,8 @@ var _ = require('lodash'),
  * {{#contains fonts "Roboto"}} ... {{/contains}}
  * {{#contains font_path "Roboto"}} ... {{/contains}}
  */
-
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function() {
-    this.handlebars.registerHelper('contains', function() {
+function helper(paper) {
+    paper.handlebars.registerHelper('contains', function() {
         var args = Array.prototype.slice.call(arguments, 0, -1),
             options = _.last(arguments),
             contained = _.contains.apply(_, args);
@@ -26,6 +22,6 @@ internals.implementation.prototype.register = function() {
             return options.inverse(this);
         }
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

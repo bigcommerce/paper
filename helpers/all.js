@@ -1,5 +1,6 @@
-var _ = require('lodash'),
-    internals = {};
+'use strict';
+
+var _ = require('lodash');
 
 /**
  * Yield block only if all arguments are valid
@@ -7,13 +8,8 @@ var _ = require('lodash'),
  * @example
  * {{#all items theme_settings.optionA theme_settings.optionB}} ... {{/all}}
  */
-
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function () {
-    this.handlebars.registerHelper('all', function () {
+function helper(paper) {
+    paper.handlebars.registerHelper('all', function () {
 
         var args = [], opts, result;
 
@@ -47,6 +43,6 @@ internals.implementation.prototype.register = function () {
             return opts.inverse(this);
         }
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;
