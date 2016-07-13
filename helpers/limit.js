@@ -9,7 +9,7 @@ var _ = require('lodash');
  * {{limit array 4}}
  */
 function helper(paper) {
-    paper.handlebars.registerHelper('limit', function(data, limit) {
+    paper.handlebars.registerHelper('limit', function (data, limit) {
 
         if (_.isString(data)) {
             return data.substring(0, limit);

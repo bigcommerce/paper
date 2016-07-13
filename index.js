@@ -79,8 +79,8 @@ module.exports = function (settings, themeSettings, assembler) {
             }
 
             _.each(templates, function (precompiled, path) {
+                var template;
                 if (!self.handlebars.templates[path]) {
-                    var template;
                     eval('template = ' + precompiled);
                     self.handlebars.templates[path] = self.handlebars.template(template);
                 }

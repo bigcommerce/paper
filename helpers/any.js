@@ -9,7 +9,7 @@ var _ = require('lodash');
  * {{#any items selected=true}} ... {{/any}}
  */
 function helper(paper) {
-    paper.handlebars.registerHelper('any', function() {
+    paper.handlebars.registerHelper('any', function () {
 
         var args = [],
             opts,
@@ -31,7 +31,7 @@ function helper(paper) {
         } else {
             // DEPRECATED: Moved to #or helper
             // Without options hash, we check all the arguments
-            any = _.any(args, function(arg) {
+            any = _.any(args, function (arg) {
                 if (_.isArray(arg)) {
                     return !!arg.length;
                 }

@@ -3,7 +3,7 @@
 var _ = require('lodash');
 
 function helper(paper) {
-    paper.handlebars.registerHelper('for', function(from, to, context, options) {
+    paper.handlebars.registerHelper('for', function (from, to, context, options) {
         var output = '',
             maxIterations = 100;
 

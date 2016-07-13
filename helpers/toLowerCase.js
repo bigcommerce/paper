@@ -1,7 +1,7 @@
 'use strict';
 
 function helper(paper) {
-    paper.handlebars.registerHelper('toLowerCase', function(string) {
+    paper.handlebars.registerHelper('toLowerCase', function (string) {
 
         if (typeof string !== 'string') {
             return string;

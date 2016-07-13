@@ -10,7 +10,7 @@ var _ = require('lodash');
  * {{#contains font_path "Roboto"}} ... {{/contains}}
  */
 function helper(paper) {
-    paper.handlebars.registerHelper('contains', function() {
+    paper.handlebars.registerHelper('contains', function () {
         var args = Array.prototype.slice.call(arguments, 0, -1),
             options = _.last(arguments),
             contained = _.contains.apply(_, args);

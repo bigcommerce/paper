@@ -1,7 +1,7 @@
 'use strict';
 
 function helper(paper) {
-    paper.handlebars.registerHelper('snippet', function(location) {
+    paper.handlebars.registerHelper('snippet', function (location) {
         return '<!-- snippet location ' + location + ' -->';
     });
 }

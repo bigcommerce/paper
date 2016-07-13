@@ -3,7 +3,7 @@
 var _ = require('lodash');
 
 function helper(paper) {
-    paper.handlebars.registerHelper('pick', function() {
+    paper.handlebars.registerHelper('pick', function () {
         return _.pick.apply(null, arguments);
     });
 
@@ -56,7 +56,7 @@ function helper(paper) {
     /**
      * @deprecate Use {{#for start end (context)}}...{{/for}}
      */
-    paper.handlebars.registerHelper('enumerate', function(start, end, options) {
+    paper.handlebars.registerHelper('enumerate', function (start, end, options) {
         var out = '',
             i = start;
 

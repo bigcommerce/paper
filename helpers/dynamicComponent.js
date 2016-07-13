@@ -3,7 +3,7 @@
 var Path = require('path');
 
 function helper(paper) {
-    paper.handlebars.registerHelper('dynamicComponent', function(path) {
+    paper.handlebars.registerHelper('dynamicComponent', function (path) {
         if (!this['partial']) {
             return;
         }

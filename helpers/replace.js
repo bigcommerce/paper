@@ -1,7 +1,7 @@
 'use strict';
 
 function helper(paper) {
-    paper.handlebars.registerHelper('replace', function(needle, haystack, options) {
+    paper.handlebars.registerHelper('replace', function (needle, haystack, options) {
         var contains = false;
 
         if (typeof(haystack) === 'string') {
