@@ -1,213 +1,223 @@
 'use strict';
 
-var _ = require('lodash'),
-    Localizer = require('./lib/localizer'),
-    Path = require('path'),
-    Fs = require('fs'),
-    Handlebars = require('handlebars'),
-    Async = require('async'),
-    handlebarsOptions = {
-        preventIndent: true
-    },
-    helpers = [];
+var _ = require('lodash');
+var Localizer = require('./lib/localizer');
+var Path = require('path');
+var Fs = require('fs');
+var Handlebars = require('handlebars');
+var Async = require('async');
+var helpers = [];
+var handlebarsOptions = {
+    preventIndent: true
+};
 
-// Load helpers
+// Load helpers (this only run once)
 Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function (file) {
     helpers.push(require('./helpers/' + file));
 });
 
 /**
- * Theme renderer constructor
- * @param {Object} settings
- * @param {Object} themeSettings
- * @param {Object} assembler
- */
-module.exports = function (settings, themeSettings, assembler) {
+* Theme renderer constructor
+* @param {Object} settings
+* @param {Object} themeSettings
+* @param {Object} assembler
+*/
+function Paper(settings, themeSettings, assembler) {
     var self = this;
 
     self.handlebars = Handlebars.create();
 
     self.handlebars.templates = {};
+    self.translate = null;
+    self.inject = {};
+    self.decorators = [];
 
     self.settings = settings || {};
     self.themeSettings = themeSettings || {};
-
-    self.translate = null;
-    self.inject = {};
-    self.helpers = [];
-    self.decorators = [];
+    self.assembler = assembler || {};
 
     _.each(helpers, function (helper) {
         helper(self);
     });
+}
 
-    /**
-     * Renders a string with the given context
-     * @param  {String} string
-     * @param  {Object} context
-     */
-    self.renderString = function (string, context) {
-        return self.handlebars.compile(string)(context);
-    };
+/**
+ * Renders a string with the given context
+ * @param  {String} string
+ * @param  {Object} context
+ */
+Paper.prototype.renderString = function (string, context) {
+    return this.handlebars.compile(string)(context);
+};
 
-    self.loadTheme = function (paths, acceptLanguage, done) {
-        if (!_.isArray(paths)) {
-            paths = paths ? [paths] : [];
+Paper.prototype.loadTheme = function (paths, acceptLanguage, done) {
+    var self = this;
+
+    if (!_.isArray(paths)) {
+        paths = paths ? [paths] : [];
+    }
+
+    Async.parallel([
+        function (next) {
+            self.loadTranslations(acceptLanguage, next);
+        },
+        function (next) {
+            Async.map(paths, self.loadTemplates.bind(self), next);
+        }
+    ], done);
+};
+
+/**
+ * Load Partials/Templates
+ * @param  {Object}   templates
+ * @param  {Function} callback
+ */
+Paper.prototype.loadTemplates = function (path, callback) {
+    var self = this;
+
+    var processor = self.getTemplateProcessor();
+
+    self.assembler.getTemplates(path, processor, function (error, templates) {
+        if (error) {
+            return callback(error);
         }
 
-        Async.parallel([
-            function (next) {
-                self.loadTranslations(acceptLanguage, next);
-            },
-            function (next) {
-                Async.map(paths, self.loadTemplates, next);
+        _.each(templates, function (precompiled, path) {
+            var template;
+            if (!self.handlebars.templates[path]) {
+                eval('template = ' + precompiled);
+                self.handlebars.templates[path] = self.handlebars.template(template);
             }
-        ], done);
-    };
-
-    /**
-     * Load Partials/Templates
-     * @param  {Object}   templates
-     * @param  {Function} callback
-     */
-    self.loadTemplates = function (path, callback) {
-        var processor = self.getTemplateProcessor();
-
-        assembler.getTemplates(path, processor, function (error, templates) {
-            if (error) {
-                return callback(error);
-            }
-
-            _.each(templates, function (precompiled, path) {
-                var template;
-                if (!self.handlebars.templates[path]) {
-                    eval('template = ' + precompiled);
-                    self.handlebars.templates[path] = self.handlebars.template(template);
-                }
-            });
-
-            self.handlebars.partials = self.handlebars.templates;
-
-            callback();
-        });
-    };
-
-    self.getTemplateProcessor = function () {
-        return function (templates) {
-            var precompiledTemplates = {};
-
-            _.each(templates, function (content, path) {
-                precompiledTemplates[path] = self.handlebars.precompile(content, handlebarsOptions);
-            });
-
-            return precompiledTemplates;
-        }
-    };
-
-    /**
-     * Load Partials/Templates used for test cases and stencil-cli
-     * @param  {Object}   templates
-     * @return {Object}
-     */
-    self.loadTemplatesSync = function (templates) {
-        _.each(templates, function (content, fileName) {
-            self.handlebars.templates[fileName] = self.handlebars.compile(content, handlebarsOptions);
         });
 
         self.handlebars.partials = self.handlebars.templates;
 
-        return self;
-    };
+        callback();
+    });
+};
 
-    /**
-     * @param {String} acceptLanguage
-     * @param {Object} translations
-     */
-    self.loadTranslations = function (acceptLanguage, callback) {
+Paper.prototype.getTemplateProcessor = function () {
+    var self = this;
 
-        assembler.getTranslations(function (error, translations) {
-            if (error) {
-                return callback(error);
-            }
-            // Make translations available to the helpers
-            self.translate = Localizer.localize(acceptLanguage, translations);
+    return function (templates) {
+        var precompiledTemplates = {};
 
-            callback();
+        _.each(templates, function (content, path) {
+            precompiledTemplates[path] = self.handlebars.precompile(content, handlebarsOptions);
         });
-    };
 
-    /**
-     * Add CDN base url to the relative path
-     * @param  {String} path     Relative path
-     * @return {String}          Url cdn
-     */
-    self.cdnify = function (path) {
-        var cdnUrl = self.settings['cdn_url'] || '';
-        var versionId = self.settings['theme_version_id'];
-        var configId = self.settings['theme_config_id'];
-        var protocolMatch = /(.*!?:)/;
+        return precompiledTemplates;
+    }
+};
 
-        if (!path) {
-            return '';
+/**
+ * Load Partials/Templates used for test cases and stencil-cli
+ * @param  {Object}   templates
+ * @return {Object}
+ */
+Paper.prototype.loadTemplatesSync = function (templates) {
+    var self = this;
+
+    _.each(templates, function (content, fileName) {
+        self.handlebars.templates[fileName] = self.handlebars.compile(content, handlebarsOptions);
+    });
+
+    self.handlebars.partials = self.handlebars.templates;
+
+    return self;
+};
+
+/**
+ * @param {String} acceptLanguage
+ * @param {Object} translations
+ */
+Paper.prototype.loadTranslations = function (acceptLanguage, callback) {
+    var self = this;
+
+    self.assembler.getTranslations(function (error, translations) {
+        if (error) {
+            return callback(error);
+        }
+        // Make translations available to the helpers
+        self.translate = Localizer.localize(acceptLanguage, translations);
+
+        callback();
+    });
+};
+
+/**
+ * Add CDN base url to the relative path
+ * @param  {String} path     Relative path
+ * @return {String}          Url cdn
+ */
+Paper.prototype.cdnify = function (path) {
+    var cdnUrl = this.settings['cdn_url'] || '';
+    var versionId = this.settings['theme_version_id'];
+    var configId = this.settings['theme_config_id'];
+    var protocolMatch = /(.*!?:)/;
+
+    if (!path) {
+        return '';
+    }
+
+    if (/^(?:https?:)?\/\//.test(path)) {
+        return path;
+    }
+
+    if (protocolMatch.test(path)) {
+        var match = path.match(protocolMatch);
+        path = path.slice(match[0].length, path.length);
+
+        if (path[0] === '/') {
+            path = path.slice(1, path.length);
         }
 
-        if (/^(?:https?:)?\/\//.test(path)) {
-            return path;
-        }
-
-        if (protocolMatch.test(path)) {
-            var match = path.match(protocolMatch);
-            path = path.slice(match[0].length, path.length);
-
-            if (path[0] === '/') {
-                path = path.slice(1, path.length);
-            }
-
-            if (match[0] === 'webdav:') {
-                return [cdnUrl, 'content', path].join('/');
-            }
-
-            if (path[0] !== '/') {
-                path = '/' + path;
-            }
-
-            return path;
+        if (match[0] === 'webdav:') {
+            return [cdnUrl, 'content', path].join('/');
         }
 
         if (path[0] !== '/') {
             path = '/' + path;
         }
 
-        if (!versionId || !configId) {
-            return path;
-        }
+        return path;
+    }
 
-        if (path.substr(0, 8) === '/assets/') {
-            path = path.substr(8, path.length);
-        }
+    if (path[0] !== '/') {
+        path = '/' + path;
+    }
 
-        return [cdnUrl, 'stencil', versionId, configId, path].join('/');
-    };
+    if (!versionId || !configId) {
+        return path;
+    }
 
-    /**
-     * @param {Function} decorator
-     */
-    self.addDecorator = function (decorator) {
-        self.decorators.push(decorator);
-    };
+    if (path.substr(0, 8) === '/assets/') {
+        path = path.substr(8, path.length);
+    }
 
-    /**
-     * @param {String} path
-     * @param {Object} context
-     * @return {String}
-     */
-    self.render = function (path, context) {
-        var output = self.handlebars.templates[path](context);
-
-        _.each(self.decorators, function (decorator) {
-            output = decorator(output);
-        });
-
-        return output;
-    };
+    return [cdnUrl, 'stencil', versionId, configId, path].join('/');
 };
+
+/**
+ * @param {Function} decorator
+ */
+Paper.prototype.addDecorator = function (decorator) {
+    this.decorators.push(decorator);
+};
+
+/**
+ * @param {String} path
+ * @param {Object} context
+ * @return {String}
+ */
+Paper.prototype.render = function (path, context) {
+    var output = this.handlebars.templates[path](context);
+
+    _.each(this.decorators, function (decorator) {
+        output = decorator(output);
+    });
+
+    return output;
+};
+
+module.exports = Paper;
