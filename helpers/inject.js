@@ -1,13 +1,7 @@
-var internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function(context, paper) {
-    var self = this;
-
-    this.handlebars.registerHelper('inject', function (key, value) {
+function helper(paper) {
+    paper.handlebars.registerHelper('inject', function (key, value) {
         if (typeof value === 'function') {
             return;
         }
@@ -15,12 +9,12 @@ internals.implementation.prototype.register = function(context, paper) {
         paper.inject[key] = value;
     });
 
-    this.handlebars.registerHelper('jsContext', function () {
+    paper.handlebars.registerHelper('jsContext', function () {
 
         var jsContext = JSON.stringify(JSON.stringify(paper.inject));
 
-        return new self.handlebars.SafeString(jsContext);
+        return new paper.handlebars.SafeString(jsContext);
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

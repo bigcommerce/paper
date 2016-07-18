@@ -1,14 +1,11 @@
-var _ = require('lodash'),
-    internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
+var _ = require('lodash');
 
-internals.implementation.prototype.register = function() {
-    this.handlebars.registerHelper('pluck', function(collection, path) {
+function helper(paper) {
+    paper.handlebars.registerHelper('pluck', function (collection, path) {
         return _.pluck(collection, path);
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

@@ -1,19 +1,16 @@
-var _ = require('lodash'),
-    internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
+var _ = require('lodash');
 
-internals.implementation.prototype.register = function() {
-    this.handlebars.registerHelper('pick', function() {
+function helper(paper) {
+    paper.handlebars.registerHelper('pick', function () {
         return _.pick.apply(null, arguments);
     });
 
     /**
      * @deprecate Use lang + concat
      */
-    this.handlebars.registerHelper('getShortMonth', function (index) {
+    paper.handlebars.registerHelper('getShortMonth', function (index) {
 
         switch (index) {
             case 1:
@@ -48,7 +45,7 @@ internals.implementation.prototype.register = function() {
     /**
      * @deprecate Use {{#if val1 '==' val2}}...{{/if}}
      */
-    this.handlebars.registerHelper('equals', function (val1, val2, options) {
+    paper.handlebars.registerHelper('equals', function (val1, val2, options) {
         if (val1 != val2) {
             return '';
         }
@@ -59,7 +56,7 @@ internals.implementation.prototype.register = function() {
     /**
      * @deprecate Use {{#for start end (context)}}...{{/for}}
      */
-    this.handlebars.registerHelper('enumerate', function(start, end, options) {
+    paper.handlebars.registerHelper('enumerate', function (start, end, options) {
         var out = '',
             i = start;
 
@@ -69,6 +66,6 @@ internals.implementation.prototype.register = function() {
 
         return out + '';
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

@@ -7,7 +7,23 @@ var Code = require('code'),
     it = lab.it;
 
 function c(template, context) {
-    return new Paper().loadTemplatesSync({template: template}).render('template', context);
+    var themeSettings = {
+        logo_image: '600x300',
+        gallery: '100x100',
+        _images: {
+            logo: {
+                width: 250,
+                height: 100
+            },
+            gallery: {
+                width: 300,
+                height: 300
+            },
+            missing_values: {},
+            missing_width: {height: 100}
+        }
+    };
+    return new Paper({}, themeSettings).loadTemplatesSync({template: template}).render('template', context);
 }
 
 describe('getImage helper', function() {
@@ -19,22 +35,6 @@ describe('getImage helper', function() {
             data: urlData
         },
         logoPreset: 'logo',
-        theme_settings: {
-            logo_image: '600x300',
-            gallery: '100x100',
-            _images: {
-                logo: {
-                    width: 250,
-                    height: 100
-                },
-                gallery: {
-                    width: 300,
-                    height: 300
-                },
-                missing_values: {},
-                missing_width: {height: 100}
-            }
-        }
     };
 
     it('should return a url if a url is passed', function(done) {

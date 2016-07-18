@@ -1,5 +1,6 @@
-var _ = require('lodash'),
-    internals = {};
+'use strict';
+
+var _ = require('lodash');
 
 /**
  * Yield block if any object within a collection matches supplied predicate
@@ -7,13 +8,8 @@ var _ = require('lodash'),
  * @example
  * {{#any items selected=true}} ... {{/any}}
  */
-
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
-
-internals.implementation.prototype.register = function() {
-    this.handlebars.registerHelper('any', function() {
+function helper(paper) {
+    paper.handlebars.registerHelper('any', function () {
 
         var args = [],
             opts,
@@ -27,7 +23,7 @@ internals.implementation.prototype.register = function() {
 
         // Take the last argument (content) out of testing array
         opts = args.pop();
-        predicate = opts.hash; 
+        predicate = opts.hash;
 
         if (!_.isEmpty(predicate)) {
             // With options hash, we check the contents of first argument
@@ -35,7 +31,7 @@ internals.implementation.prototype.register = function() {
         } else {
             // DEPRECATED: Moved to #or helper
             // Without options hash, we check all the arguments
-            any = _.any(args, function(arg) {
+            any = _.any(args, function (arg) {
                 if (_.isArray(arg)) {
                     return !!arg.length;
                 }
@@ -56,6 +52,6 @@ internals.implementation.prototype.register = function() {
 
         return opts.inverse(this);
     });
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;

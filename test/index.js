@@ -44,7 +44,7 @@ describe('loadTheme()', function() {
             }
         };
 
-        var paper = new Paper(assembler);
+        var paper = new Paper(null, null, assembler);
 
         paper.loadTheme('pages/product', 'fr-CA;q=0.8, fr, en', function () {
 

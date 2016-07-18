@@ -1,19 +1,16 @@
-var _ = require('lodash'),
-    internals = {};
+'use strict';
 
-internals.implementation = function(handlebars) {
-    this.handlebars = handlebars;
-};
+var _ = require('lodash');
 
-internals.implementation.prototype.register = function(context) {
-    var handlebars = this.handlebars;
+function helper(paper) {
+    var handlebars = paper.handlebars;
 
-    handlebars.registerHelper('getFontsCollection', function() {
+    handlebars.registerHelper('getFontsCollection', function () {
         var fontKeyFormat = new RegExp(/\w+(-\w*)*-font$/),
             googleFonts = [],
             linkElements = [];
 
-        _.each(context.theme_settings, function(value, key) {
+        _.each(paper.themeSettings, function (value, key) {
             var split;
 
             if (fontKeyFormat.test(key)) {
@@ -30,11 +27,11 @@ internals.implementation.prototype.register = function(context) {
             }
         });
 
-        linkElements.push(internals.googleParser(googleFonts));
+        linkElements.push(googleParser(googleFonts));
 
         return new handlebars.SafeString(linkElements.join(''));
     });
-};
+}
 
 /**
  * Parser for Google fonts
@@ -50,7 +47,7 @@ internals.implementation.prototype.register = function(context) {
  * @returns {string}
  */
 
-internals.googleParser = function(fonts) {
+function googleParser(fonts) {
     var collection = [],
         familyHash = {};
 
@@ -83,6 +80,6 @@ internals.googleParser = function(fonts) {
     });
 
     return '<link href="//fonts.googleapis.com/css?family=' + collection.join('|') + '" rel="stylesheet">';
-};
+}
 
-module.exports = internals.implementation;
+module.exports = helper;
