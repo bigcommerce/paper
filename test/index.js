@@ -60,9 +60,9 @@ describe('loadTheme()', function() {
     });
 });
 
-describe('cdnify()', () => {
-    it('should not include session id', (done) => {
-        const paper = new Paper({
+describe('cdnify()', function () {
+    it('should not include session id', function (done) {
+        var paper = new Paper({
             cdn_url: 'http://cdn.example.com/foo',
             theme_version_id: '123',
             theme_config_id: '234',
@@ -74,8 +74,8 @@ describe('cdnify()', () => {
         done();
     });
 
-    it('should use sessionId if available', (done) => {
-        const paper = new Paper({
+    it('should use sessionId if available', function (done) {
+        var paper = new Paper({
             cdn_url: 'http://cdn.example.com/foo',
             theme_version_id: '123',
             theme_config_id: '234',
