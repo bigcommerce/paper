@@ -154,6 +154,7 @@ Paper.prototype.cdnify = function (path) {
     var cdnUrl = this.settings['cdn_url'] || '';
     var versionId = this.settings['theme_version_id'];
     var configId = this.settings['theme_config_id'];
+    var sessionId = this.settings['theme_session_id'];
     var protocolMatch = /(.*!?:)/;
 
     if (!path) {
@@ -193,6 +194,10 @@ Paper.prototype.cdnify = function (path) {
 
     if (path.substr(0, 8) === '/assets/') {
         path = path.substr(8, path.length);
+    }
+
+    if (sessionId) {
+        return [cdnUrl, 'stencil', versionId, configId, sessionId, path].join('/');
     }
 
     return [cdnUrl, 'stencil', versionId, configId, path].join('/');

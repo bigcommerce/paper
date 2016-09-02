@@ -60,6 +60,35 @@ describe('loadTheme()', function() {
     });
 });
 
+describe('cdnify()', function () {
+    it('should not include session id', function (done) {
+        var paper = new Paper({
+            cdn_url: 'http://cdn.example.com/foo',
+            theme_version_id: '123',
+            theme_config_id: '234',
+        });
+
+        expect(paper.cdnify('/assets/image.jpg'))
+            .to.be.equal('http://cdn.example.com/foo/stencil/123/234/image.jpg');
+
+        done();
+    });
+
+    it('should use sessionId if available', function (done) {
+        var paper = new Paper({
+            cdn_url: 'http://cdn.example.com/foo',
+            theme_version_id: '123',
+            theme_config_id: '234',
+            theme_session_id: '345',
+        });
+
+        expect(paper.cdnify('/assets/image.jpg'))
+            .to.be.equal('http://cdn.example.com/foo/stencil/123/234/345/image.jpg');
+
+        done();
+    });
+});
+
 describe('render()', function() {
     var templates = {
             'pages/product': '<html>{{> pages/partial}}</html>',
