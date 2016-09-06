@@ -83,7 +83,7 @@ describe('cdnify()', function () {
         });
 
         expect(paper.cdnify('/assets/image.jpg'))
-            .to.be.equal('http://cdn.example.com/foo/stencil/123/234/345/image.jpg');
+            .to.be.equal('http://cdn.example.com/foo/stencil/123/234/e/345/image.jpg');
 
         done();
     });

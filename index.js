@@ -197,7 +197,7 @@ Paper.prototype.cdnify = function (path) {
     }
 
     if (sessionId) {
-        return [cdnUrl, 'stencil', versionId, configId, sessionId, path].join('/');
+        return [cdnUrl, 'stencil', versionId, configId, 'e', sessionId, path].join('/');
     }
 
     return [cdnUrl, 'stencil', versionId, configId, path].join('/');
