@@ -177,6 +177,17 @@ Paper.prototype.cdnify = function (path) {
             return [cdnUrl, 'content', path].join('/');
         }
 
+        if (this.themeSettings.cdn) {
+            var endpointKey = match[0].substr(0, match[0].length - 1);
+            if (this.themeSettings.cdn.hasOwnProperty(endpointKey)) {
+                if (cdnUrl) {
+                    return [this.themeSettings.cdn[endpointKey].path, path].join('/');
+                }
+
+                return ['/assets/cdn', endpointKey, path].join('/');
+            }
+        }
+
         if (path[0] !== '/') {
             path = '/' + path;
         }
