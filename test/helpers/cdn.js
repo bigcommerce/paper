@@ -110,6 +110,17 @@ describe('cdn helper', function () {
         done();
     });
 
+    it('should return a custom CDN asset when using nested helper', function (done) {
+
+        expect(c('{{cdn (concat "customcdn:" "img/image.jpg")}}', context, settings, themeSettings))
+            .to.be.equal('https://bigcommerce.customcdn.net/img/image.jpg');
+
+        expect(c('{{cdn (concat "customcdn:" "/img/image.jpg")}}', context, settings, themeSettings))
+            .to.be.equal('https://bigcommerce.customcdn.net/img/image.jpg');
+
+        done();
+    });
+
     it('should return a local CDN asset if no cdn url is configured', function (done) {
 
         expect(c('{{cdn "customcdn:img/image.jpg"}}', context, {}, themeSettings))

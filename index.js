@@ -157,6 +157,10 @@ Paper.prototype.cdnify = function (path) {
     var sessionId = this.settings['theme_session_id'];
     var protocolMatch = /(.*!?:)/;
 
+    if (path instanceof Handlebars.SafeString) {
+      path = path.string;
+    }
+
     if (!path) {
         return '';
     }
