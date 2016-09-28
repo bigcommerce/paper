@@ -157,6 +157,10 @@ Paper.prototype.cdnify = function (path) {
     var sessionId = this.settings['theme_session_id'];
     var protocolMatch = /(.*!?:)/;
 
+    if (path instanceof Handlebars.SafeString) {
+      path = path.string;
+    }
+
     if (!path) {
         return '';
     }
@@ -175,6 +179,17 @@ Paper.prototype.cdnify = function (path) {
 
         if (match[0] === 'webdav:') {
             return [cdnUrl, 'content', path].join('/');
+        }
+
+        if (this.themeSettings.cdn) {
+            var endpointKey = match[0].substr(0, match[0].length - 1);
+            if (this.themeSettings.cdn.hasOwnProperty(endpointKey)) {
+                if (cdnUrl) {
+                    return [this.themeSettings.cdn[endpointKey], path].join('/');
+                }
+
+                return ['/assets/cdn', endpointKey, path].join('/');
+            }
         }
 
         if (path[0] !== '/') {
