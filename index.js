@@ -185,7 +185,7 @@ Paper.prototype.cdnify = function (path) {
             var endpointKey = match[0].substr(0, match[0].length - 1);
             if (this.themeSettings.cdn.hasOwnProperty(endpointKey)) {
                 if (cdnUrl) {
-                    return [this.themeSettings.cdn[endpointKey].path, path].join('/');
+                    return [this.themeSettings.cdn[endpointKey], path].join('/');
                 }
 
                 return ['/assets/cdn', endpointKey, path].join('/');

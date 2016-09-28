@@ -19,9 +19,8 @@ describe('cdn helper', function () {
     };
     var themeSettings = {
       cdn: {
-        customcdn: {
-          path: 'https://bigcommerce.customcdn.net'
-        }
+        customcdn1: 'https://bigcommerce.customcdn.net',
+        customcdn2: 'http://cdn.mystore.com'
       }
     };
 
@@ -101,43 +100,61 @@ describe('cdn helper', function () {
 
     it('should return a custom CDN asset if protocol is configured', function (done) {
 
-        expect(c('{{cdn "customcdn:img/image.jpg"}}', context, settings, themeSettings))
+        expect(c('{{cdn "customcdn1:img/image.jpg"}}', context, settings, themeSettings))
             .to.be.equal('https://bigcommerce.customcdn.net/img/image.jpg');
 
-        expect(c('{{cdn "customcdn:/img/image.jpg"}}', context, settings, themeSettings))
+        expect(c('{{cdn "customcdn1:/img/image.jpg"}}', context, settings, themeSettings))
             .to.be.equal('https://bigcommerce.customcdn.net/img/image.jpg');
+
+        expect(c('{{cdn "customcdn2:img/image.jpg"}}', context, settings, themeSettings))
+            .to.be.equal('http://cdn.mystore.com/img/image.jpg');
+
+        expect(c('{{cdn "customcdn2:/img/image.jpg"}}', context, settings, themeSettings))
+            .to.be.equal('http://cdn.mystore.com/img/image.jpg');
 
         done();
     });
 
     it('should return a custom CDN asset when using nested helper', function (done) {
 
-        expect(c('{{cdn (concat "customcdn:" "img/image.jpg")}}', context, settings, themeSettings))
+        expect(c('{{cdn (concat "customcdn1:" "img/image.jpg")}}', context, settings, themeSettings))
             .to.be.equal('https://bigcommerce.customcdn.net/img/image.jpg');
 
-        expect(c('{{cdn (concat "customcdn:" "/img/image.jpg")}}', context, settings, themeSettings))
+        expect(c('{{cdn (concat "customcdn1:" "/img/image.jpg")}}', context, settings, themeSettings))
             .to.be.equal('https://bigcommerce.customcdn.net/img/image.jpg');
+
+        expect(c('{{cdn (concat "customcdn2:" "img/image.jpg")}}', context, settings, themeSettings))
+            .to.be.equal('http://cdn.mystore.com/img/image.jpg');
+
+        expect(c('{{cdn (concat "customcdn2:" "/img/image.jpg")}}', context, settings, themeSettings))
+            .to.be.equal('http://cdn.mystore.com/img/image.jpg');
 
         done();
     });
 
     it('should return a local CDN asset if no cdn url is configured', function (done) {
 
-        expect(c('{{cdn "customcdn:img/image.jpg"}}', context, {}, themeSettings))
-            .to.be.equal('/assets/cdn/customcdn/img/image.jpg');
+        expect(c('{{cdn "customcdn1:img/image.jpg"}}', context, {}, themeSettings))
+            .to.be.equal('/assets/cdn/customcdn1/img/image.jpg');
 
-        expect(c('{{cdn "customcdn:/img/image.jpg"}}', context, {}, themeSettings))
-            .to.be.equal('/assets/cdn/customcdn/img/image.jpg');
+        expect(c('{{cdn "customcdn1:/img/image.jpg"}}', context, {}, themeSettings))
+            .to.be.equal('/assets/cdn/customcdn1/img/image.jpg');
+
+        expect(c('{{cdn "customcdn2:img/image.jpg"}}', context, {}, themeSettings))
+            .to.be.equal('/assets/cdn/customcdn2/img/image.jpg');
+
+        expect(c('{{cdn "customcdn2:/img/image.jpg"}}', context, {}, themeSettings))
+            .to.be.equal('/assets/cdn/customcdn2/img/image.jpg');
 
         done();
     });
 
     it('should not return a custom CDN asset if protocol is not configured', function (done) {
 
-        expect(c('{{cdn "customcdn:img/image.jpg"}}', context, settings, {}))
+        expect(c('{{cdn "customcdn1:img/image.jpg"}}', context, settings, {}))
             .to.be.equal('/img/image.jpg');
 
-        expect(c('{{cdn "customcdn:/img/image.jpg"}}', context, settings, {}))
+        expect(c('{{cdn "customcdn1:/img/image.jpg"}}', context, settings, {}))
             .to.be.equal('/img/image.jpg');
 
         done();
