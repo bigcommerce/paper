@@ -1,10 +1,11 @@
 'use strict';
 
 function helper(paper) {
-    paper.handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
-        var operator,
-            operators,
-            result;
+    paper.handlebars.registerHelper('compare', function (lvalue, rvalue) {
+        const options = arguments[arguments.length - 1];
+        var operator;
+        var operators;
+        var result;
 
         if (arguments.length < 3) {
             throw new Error("Handlerbars Helper 'compare' needs 2 parameters");

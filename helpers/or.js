@@ -11,8 +11,8 @@ var _ = require('lodash');
 function helper(paper) {
     paper.handlebars.registerHelper('or', function () {
         var args = [],
-        opts,
-        any;
+            opts,
+            any;
 
         // Translate arguments to array safely
         for (var i = 0; i < arguments.length; i++) {

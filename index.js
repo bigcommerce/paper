@@ -158,7 +158,7 @@ Paper.prototype.cdnify = function (path) {
     var protocolMatch = /(.*!?:)/;
 
     if (path instanceof Handlebars.SafeString) {
-      path = path.string;
+        path = path.string;
     }
 
     if (!path) {

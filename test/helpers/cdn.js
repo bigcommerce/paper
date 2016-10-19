@@ -18,10 +18,10 @@ describe('cdn helper', function () {
         theme_config_id: '3245',
     };
     var themeSettings = {
-      cdn: {
-        customcdn1: 'https://bigcommerce.customcdn.net',
-        customcdn2: 'http://cdn.mystore.com'
-      }
+        cdn: {
+            customcdn1: 'https://bigcommerce.customcdn.net',
+            customcdn2: 'http://cdn.mystore.com'
+        }
     };
 
     it('should render the css cdn url', function (done) {
