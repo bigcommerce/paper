@@ -1,5 +1,4 @@
 'use strict';
-var _ = require('lodash');
 
 function helper(paper) {
     paper.handlebars.registerHelper('block', function (name) {
