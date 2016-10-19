@@ -36,44 +36,44 @@ function helper(paper) {
             }
 
             switch (operator) {
-                case '==':
-                    result = (lvalue == rvalue);
-                    break;
+            case '==':
+                result = (lvalue == rvalue);
+                break;
 
-                case '===':
-                    result = (lvalue === rvalue);
-                    break;
+            case '===':
+                result = (lvalue === rvalue);
+                break;
 
-                case '!=':
-                    result = (lvalue != rvalue);
-                    break;
+            case '!=':
+                result = (lvalue != rvalue);
+                break;
 
-                case '!==':
-                    result = (lvalue !== rvalue);
-                    break;
+            case '!==':
+                result = (lvalue !== rvalue);
+                break;
 
-                case '<':
-                    result = (lvalue < rvalue);
-                    break;
+            case '<':
+                result = (lvalue < rvalue);
+                break;
 
-                case '>':
-                    result = (lvalue > rvalue);
-                    break;
+            case '>':
+                result = (lvalue > rvalue);
+                break;
 
-                case '<=':
-                    result = (lvalue <= rvalue);
-                    break;
+            case '<=':
+                result = (lvalue <= rvalue);
+                break;
 
-                case '>=':
-                    result = (lvalue >= rvalue);
-                    break;
+            case '>=':
+                result = (lvalue >= rvalue);
+                break;
 
-                case 'typeof':
-                    result = (typeof lvalue === rvalue);
-                    break;
+            case 'typeof':
+                result = (typeof lvalue === rvalue);
+                break;
 
-                default:
-                    throw new Error("Handlerbars Helper 'if' doesn't know the operator " + operator);
+            default:
+                throw new Error("Handlerbars Helper 'if' doesn't know the operator " + operator);
             }
         }
 

@@ -17,12 +17,12 @@ function helper(paper) {
                 split = value.split('_');
 
                 switch (split[0]) {
-                    case 'Google':
-                        googleFonts.push(value);
-                        break;
+                case 'Google':
+                    googleFonts.push(value);
+                    break;
 
-                    default:
-                        break;
+                default:
+                    break;
                 }
             }
         });

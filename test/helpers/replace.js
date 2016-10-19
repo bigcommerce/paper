@@ -12,13 +12,13 @@ function c(templates, context) {
 
 describe('replace helper', function() {
     var templates = {
-        template: "{{#replace '%%var%%' content}}{{> template2}}{{/replace}}",
-        template2: "day"
-    },
-    context = {
-        content: "Either you run the %%var%% or the  %%var%% runs you",
+            template: "{{#replace '%%var%%' content}}{{> template2}}{{/replace}}",
+            template2: "day"
+        },
+        context = {
+            content: "Either you run the %%var%% or the  %%var%% runs you",
 
-    };
+        };
 
     it('should replace all ocurrance of %%var%% with "day"', function(done) {
 

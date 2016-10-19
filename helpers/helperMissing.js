@@ -2,7 +2,7 @@
 
 function helper(paper) {
     paper.handlebars.registerHelper('helperMissing', function () {
-    	return undefined;
+        return undefined;
     });
 }
 

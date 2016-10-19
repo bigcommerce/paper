@@ -13,13 +13,13 @@ function c(templates, context) {
 describe('partial and block helpers', function () {
     it('should insert partial into the corresponding block', function (done) {
         var templates = {
-            template: '{{#partial "page"}}<h1>{{title}}</h1><p>{{content}}</p>{{/partial}}{{> layout}}',
-            layout: '<html><body>{{#block "page"}}{{/block}}</body>/<html>',
-        },
-        context = {
-            title: 'Hello',
-            content: 'World',
-        };
+                template: '{{#partial "page"}}<h1>{{title}}</h1><p>{{content}}</p>{{/partial}}{{> layout}}',
+                layout: '<html><body>{{#block "page"}}{{/block}}</body>/<html>',
+            },
+            context = {
+                title: 'Hello',
+                content: 'World',
+            };
 
         expect(c(templates, context))
             .to.contain('<html><body><h1>Hello</h1><p>World</p></body>/<html>');
