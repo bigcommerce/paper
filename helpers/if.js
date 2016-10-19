@@ -3,7 +3,8 @@
 var _ = require('lodash');
 
 function helper(paper) {
-    paper.handlebars.registerHelper('if', function (lvalue, operator, rvalue, options) {
+    paper.handlebars.registerHelper('if', function (lvalue, operator, rvalue) {
+        const options = arguments[arguments.length - 1];
         var result;
 
         function isOptions(obj) {
@@ -12,7 +13,6 @@ function helper(paper) {
 
         // Only parameter
         if (isOptions(operator)) {
-            options = operator;
 
             // If an array is passed as the only parameter
             if (_.isArray(lvalue)) {
@@ -31,7 +31,6 @@ function helper(paper) {
             if (isOptions(rvalue)) {
                 // @TODO: this is block is for backwards compatibility with 'compare' helper
                 // Remove after operator='==' is removed from stencil theme
-                options = rvalue;
                 rvalue = operator;
                 operator = options.hash.operator || "==";
             }

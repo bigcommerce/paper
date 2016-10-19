@@ -10,8 +10,7 @@ function helper(paper) {
     });
 
     paper.handlebars.registerHelper('jsContext', function () {
-
-        var jsContext = JSON.stringify(JSON.stringify(paper.inject));
+        const jsContext = JSON.stringify(JSON.stringify(paper.inject));
 
         return new paper.handlebars.SafeString(jsContext);
     });

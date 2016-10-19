@@ -45,7 +45,9 @@ function helper(paper) {
     /**
      * @deprecate Use {{#if val1 '==' val2}}...{{/if}}
      */
-    paper.handlebars.registerHelper('equals', function (val1, val2, options) {
+    paper.handlebars.registerHelper('equals', function (val1, val2) {
+        const options = arguments[arguments.length - 1];
+
         if (val1 != val2) {
             return '';
         }
@@ -56,9 +58,10 @@ function helper(paper) {
     /**
      * @deprecate Use {{#for start end (context)}}...{{/for}}
      */
-    paper.handlebars.registerHelper('enumerate', function (start, end, options) {
-        var out = '',
-            i = start;
+    paper.handlebars.registerHelper('enumerate', function (start, end) {
+        const options = arguments[arguments.length - 1];
+        var out = '';
+        var i = start;
 
         for (i; i <= end; i++) {
             out = out + options.fn(i);

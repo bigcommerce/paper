@@ -1,7 +1,8 @@
 'use strict';
 
 function helper(paper) {
-    paper.handlebars.registerHelper('join', function (array, separator, options) {
+    paper.handlebars.registerHelper('join', function (array, separator) {
+        const options = arguments[arguments.length - 1];
         var config = options.hash || {};
 
         array = array.slice();

@@ -3,8 +3,9 @@
 var _ = require('lodash');
 
 function helper(paper) {
-    paper.handlebars.registerHelper('stylesheet', function (assetPath, options) {
-        var url = paper.cdnify(assetPath);
+    paper.handlebars.registerHelper('stylesheet', function (assetPath) {
+        const options = arguments[arguments.length - 1];
+        const url = paper.cdnify(assetPath);
         var attrs = {
             rel: 'stylesheet'
         };
