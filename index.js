@@ -231,7 +231,13 @@ Paper.prototype.addDecorator = function (decorator) {
  * @return {String}
  */
 Paper.prototype.render = function (path, context) {
-    var output = this.handlebars.templates[path](context);
+    var output;
+
+    if (this.translate) {
+        context.localeName = this.translate.localeName;
+    }
+
+    output = this.handlebars.templates[path](context);
 
     _.each(this.decorators, function (decorator) {
         output = decorator(output);

@@ -7,53 +7,83 @@ var Code = require('code'),
     it = lab.it;
 
 describe('loadTheme()', function() {
-    it('should use the assembler interface to load templates and translations', function(done) {
-        var assembler = {
-            getTemplates: function(path, processor, callback) {
-                process.nextTick(function() {
-                    var templates = {
-                        'pages/product': '<html></html>',
-                        'pages/partial': '<p></p>',
-                    };
+    var assembler = {
+        getTemplates: function(path, processor, callback) {
+            process.nextTick(function() {
+                var templates = {
+                    'pages/product': '<html></html>',
+                    'pages/partial': '<p></p>',
+                    'pages/localeName': '{{localeName}}',
+                };
 
-                    callback(null, processor(templates));
-                });
-            },
-            getTranslations: function (callback) {
-                process.nextTick(function() {
-                    var translations = {
-                        'en': {
-                            hello: 'Hello {name}',
-                            level1: {
-                                level2: 'we are in the second level'
-                            }
-                        },
-                        'fr': {
-                            hello: 'Bonjour {name}',
-                            level1: {
-                                level2: 'nous sommes dans le deuxième niveau'
-                            }
-                        },
-                        'fr-CA': {
-                            hello: 'Salut {name}'
+                callback(null, processor(templates));
+            });
+        },
+        getTranslations: function (callback) {
+            process.nextTick(function() {
+                var translations = {
+                    'en': {
+                        hello: 'Hello {name}',
+                        level1: {
+                            level2: 'we are in the second level'
                         }
-                    };
+                    },
+                    'fr': {
+                        hello: 'Bonjour {name}',
+                        level1: {
+                            level2: 'nous sommes dans le deuxième niveau'
+                        }
+                    },
+                    'fr-CA': {
+                        hello: 'Salut {name}'
+                    }
+                };
 
-                    callback(null, translations);
-                });
-            }
-        };
+                callback(null, translations);
+            });
+        }
+    };
 
-        var paper = new Paper(null, null, assembler);
+    it('should use the assembler interface to load templates and translations', done => {
+        const paper = new Paper(null, null, assembler);
 
-        paper.loadTheme('pages/product', 'fr-CA;q=0.8, fr, en', function () {
-
+        paper.loadTheme('pages/product', 'fr-CA;q=0.8, fr, en', () => {
             expect(paper.handlebars.templates['pages/product']).to.be.a.function();
             expect(paper.handlebars.templates['pages/partial']).to.be.a.function();
             expect(paper.translate).to.be.a.function();
             expect(paper.translate('hello', {name: 'Mario'})).to.be.equal('Bonjour Mario');
             expect(paper.translate('hello', {name: 'Already Compiled'})).to.be.equal('Bonjour Already Compiled');
             expect(paper.translate('does_not_exist')).to.be.equal('does_not_exist');
+
+            done();
+        });
+    });
+
+    it('should get the localeName from the acceptLanguage header', done => {
+        const paper = new Paper(null, null, assembler);
+
+        paper.loadTheme('pages/localeName', 'fr-CA;q=0.8, fr, en', () => {
+            expect(paper.translate.localeName).to.be.equal('fr');
+
+            done();
+        });
+    });
+
+    it('should default to english if the locale is not supported', done => {
+        const paper = new Paper(null, null, assembler);
+
+        paper.loadTheme('pages/localeName', 'es-VE, en', () => {
+            expect(paper.translate.localeName).to.be.equal('en');
+
+            done();
+        });
+    });
+
+    it('should include the langName in the template context', done => {
+        const paper = new Paper(null, null, assembler);
+
+        paper.loadTheme('pages/localeName', 'fr-CA, en', () => {
+            expect(paper.render('pages/localeName', {})).to.be.equal('fr-CA');
 
             done();
         });
