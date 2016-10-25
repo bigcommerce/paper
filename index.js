@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var Localizer = require('./lib/localizer');
+var localizer = require('./lib/localizer');
 var Path = require('path');
 var Fs = require('fs');
 var Handlebars = require('handlebars');
@@ -134,12 +134,12 @@ Paper.prototype.loadTemplatesSync = function (templates) {
 Paper.prototype.loadTranslations = function (acceptLanguage, callback) {
     var self = this;
 
-    self.assembler.getTranslations(function (error, translations) {
+    self.assembler.getTranslations((error, translations) => {
         if (error) {
             return callback(error);
         }
         // Make translations available to the helpers
-        self.translate = Localizer.localize(acceptLanguage, translations);
+        self.translate = localizer(acceptLanguage, translations);
 
         callback();
     });
