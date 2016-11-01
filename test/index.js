@@ -13,7 +13,7 @@ describe('loadTheme()', function() {
                 var templates = {
                     'pages/product': '<html></html>',
                     'pages/partial': '<p></p>',
-                    'pages/localeName': '{{localeName}}',
+                    'pages/localeName': '{{locale_name}}',
                 };
 
                 callback(null, processor(templates));

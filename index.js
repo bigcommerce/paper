@@ -234,7 +234,7 @@ Paper.prototype.render = function (path, context) {
     var output;
 
     if (this.translate) {
-        context.localeName = this.translate.localeName;
+        context.locale_name = this.translate.localeName;
     }
 
     output = this.handlebars.templates[path](context);
