@@ -50,10 +50,9 @@ describe('loadTheme()', function() {
         paper.loadTheme('pages/product', 'fr-CA;q=0.8, fr, en', () => {
             expect(paper.handlebars.templates['pages/product']).to.be.a.function();
             expect(paper.handlebars.templates['pages/partial']).to.be.a.function();
-            expect(paper.translate).to.be.a.function();
-            expect(paper.translate('hello', {name: 'Mario'})).to.be.equal('Bonjour Mario');
-            expect(paper.translate('hello', {name: 'Already Compiled'})).to.be.equal('Bonjour Already Compiled');
-            expect(paper.translate('does_not_exist')).to.be.equal('does_not_exist');
+            expect(paper.translator.translate('hello', {name: 'Mario'})).to.be.equal('Bonjour Mario');
+            expect(paper.translator.translate('hello', {name: 'Already Compiled'})).to.be.equal('Bonjour Already Compiled');
+            expect(paper.translator.translate('does_not_exist')).to.be.equal('does_not_exist');
 
             done();
         });
@@ -63,7 +62,7 @@ describe('loadTheme()', function() {
         const paper = new Paper(null, null, assembler);
 
         paper.loadTheme('pages/localeName', 'fr-CA;q=0.8, fr, en', () => {
-            expect(paper.translate.localeName).to.be.equal('fr');
+            expect(paper.translator.getLocaleName()).to.be.equal('fr');
 
             done();
         });
@@ -73,7 +72,7 @@ describe('loadTheme()', function() {
         const paper = new Paper(null, null, assembler);
 
         paper.loadTheme('pages/localeName', 'es-VE, en', () => {
-            expect(paper.translate.localeName).to.be.equal('en');
+            expect(paper.translator.getLocaleName()).to.be.equal('en');
 
             done();
         });
