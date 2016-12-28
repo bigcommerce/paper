@@ -233,6 +233,9 @@ Paper.prototype.addDecorator = function (decorator) {
 Paper.prototype.render = function (path, context) {
     var output;
 
+    context = context || {};
+    context.template_file = path;
+
     if (this.translate) {
         context.locale_name = this.translate.localeName;
     }
@@ -245,5 +248,57 @@ Paper.prototype.render = function (path, context) {
 
     return output;
 };
+
+/**
+ * Theme rendering logic
+ * @param  {String|Array} templatePath
+ * @param  {Object} data
+ * @return {String|Object}
+ */
+Paper.prototype.renderTheme = function(templatePath, data) {
+    var html,
+        output;
+
+    // Is an ajax request?
+    if (data.remote || _.isArray(templatePath)) {
+
+        if (data.remote) {
+            data.context = _.extend({}, data.context, data.remote_data);
+        }
+
+        // Is render_with ajax request?
+        if (templatePath) {
+            // if multiple render_with
+            if (_.isArray(templatePath)) {
+                // if templatePath is an array ( multiple templates using render_with option)
+                // compile all the template required files into a hash table
+                html = templatePath.reduce((table, file) => {
+                    table[file] = this.render(file, data.context);
+                    return table;
+                }, {});
+            } else {
+                html = this.render(templatePath, data.context);
+            }
+
+            if (data.remote) {
+                // combine the context & rendered html
+                output = {
+                    data: data.remote_data,
+                    content: html
+                };
+            } else {
+                output = html;
+            }
+        } else {
+            output = {
+                data: data.remote_data
+            };
+        }
+    } else {
+        output = this.render(templatePath, data.context);
+    }
+
+    return output;
+}
 
 module.exports = Paper;
