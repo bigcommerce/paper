@@ -220,4 +220,14 @@ describe('if helper', function() {
         done();
     });
 
+    it('should work as a non-block helper when used as a subexpression', function(done) {
+        expect(c('{{#if (if num1 "!==" num2)}}{{big}}{{/if}}', context))
+            .to.be.equal('big');
+
+        expect(c('{{#all (if num1 "!==" num2) "1" true}}big{{/all}}', context))
+            .to.be.equal('big');
+
+        done();
+    });
+
 });
