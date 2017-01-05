@@ -77,10 +77,14 @@ function helper(paper) {
             }
         }
 
-        if (result) {
-            return options.fn(this);
-        } else {
-            return options.inverse(this);
+        if (options.fn) { // block helper
+            if (result) {
+                return options.fn(this);
+            } else {
+                return options.inverse(this);
+            }
+        } else { // non-block helper
+            return result;
         }
     });
 }
