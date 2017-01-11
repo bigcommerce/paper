@@ -28,7 +28,7 @@ describe('lang helper', () => {
         paper = new Paper();
 
         paper.translator = {
-            getLocaleName: () => 'en',
+            getLocale: () => 'en',
             translate: (key, params) => `Powered By ${params.name}`,
         };
 

@@ -6,10 +6,7 @@ function helper(paper) {
             return '{}';
         }
 
-        return JSON.stringify({
-            locale: paper.translator.getLocaleName(),
-            translation: paper.translator.getTranslation(keyFilter),
-        });
+        return JSON.stringify(paper.translator.getLanguage(keyFilter));
     });
 }
 

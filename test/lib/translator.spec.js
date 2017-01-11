@@ -7,34 +7,58 @@ const Logger = require('../../lib/logger');
 const Translator = require('../../lib/translator');
 
 const lab = exports.lab = Lab.script();
+const afterEach = lab.afterEach;
+const beforeEach = lab.beforeEach;
 const describe = lab.experiment;
 const expect = Code.expect;
 const it = lab.it;
 
 describe('Translator', () => {
-    const translations = {
-        en: {
-            welcome: 'Welcome',
-            hello: 'Hello {name}',
-            bye: 'Bye bye',
-            level1: {
-                level2: 'we are on the second level',
+    let errorLoggerStub;
+    let loggerStub;
+    let translations;
+
+    beforeEach(done => {
+        translations = {
+            en: {
+                welcome: 'Welcome',
+                hello: 'Hello {name}',
+                bye: 'Bye bye',
+                items: '{count, plural, one{1 Item} other{# Items}}',
+                level1: {
+                    level2: 'we are on the second level',
+                },
             },
-        },
-        fr: {
-            hello: 'Bonjour {name}',
-            bye: 'au revoir',
-            level1: {
-                level2: 'nous sommes dans le deuxième niveau',
+            fr: {
+                hello: 'Bonjour {name}',
+                bye: 'au revoir',
+                level1: {
+                    level2: 'nous sommes dans le deuxième niveau',
+                },
             },
-        },
-        'fr-CA': {
-            hello: 'Salut {name}',
-        },
-        yolo: {
-            welcome: 'yolo',
-        },
-    };
+            'fr-CA': {
+                hello: 'Salut {name}',
+            },
+            yolo: {
+                welcome: 'yolo',
+            },
+            zh: {
+                days: '{count, plural, other{# 天}}',
+            },
+        };
+
+        errorLoggerStub = Sinon.stub(Logger, 'logError');
+        loggerStub = Sinon.stub(Logger, 'log');
+
+        done();
+    });
+
+    afterEach(done => {
+        errorLoggerStub.restore();
+        loggerStub.restore();
+
+        done();
+    });
 
     it('should return translated strings', done => {
         const translator = Translator.create('fr-CA', translations);
@@ -75,8 +99,6 @@ describe('Translator', () => {
     });
 
     it('should return translated strings in English and print to log if the translation file cannot be parsed', done => {
-        const loggerStub = Sinon.stub(Logger, 'log');
-
         const nl = {
             bye: 'doei',
             level1: {},
@@ -88,8 +110,6 @@ describe('Translator', () => {
 
         expect(translator.translate('bye')).to.equal('Bye bye');
         expect(loggerStub.called).to.equal(true);
-
-        loggerStub.restore();
 
         done();
     });
@@ -104,19 +124,15 @@ describe('Translator', () => {
     });
 
     it('should return an empty string and log a message if missing required parameters', done => {
-        const loggerStub = Sinon.stub(Logger, 'log');
         const translator = Translator.create('en', translations);
 
         expect(translator.translate('hello')).to.equal('');
         expect(loggerStub.called).to.equal(true);
 
-        loggerStub.restore();
-
         done();
     });
 
     it('should log an error when there is a syntax error in the template', done => {
-        const errorLoggerStub = Sinon.stub(Logger, 'logError');
         const translator = Translator.create('en', {
             en: {
                 items_with_syntax_error: '{count, plurral, one{1 Item} other{# Items}}',
@@ -130,6 +146,18 @@ describe('Translator', () => {
         done();
     });
 
+    it('should log an error when there is a syntax error in the template', done => {
+        const translator = Translator.create('en', {
+            en: {
+                gender_error: '{gender, select, male{He} female{She}} liked this.',
+            },
+        });
+
+        expect(() => translator.translate('gender_error', { gender: 'shemale' })).to.throw(Error);
+
+        done();
+    });
+
     it('should return the translation key if both the preferred and fallback translations are missing', done => {
         const translator = Translator.create('jp', {});
 
@@ -138,10 +166,21 @@ describe('Translator', () => {
         done();
     });
 
+    it('should return pluralized strings according to their language', done => {
+        const translator = Translator.create('zh', translations);
+
+        expect(translator.translate('days', { count: 1 })).to.equal('1 天');
+        expect(translator.translate('days', { count: 2 })).to.equal('2 天');
+        expect(translator.translate('items', { count: 1 })).to.equal('1 Item');
+        expect(translator.translate('items', { count: 2 })).to.equal('2 Items');
+
+        done();
+    });
+
     it('should return the current locale name', done => {
-        expect(Translator.create('en', translations).getLocaleName()).to.equal('en');
-        expect(Translator.create('fr-CA', translations).getLocaleName()).to.equal('fr-CA');
-        expect(Translator.create('jp', translations).getLocaleName()).to.equal('en');
+        expect(Translator.create('en', translations).getLocale()).to.equal('en');
+        expect(Translator.create('fr-CA', translations).getLocale()).to.equal('fr-CA');
+        expect(Translator.create('jp', translations).getLocale()).to.equal('en');
 
         done();
     });
@@ -149,11 +188,46 @@ describe('Translator', () => {
     it('should return a translation object', done => {
         const translator = Translator.create('en', translations);
 
-        expect(translator.getTranslation()).to.deep.equal({
-            welcome: 'Welcome',
-            hello: 'Hello {name}',
-            bye: 'Bye bye',
-            'level1.level2': 'we are on the second level',
+        expect(translator.getLanguage()).to.deep.equal({
+            locale: 'en',
+            locales: {
+                'level1.level2': 'en',
+                bye: 'en',
+                hello: 'en',
+                items: 'en',
+                welcome: 'en',
+            },
+            translations: {
+                'level1.level2': 'we are on the second level',
+                bye: 'Bye bye',
+                hello: 'Hello {name}',
+                items: '{count, plural, one{1 Item} other{# Items}}',
+                welcome: 'Welcome',
+            },
+        });
+
+        done();
+    });
+
+    it('should return a cascaded translation object', done => {
+        const translator = Translator.create('fr-CA', translations);
+
+        expect(translator.getLanguage()).to.deep.equal({
+            locale: 'fr-CA',
+            locales: {
+                'level1.level2': 'fr',
+                bye: 'fr',
+                hello: 'fr-CA',
+                items: 'en',
+                welcome: 'en',
+            },
+            translations: {
+                'level1.level2': 'nous sommes dans le deuxième niveau',
+                bye: 'au revoir',
+                hello: 'Salut {name}',
+                items: '{count, plural, one{1 Item} other{# Items}}',
+                welcome: 'Welcome',
+            },
         });
 
         done();
@@ -162,12 +236,24 @@ describe('Translator', () => {
     it('should return a translation object filtered by key', done => {
         const translator = Translator.create('en', translations);
 
-        expect(translator.getTranslation('hello')).to.deep.equal({
-            hello: 'Hello {name}'
+        expect(translator.getLanguage('hello')).to.deep.equal({
+            locale: 'en',
+            locales: {
+                hello: 'en',
+            },
+            translations: {
+                hello: 'Hello {name}',
+            },
         });
 
-        expect(translator.getTranslation('level1')).to.deep.equal({
-            'level1.level2': 'we are on the second level',
+        expect(translator.getLanguage('level1')).to.deep.equal({
+            locale: 'en',
+            locales: {
+                'level1.level2': 'en',
+            },
+            translations: {
+                'level1.level2': 'we are on the second level',
+            },
         });
 
         done();

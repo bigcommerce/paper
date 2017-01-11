@@ -62,7 +62,7 @@ describe('loadTheme()', function() {
         const paper = new Paper(null, null, assembler);
 
         paper.loadTheme('pages/localeName', 'fr-CA;q=0.8, fr, en', () => {
-            expect(paper.translator.getLocaleName()).to.be.equal('fr');
+            expect(paper.translator.getLocale()).to.be.equal('fr');
 
             done();
         });
@@ -72,7 +72,7 @@ describe('loadTheme()', function() {
         const paper = new Paper(null, null, assembler);
 
         paper.loadTheme('pages/localeName', 'es-VE, en', () => {
-            expect(paper.translator.getLocaleName()).to.be.equal('en');
+            expect(paper.translator.getLocale()).to.be.equal('en');
 
             done();
         });

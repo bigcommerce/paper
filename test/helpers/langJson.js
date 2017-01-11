@@ -23,18 +23,15 @@ describe('langJson helper', () => {
         paper = new Paper();
 
         paper.translator = {
-            getLocaleName: () => 'en',
-            getTranslation: () => ({}),
+            getLocale: () => 'en',
+            getLanguage: () => ({ locale: 'en' }),
         };
 
         done();
     });
 
     it('should return translation as JSON string if translator is defined', done => {
-        expect(compile(paper, '{{{langJson}}}')).to.be.equal(JSON.stringify({
-            locale: paper.translator.getLocaleName(),
-            translation: paper.translator.getTranslation(),
-        }));
+        expect(compile(paper, '{{{langJson}}}')).to.be.equal(JSON.stringify(paper.translator.getLanguage()));
 
         done();
     });
