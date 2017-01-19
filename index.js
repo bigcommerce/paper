@@ -234,7 +234,7 @@ Paper.prototype.render = function (path, context) {
     var output;
 
     context = context || {};
-    context.template_file = path;
+    context.template = path;
 
     if (this.translate) {
         context.locale_name = this.translate.localeName;
