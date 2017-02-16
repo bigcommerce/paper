@@ -1,3 +1,5 @@
+'use strict';
+
 /*
 ** FUNCTION
 ** phpDateToTimestamp(dateString)
@@ -19,65 +21,64 @@
 **
 ** {{#if (phpDateToTimestamp 'category.products[0].date_added.') > 
 **       ((getTime) - theme_settings.new_product_lag)) }}
-**   /* product is newer than the given time interval */
+**   // product is newer than the given time interval 
 ** {{/if}}
 **
 ** and similarly with brands: 'brands.products[0].date_added.')
 */
 
-'use strict';
-
 function helper(paper) {
-  paper.handlebars.registerHelper('phpDateToTimestamp', function (dateString) {
-    if (typeof dateString !== 'string') {
-        return 0;
-    }
-    var dateArray = dateString.split(" ");
-    var month = 12;
-    switch (dateArray[0]) {
-      case "Jan":
-        month = 0;
-        break;
-      case "Feb":
-        month = 1;
-        break;
-      case "Mar":
-        month = 2;
-        break;
-      case "Apr":
-        month = 3;
-        break;
-      case "May":
-        month = 4;
-        break;
-      case "Jun":
-        month = 5;
-        break;
-      case "Jul":
-        month = 6;
-        break;    
-      case "Aug":
-        month = 7;
-        break;
-      case "Sep":
-        month = 8;
-        break;
-      case "Oct":
-        month = 9;
-        break;
-      case "Nov":
-        month = 10;
-        break;
-      case "Dec":
-        month = 11;
-        break;
-    }
-    // remove english ordinal suffix: nd, rd, st, th
-    var day = dateArray[1].replace(/[a-z]/g, "");
-    var year = dateArray[2];
-    var ts = new Date(year, month, day, 0, 0, 0);
-    return ts.getTime();
-  });
+    paper.handlebars.registerHelper('phpDateToTimestamp', function (dateString) {
+        if (typeof dateString !== 'string') {
+            return 0;
+        }
+        var dateArray = dateString.split(" ");
+        var month = 12;
+
+        switch (dateArray[0]) {
+        case "Jan":
+            month = 0;
+            break;
+        case "Feb":
+            month = 1;
+            break;
+        case "Mar":
+            month = 2;
+            break;
+        case "Apr":
+            month = 3;
+            break;
+        case "May":
+            month = 4;
+            break;
+        case "Jun":
+            month = 5;
+            break;
+        case "Jul":
+            month = 6;
+            break;    
+        case "Aug":
+            month = 7;
+            break;
+        case "Sep":
+            month = 8;
+            break;
+        case "Oct":
+            month = 9;
+            break;
+        case "Nov":
+            month = 10;
+            break;
+        case "Dec":
+            month = 11;
+            break;
+        }
+        // remove english ordinal suffix: nd, rd, st, th
+        var day = dateArray[1].replace(/[a-z]/g, "");
+        var year = dateArray[2];
+        var ts = new Date(year, month, day, 0, 0, 0);
+        return ts.getTime();
+    });
 }
 
 module.exports = helper;
