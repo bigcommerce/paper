@@ -13,8 +13,8 @@ function c(template, context) {
 describe('truncate helper', function() {
 
     var context = {
-      string: "hello world",
-      number: 2
+        string: 'hello world',
+        number: 2
     };
 
     it('should return the entire string if length is longer than the input string', function(done) {
