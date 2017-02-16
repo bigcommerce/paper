@@ -19,31 +19,31 @@ describe('phpDateToTimestamp helper', function() {
         th: 'Mar 4th 2017'
     };
 
-    it('should return the unix timestamp for Mar 1st 2017', function(done) {
+    it('should return the unix timestamp for Mar 1st 2017 GMT', function(done) {
 
         expect(c('{{phpDateToTimestamp st}}', context))
-            .to.be.equal('1488355200000');
+            .to.be.equal('1488326400000');
         done();
     });
 
-    it('should return the unix timestamp for Mar 2nd 2017', function(done) {
+    it('should return the unix timestamp for Mar 2nd 2017 GMT', function(done) {
 
         expect(c('{{phpDateToTimestamp nd}}', context))
-            .to.be.equal('1488441600000');
+            .to.be.equal('1488412800000');
         done();
     });
 
-    it('should return the unix timestamp for Mar 3rd 2017', function(done) {
+    it('should return the unix timestamp for Mar 3rd 2017 GMT', function(done) {
 
         expect(c('{{phpDateToTimestamp rd}}', context))
-            .to.be.equal('1488528000000');
+            .to.be.equal('1488499200000');
         done();
     });
 
-    it('should return the unix timestamp for Mar 4th 2017', function(done) {
+    it('should return the unix timestamp for Mar 4th 2017 GMT', function(done) {
 
         expect(c('{{phpDateToTimestamp th}}', context))
-            .to.be.equal('1488614400000');
+            .to.be.equal('1488585600000');
         done();
     });
 
