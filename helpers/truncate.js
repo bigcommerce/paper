@@ -1,13 +1,15 @@
 'use strict';
 
+const substring = require('stringz').substring;
+
 /* 2017-02-14
- * 
+ *
  * FUNCTION
  * truncate(str, length)
  *
  * DESCRIPTION (WHAT)
- * Returns the first X characters in a string (unless it reaches the end 
- * of the string first, in which case it will return fewer). Returns a 
+ * Returns the first X characters in a string (unless it reaches the end
+ * of the string first, in which case it will return fewer). Returns a
  * new string that is truncated to the given length.
  *
  * USE CASE (WHY)
@@ -15,19 +17,21 @@
  * my home page that highlights the most recent blog post. In the card,
  * I want to display the blog thumbnail, title and the first 40 characters
  * of the post's body. In order to extract the first 40 characters, I need
- * a Handlebars helper that works like the javascript substring() function. 
- * 
+ * a Handlebars helper that works like the javascript substring() function.
+ *
  * USAGE
  *
  *  {{lang (truncate 'blog.post.body.' 40) }}
  */
 function helper(paper) {
-    paper.handlebars.registerHelper('truncate', function (s, length) {
-        if (typeof s !== 'string') {
-            return s;
+    paper.handlebars.registerHelper('truncate', function (string, length) {
+        if (typeof string !== 'string') {
+            return string;
         }
-        var str = s.substring(0, length)
-        return new paper.handlebars.SafeString(str);
+
+        const truncatedString = substring(string, 0, length);
+
+        return new paper.handlebars.SafeString(truncatedString);
     });
 }
 

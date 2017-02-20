@@ -13,8 +13,11 @@ function c(template, context) {
 describe('truncate helper', function() {
 
     var context = {
+        chinese_string: '𠜎𠜱𠝹𠱓𠱸𠲖𠳏',
+        number: 2,
+        spanish_string: 'mañana',
         string: 'hello world',
-        number: 2
+        unicode_string: 'She ❤️️ this',
     };
 
     it('should return the entire string if length is longer than the input string', function(done) {
@@ -35,6 +38,25 @@ describe('truncate helper', function() {
 
         expect(c('{{truncate number 5}}', context))
             .to.be.equal('2');
+        done();
+    });
+
+    it('should handle non-English strings', function(done) {
+
+        expect(c('{{truncate spanish_string 3}}', context))
+            .to.be.equal('mañ');
+
+        expect(c('{{truncate chinese_string 3}}', context))
+            .to.be.equal('𠜎𠜱𠝹');
+
+        done();
+    });
+
+    it('should handle unicode strings', function(done) {
+
+        expect(c('{{truncate unicode_string 5}}', context))
+            .to.be.equal('She ❤️');
+
         done();
     });
 });
