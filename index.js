@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var localizer = require('./lib/localizer');
+var Translator = require('./lib/translator');
 var Path = require('path');
 var Fs = require('fs');
 var Handlebars = require('handlebars');
@@ -138,8 +138,9 @@ Paper.prototype.loadTranslations = function (acceptLanguage, callback) {
         if (error) {
             return callback(error);
         }
+
         // Make translations available to the helpers
-        self.translate = localizer(acceptLanguage, translations);
+        self.translator = Translator.create(acceptLanguage, translations);
 
         callback();
     });
@@ -236,8 +237,8 @@ Paper.prototype.render = function (path, context) {
     context = context || {};
     context.template = path;
 
-    if (this.translate) {
-        context.locale_name = this.translate.localeName;
+    if (this.translator) {
+        context.locale_name = this.translator.getLocale();
     }
 
     output = this.handlebars.templates[path](context);

@@ -16,36 +16,30 @@ function compile(paper, template, context) {
     return paper.loadTemplatesSync({ template: template }).render('template', context);
 }
 
-describe('lang helper', () => {
-    let context;
+describe('langJson helper', () => {
     let paper;
 
     beforeEach(done => {
-        context = {
-            name: 'BigCommerce',
-        };
-
         paper = new Paper();
 
         paper.translator = {
             getLocale: () => 'en',
-            translate: (key, params) => `Powered By ${params.name}`,
+            getLanguage: () => ({ locale: 'en' }),
         };
 
         done();
     });
 
-    it('should translate the key with attributes', done => {
-        expect(compile(paper, '{{lang "powered_by" name=name}}', context))
-            .to.be.equal('Powered By BigCommerce');
+    it('should return translation as JSON string if translator is defined', done => {
+        expect(compile(paper, '{{{langJson}}}')).to.be.equal(JSON.stringify(paper.translator.getLanguage()));
 
         done();
     });
 
-    it('should return an empty string if translator is undefined', done => {
+    it('should return an empty object as JSON string if translator is not defined', done => {
         paper.translator = null;
 
-        expect(compile(paper, '{{lang "powered_by" name=name}}', context)).to.be.equal('');
+        expect(compile(paper, '{{{langJson}}}')).to.be.equal('{}');
 
         done();
     });

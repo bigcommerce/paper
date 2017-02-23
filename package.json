@@ -24,7 +24,6 @@
     "accept-language-parser": "^1.0.2",
     "async": "^1.4.2",
     "handlebars": "^3.0.1",
-    "hoek": "^2.12.0",
     "lodash": "^3.6.0",
     "messageformat": "^0.2.2",
     "stringz": "^0.1.1",
