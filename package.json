@@ -1,6 +1,6 @@
 {
   "name": "@bigcommerce/stencil-paper",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "description": "A stencil plugin to register partials and helpers from handlebars and returns the compiled version for the stencil platform.",
   "main": "index.js",
   "author": "Bigcommerce",
