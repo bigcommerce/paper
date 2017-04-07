@@ -8,7 +8,7 @@
 Load Paper into your app:
 
 ```
-var Paper = require('stencil-paper');
+var Paper = require('@bigcommerce/stencil-paper');
 ```
 
 Instatiate paper passing an `assembler`:
