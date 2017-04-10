@@ -17,10 +17,58 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function (file) {
 });
 
 /**
-* Theme renderer constructor
-* @param {Object} settings
-* @param {Object} themeSettings
-* @param {Object} assembler
+* processor is an optional function to apply during template assembly. The
+* templates parameter is a object where the keys are paths and the values are the
+* raw templates. The function returns an object of the same format, possibly changing
+* the values. We use this to precompile templates within the Paper module.
+*
+* @callback processor
+* @param {Object} templates - Object that contains the gathered templates
+*/
+
+/**
+* getTemplatesCallback is a function to call on completion of Assembler.getTemplates
+*
+* @callback getTemplatesCallback
+* @param {Error} err - Error if it occurred, null otherwise
+* @param {Object} templates - Object that contains the gathered templates, including processing
+*/
+
+/**
+* getTranslationsCallback is a function to call on completion of Assembler.getTranslations
+*
+* @callback getTranslationsCallback
+* @param {Error} err - Error if it occurred, null otherwise
+* @param {Object} translations - Object that contains the translations
+*/
+
+/**
+* Assembler.getTemplates assembles all the templates required to render the given
+* top-level template.
+*
+* @callback assemblerGetTemplates
+* @param {string} path - The path to the templates, relative to the templates directory
+* @param {processor} processor - An optional processor to apply to each template during assembly
+* @param {getTemplatesCallback} callback - Callback when Assembler.getTemplates is done.
+*/
+
+/**
+* Assembler.getTranslations assembles all the translations for the theme.
+*
+* @callback assemblerGetTranslations
+* @param {getTranslationsCallback} callback - Callback when Assembler.getTranslations is done.
+*/
+
+/**
+* Paper constructor. In addition to store settings and theme settings (configuration),
+* paper expects to be passed an assembler to gather all the templates required to render
+* the top level template.
+*
+* @param {Object} settings - Site settings
+* @param {Object} themeSettings - Theme settings (configuration)
+* @param {Object} assembler - Assembler with getTemplates and getTranslations methods.
+* @param {assemblerGetTemplates} assembler.getTemplates - Method to assemble templates
+* @param {assemblerGetTranslations} assembler.getTranslations - Method to assemble translations
 */
 function Paper(settings, themeSettings, assembler) {
     var self = this;
@@ -28,7 +76,7 @@ function Paper(settings, themeSettings, assembler) {
     self.handlebars = Handlebars.create();
 
     self.handlebars.templates = {};
-    self.translate = null;
+    self.translator = null;
     self.inject = {};
     self.decorators = [];
 
