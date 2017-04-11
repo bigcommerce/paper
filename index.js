@@ -202,7 +202,6 @@ Paper.prototype.loadTranslations = function (acceptLanguage, callback) {
 Paper.prototype.cdnify = function (path) {
     var cdnUrl = this.settings['cdn_url'] || '';
     var versionId = this.settings['theme_version_id'];
-    var configId = this.settings['theme_config_id'];
     var sessionId = this.settings['theme_session_id'];
     var protocolMatch = /(.*!?:)/;
 
@@ -252,7 +251,7 @@ Paper.prototype.cdnify = function (path) {
         path = '/' + path;
     }
 
-    if (!versionId || !configId) {
+    if (!versionId) {
         return path;
     }
 
@@ -261,10 +260,10 @@ Paper.prototype.cdnify = function (path) {
     }
 
     if (sessionId) {
-        return [cdnUrl, 'stencil', versionId, configId, 'e', sessionId, path].join('/');
+        return [cdnUrl, 'stencil', versionId, 'e', sessionId, path].join('/');
     }
 
-    return [cdnUrl, 'stencil', versionId, configId, path].join('/');
+    return [cdnUrl, 'stencil', versionId, path].join('/');
 };
 
 /**
