@@ -61,7 +61,7 @@ const whitelist = [
     },
     {
         name: 'html',
-        include: ['ellipsis', 'sanitize', 'ul', 'ol', 'thumbnail']
+        include: ['ellipsis', 'sanitize', 'ul', 'ol', 'thumbnailImage']
     },
     {
         name: 'inflection',

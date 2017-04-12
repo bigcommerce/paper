@@ -88,6 +88,26 @@ describe('third party handlebars-helpers', function() {
             });
         });
 
+        describe('contains thumbnailImage', function() {
+            it('creates a <figure> with a thumbnail linked to an image', function(done) {
+                const ctxt = {
+                    data: {
+                        id: 'id',
+                        alt: 'alt',
+                        thumbnail: 'thumbnail.png',
+                        size: {
+                            width: 32,
+                            height: 32
+                        }
+                    }
+                };
+                expect(c(`{{{thumbnailImage data}}}`, ctxt)).to.be
+                    .equal('<figure id=\"image-id\">\n<img alt=\"alt\" src=\"thumbnail.png\" width=\"32\" height=\"32\">\n</figure>');
+
+                done();
+            });
+        });
+
     });
 
     describe('inflection helpers', function() {
