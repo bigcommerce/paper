@@ -43,4 +43,11 @@ describe('stylesheet helper', () => {
 
         done();
     });
+
+    it('should not append configId if the file is not in assets/css/ directory', done => {
+        expect(c('{{{stylesheet "assets/lib/style.css" }}}', { theme_config_id: 'foo' }))
+            .to.be.equal('<link data-stencil-stylesheet href="/assets/lib/style.css" rel="stylesheet">');
+
+        done();
+    });
 });
