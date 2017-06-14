@@ -23,7 +23,7 @@
   "dependencies": {
     "accept-language-parser": "^1.0.2",
     "async": "^1.4.2",
-    "handlebars": "^3.0.1",
+    "handlebars": "^4.0.10",
     "handlebars-helpers": "^0.8.0",
     "lodash": "^3.6.0",
     "messageformat": "^0.2.2",
