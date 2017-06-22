@@ -28,6 +28,15 @@ describe('third party handlebars-helpers', function() {
             });
         });
 
+        describe('first helper', function() {
+            it('returns the first n items in an array', function(done) {
+                expect(c('{{first array 2}}', context))
+                    .to.be.equal('1,2');
+
+                done();
+            });
+        });
+
     });
 
     describe('collection helpers', function() {
