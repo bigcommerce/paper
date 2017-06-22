@@ -7,7 +7,7 @@
     "modules": true
   },
   "env": {
-    "node": true,
+    "node": true
   },
   "globals": {
 
@@ -22,6 +22,6 @@
     "no-debugger": 2,
     "no-undef": 2,
     "no-unused-vars": 2,
-    "indent": [2, 4],
+    "indent": [2, 4]
   }
 }
