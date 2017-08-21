@@ -71,7 +71,7 @@ function googleParser(fonts) {
         weights = weights.split(',');
 
         familyHash[familyKey].push(weights);
-        familyHash[familyKey] = _.unique(_.flatten(familyHash[familyKey]));
+        familyHash[familyKey] = _.uniq(_.flatten(familyHash[familyKey]));
     });
 
 
