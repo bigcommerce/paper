@@ -22,7 +22,7 @@ function helper(paper) {
         opts = args.pop();
 
         // Check if all the arguments are valid / truthy
-        result = _.all(args, function (arg) {
+        result = _.every(args, function (arg) {
             if (_.isArray(arg)) {
                 return !!arg.length;
             }
