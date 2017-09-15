@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.5 (2017-09-15)
+- Fix a bug in the `replace` helper [#125](https://github.com/bigcommerce/paper/pull/125)
+- Added support to use operators in the `unless` helper [#126](https://github.com/bigcommerce/paper/pull/126)
+
+## 2.0.4 (2017-08-21)
+- Added a test to `first` helper [#120](https://github.com/bigcommerce/paper/pull/120)
+- Lodash deprecated method replaced [#121](https://github.com/bigcommerce/paper/pull/121)
+
+## 2.0.3 (2017-06-21)
+- Adds `region` helper [#118](https://github.com/bigcommerce/paper/pull/118)
+- Bug fix in the `stylesheet` helper [#116](https://github.com/bigcommerce/paper/pull/116)
+
 ## 2.0.1 (2017-04-12)
 - Adds the `{{thumbnailImage}}` helper and removes the non-existent `{{thumbnail}}` helper [#114](https://github.com/bigcommerce/paper/pull/114)
 
