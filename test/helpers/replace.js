@@ -6,34 +6,42 @@ var Code = require('code'),
     expect = Code.expect,
     it = lab.it;
 
-function c(templates, context) {
-    return new Paper().loadTemplatesSync(templates).render('template', context);
+function c(template, context) {
+    return new Paper().loadTemplatesSync({ template, template2: "day" }).render('template', context);
 }
 
 describe('replace helper', function() {
-    var templates = {
-            template: "{{#replace '%%var%%' content}}{{> template2}}{{/replace}}",
-            template2: "day"
-        },
-        context = {
-            content: "Either you run the %%var%% or the  %%var%% runs you",
-
-        };
+    const context = {
+        content: "Either you run the %%var%% or the  %%var%% runs you",
+        price: '$49.99',
+    };
 
     it('should replace all ocurrance of %%var%% with "day"', function(done) {
 
-        expect(c(templates, context))
+        expect(c("{{#replace '%%var%%' content}}{{> template2}}{{/replace}}", context))
             .to.be.equal('Either you run the day or the  day runs you');
 
         done();
     });
 
     it('should handle undefined values', function(done) {
-        var context = {};
-        expect(c(templates, context))
+        const context = {};
+        expect(c("{{#replace '%%var%%' content}}{{> template2}}{{/replace}}", context))
             .to.be.equal('');
 
         done();
     });
 
+    it('should replace $', function(done) {
+        expect(c("{{#replace '$' price}}{{/replace}}", context))
+            .to.be.equal('49.99');
+
+        expect(c("{{#replace '$' '$10.00'}}{{/replace}}", context))
+            .to.be.equal('10.00');
+
+        expect(c("{{#replace '$' '$10.00'}}USD {{/replace}}", context))
+            .to.be.equal('USD 10.00');
+
+        done();
+    });
 });
