@@ -10,17 +10,18 @@ function c(template, context) {
     return new Paper().loadTemplatesSync({template: template}).render('template', context);
 }
 
-describe('if helper', function() {
+describe('if helper', () => {
     var context = {
         num1: 1,
         num2: 2,
         product: {a: 1, b: 2},
         string: 'yolo',
         alwaysTrue: true,
+        alwaysFalse: true,
         big: 'big'
     };
 
-    it('should have the same behavior as the original if helper', function(done) {
+    it('should have the same behavior as the original if helper', done => {
         expect(c('{{#if 1}}{{big}}{{/if}}', context))
             .to.be.equal('big');
 
@@ -54,7 +55,7 @@ describe('if helper', function() {
         done();
     });
 
-    it('should render "big" if all conditions match', function(done) {
+    it('should render "big" if all conditions match', done => {
 
         expect(c('{{#if "1" "==" num1}}big{{/if}}', context))
             .to.be.equal('big');
@@ -89,7 +90,7 @@ describe('if helper', function() {
         done();
     });
 
-    it('should render empty for all cases', function(done) {
+    it('should render empty for all cases', done => {
 
         expect(c('{{#if "2" "==" num1}}big{{/if}}', context))
             .to.be.equal('');
@@ -125,7 +126,7 @@ describe('if helper', function() {
     });
 
 
-    it('should render "big" if all ifs match', function(done) {
+    it('should render "big" if all ifs match', done => {
 
         var context = {
             num1: 1,
@@ -167,9 +168,8 @@ describe('if helper', function() {
         done();
     });
 
-    it('should render empty for all cases', function(done) {
-
-        var context = {
+    it('should render empty for all cases', done => {
+        const context = {
             num1: 1,
             num2: 2,
             product: {a: 1, b: 2},
@@ -220,7 +220,7 @@ describe('if helper', function() {
         done();
     });
 
-    it('should work as a non-block helper when used as a subexpression', function(done) {
+    it('should work as a non-block helper when used as a subexpression', done => {
         expect(c('{{#if (if num1 "!==" num2)}}{{big}}{{/if}}', context))
             .to.be.equal('big');
 
@@ -229,5 +229,62 @@ describe('if helper', function() {
 
         done();
     });
-
 });
+
+describe('unless helper', () => {
+    const context = {
+        num1: 1,
+        num2: 2,
+        product: {a: 1, b: 2},
+        alwaysTrue: true,
+        alwaysFalse: false,
+        notEmptyArray: [ 1, 2 , 3 ],
+        emptyArray: [],
+    };
+
+    it('should print hello', done => {
+        expect(c('{{#unless num1 "===" num2}}hello{{/unless}}', context))
+            .to.be.equal('hello');
+
+        expect(c('{{#unless alwaysFalse}}hello{{/unless}}', context))
+            .to.be.equal('hello');
+
+        expect(c('{{#unless does_not_exist}}hello{{/unless}}', context))
+            .to.be.equal('hello');
+
+        done();
+    });
+
+    it('should print empty', done => {
+        expect(c('{{#unless num1 "===" num1}}hello{{/unless}}', context))
+            .to.be.equal('');
+
+        expect(c('{{#unless alwaysTrue}}hello{{/unless}}', context))
+            .to.be.equal('');
+
+        expect(c('{{#unless product}}hello{{/unless}}', context))
+            .to.be.equal('');
+
+        done();
+    });
+
+    it('should work with arrays', done => {
+        expect(c('{{#unless emptyArray}}foo{{else}}bar{{/unless}}', context))
+            .to.be.equal('foo');
+
+        expect(c('{{#unless notEmptyArray}}foo{{else}}bar{{/unless}}', context))
+            .to.be.equal('bar');
+
+        done();
+    });
+
+    it('should work as a non-block helper when used as a subexpression', done => {
+        expect(c('{{#if (unless num1 "===" num2)}}big{{/if}}', context))
+            .to.be.equal('big');
+
+        expect(c('{{#all (unless num1 "===" num2) "1" true}}big{{/all}}', context))
+            .to.be.equal('big');
+
+        done();
+    });
+})

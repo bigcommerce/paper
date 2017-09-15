@@ -3,9 +3,20 @@
 var _ = require('lodash');
 
 function helper(paper) {
+    paper.handlebars.registerHelper('unless', function () {
+        const options = arguments[arguments.length - 1];
+        arguments[arguments.length - 1] = Object.assign({}, options, {
+            fn: options.inverse || (() => false),
+            inverse: options.fn || (() => true),
+            hash: options.hash
+        });
+
+        return paper.handlebars.helpers['if'].apply(this, arguments);
+    });
+
     paper.handlebars.registerHelper('if', function (lvalue, operator, rvalue) {
         const options = arguments[arguments.length - 1];
-        var result;
+        let result;
 
         function isOptions(obj) {
             return _.isObject(obj) && obj.fn;
@@ -13,10 +24,9 @@ function helper(paper) {
 
         // Only parameter
         if (isOptions(operator)) {
-
             // If an array is passed as the only parameter
             if (_.isArray(lvalue)) {
-                result = lvalue.length;
+                result = !!lvalue.length;
             }
             // If an empty object is passed, treat as false
             else if (_.isEmpty(lvalue) && _.isObject(lvalue)) {
@@ -24,7 +34,7 @@ function helper(paper) {
             }
             // Everything else
             else {
-                result = lvalue;
+                result = !!lvalue;
             }
         } else {
 
@@ -77,14 +87,15 @@ function helper(paper) {
             }
         }
 
-        if (options.fn) { // block helper
-            if (result) {
-                return options.fn(this);
-            } else {
-                return options.inverse(this);
-            }
-        } else { // non-block helper
-            return result;
+        if (!options.fn || !options.inverse) {
+            options.fn = () => true;
+            options.inverse = () => false;
+        }
+
+        if (result) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
         }
     });
 }
