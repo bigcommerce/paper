@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.6 (2017-09-20)
+- Fix a bug in the `replace` helper [#127](https://github.com/bigcommerce/paper/pull/127)
+
 ## 2.0.5 (2017-09-15)
 - Fix a bug in the `replace` helper [#125](https://github.com/bigcommerce/paper/pull/125)
 - Added support to use operators in the `unless` helper [#126](https://github.com/bigcommerce/paper/pull/126)
