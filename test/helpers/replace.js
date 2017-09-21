@@ -44,4 +44,17 @@ describe('replace helper', function() {
 
         done();
     });
+
+    it('should gracefully handle not strings', function(done) {
+        expect(c("{{#replace something price}}{{/replace}}", context))
+            .to.be.equal('');
+
+        expect(c("{{#replace $ '$10.00'}}{{/replace}}", context))
+            .to.be.equal('');
+
+        expect(c("{{#replace foo bar}}{{/replace}}", context))
+            .to.be.equal('');
+
+        done();
+    });
 });
