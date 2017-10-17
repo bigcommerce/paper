@@ -42,9 +42,9 @@ describe('Region Helper', () => {
         done();
     });
 
-    it('should return an empty string if no matching region on context object', done => {
+    it('should return an empty container if no matching region on context object', done => {
         expect(compile(paper, '{{region name="banner-bottom"}}', context))
-            .to.be.equal('');
+            .to.be.equal('<div data-content-region="banner-bottom"></div>');
 
         done();
     });
