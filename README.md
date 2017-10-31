@@ -44,6 +44,9 @@ paper.loadTheme(path, 'en', function (err) {
 });
 ```
 
+## Helpers Reference
+See the [stencil API reference](https://stencil.bigcommerce.com/docs/handlebars-helpers-reference) for documentation on the available helpers.
+
 #### License
 
 Copyright (c) 2015-2016, Bigcommerce Inc.
