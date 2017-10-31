@@ -23,7 +23,7 @@ function helper(paper) {
         opts = args.pop();
 
         // Without options hash, we check all the arguments
-        any = _.any(args, function (arg) {
+        any = _.some(args, function (arg) {
             if (_.isArray(arg)) {
                 return !!arg.length;
             }

@@ -27,11 +27,11 @@ function helper(paper) {
 
         if (!_.isEmpty(predicate)) {
             // With options hash, we check the contents of first argument
-            any = _.any(args[0], predicate);
+            any = _.some(args[0], predicate);
         } else {
             // DEPRECATED: Moved to #or helper
             // Without options hash, we check all the arguments
-            any = _.any(args, function (arg) {
+            any = _.some(args, function (arg) {
                 if (_.isArray(arg)) {
                     return !!arg.length;
                 }

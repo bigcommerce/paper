@@ -13,7 +13,7 @@ function helper(paper) {
     paper.handlebars.registerHelper('contains', function () {
         var args = Array.prototype.slice.call(arguments, 0, -1),
             options = _.last(arguments),
-            contained = _.contains.apply(_, args);
+            contained = _.includes.apply(_, args);
 
         // Yield block if true
         if (contained) {
