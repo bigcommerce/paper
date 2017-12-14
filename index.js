@@ -1,20 +1,9 @@
 'use strict';
 
-var _ = require('lodash');
-var Translator = require('./lib/translator');
-var Path = require('path');
-var Fs = require('fs');
-var Handlebars = require('handlebars');
-var Async = require('async');
-var helpers = [];
-var handlebarsOptions = {
-    preventIndent: true
-};
-
-// Load helpers (this only run once)
-Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function (file) {
-    helpers.push(require('./helpers/' + file));
-});
+const _ = require('lodash');
+const Translator = require('./lib/translator');
+const Async = require('async');
+const HandlebarsRenderer = require('@bigcommerce/stencil-paper-handlebars');
 
 /**
 * processor is an optional function to apply during template assembly. The
@@ -59,237 +48,172 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function (file) {
 * @param {getTranslationsCallback} callback - Callback when Assembler.getTranslations is done.
 */
 
-/**
-* Paper constructor. In addition to store settings and theme settings (configuration),
-* paper expects to be passed an assembler to gather all the templates required to render
-* the top level template.
-*
-* @param {Object} settings - Site settings
-* @param {Object} themeSettings - Theme settings (configuration)
-* @param {Object} assembler - Assembler with getTemplates and getTranslations methods.
-* @param {assemblerGetTemplates} assembler.getTemplates - Method to assemble templates
-* @param {assemblerGetTranslations} assembler.getTranslations - Method to assemble translations
-*/
 class Paper {
-    constructor(settings, themeSettings, assembler) {
-        this.handlebars = Handlebars.create();
-
-        this.handlebars.templates = {};
-        this.translator = null;
-        this.inject = {};
-        this.decorators = [];
-
-        this.settings = settings || {};
+    /**
+    * Paper constructor. In addition to store settings and theme settings (configuration),
+    * paper expects to be passed an assembler to gather all the templates required to render
+    * the top level template.
+    *
+    * @param {Object} siteSettings - Site settings
+    * @param {Object} themeSettings - Theme settings (configuration)
+    * @param {Object} assembler - Assembler with getTemplates and getTranslations methods.
+    * @param {String} rendererType - One of ['handlebars-v3', 'handlebars-v4']
+    * @param {assemblerGetTemplates} assembler.getTemplates - Method to assemble templates
+    * @param {assemblerGetTranslations} assembler.getTranslations - Method to assemble translations
+    */
+    constructor(siteSettings, themeSettings, assembler, rendererType) {
+        this.siteSettings = siteSettings || {};
         this.themeSettings = themeSettings || {};
         this.assembler = assembler || {};
-        this.contentServiceContext = {};
 
-        helpers.forEach(helper => helper(this));
+        // Build renderer based on type
+        switch(rendererType) {
+        case 'handlebars-v4':
+            this.renderer = new HandlebarsRenderer(this.siteSettings, this.themeSettings, 'v4');
+            break;
+        case 'handlebars-v3':
+        default:
+            this.renderer = new HandlebarsRenderer(this.siteSettings, this.themeSettings, 'v3');
+            break;
+        }
+
+        this.preProcessor = this.renderer.getPreProcessor();
     }
 
     /**
-     * Renders a string with the given context
-     * @param  {String} string
-     * @param  {Object} context
-     */
-    renderString(string, context) {
-        return this.handlebars.compile(string)(context);
-    }
-
-    loadTheme(paths, acceptLanguage, done) {
+     * Use the assembler to fetch partials/templates, and translations, then load them
+     * into the renderer.
+     *
+     * @param {String|Array} paths A string or array of strings - the template path(s) to load.
+     * @param {String} acceptLanguage The accept-language header - used to select a locale.
+     * @param {Function} callback
+    */
+    loadTheme(paths, acceptLanguage, callback) {
         if (!_.isArray(paths)) {
             paths = paths ? [paths] : [];
         }
 
         Async.parallel([
-            (next) => {
+            next => {
                 this.loadTranslations(acceptLanguage, next);
             },
-            (next) => {
+            next => {
                 Async.map(paths, this.loadTemplates.bind(this), next);
             }
-        ], done);
+        ], callback);
     }
 
     /**
-     * Load Partials/Templates
-     * @param  {Object}   templates
-     * @param  {Function} callback
+     * Use the assembler to fetch partials/templates, then load them
+     * into the renderer.
+     *
+     * @param {String} path The root template path to load. All dependencies will be loaded as well.
+     * @param {Function} callback
     */
     loadTemplates(path, callback) {
-        let processor = this.getTemplateProcessor();
-
-        this.assembler.getTemplates(path, processor, (error, templates) => {
-            if (error) {
-                return callback(error);
+        this.assembler.getTemplates(path, this.preProcessor, (err, templates) => {
+            if (err) {
+                return callback(err);
             }
 
-            _.each(templates, (precompiled, path) => {
-                var template;
-                if (!this.handlebars.templates[path]) {
-                    eval('template = ' + precompiled);
-                    this.handlebars.templates[path] = this.handlebars.template(template);
-                }
-            });
-
-            this.handlebars.partials = this.handlebars.templates;
+            try {
+                this.renderer.addTemplates(templates);
+            } catch(ex) {
+                return callback(ex);
+            }
 
             callback();
         });
     }
 
-    getTemplateProcessor() {
-        return (templates) => {
-            let precompiledTemplates = {};
-
-            _.each(templates,(content, path) => {
-                precompiledTemplates[path] = this.handlebars.precompile(content, handlebarsOptions);
-            });
-
-            return precompiledTemplates;
-        }
+    /**
+     * Is the given template loaded?
+     *
+     * @param {String} path The path to the template file
+     * @return {Boolean} is the given template loaded?
+     */
+    isTemplateLoaded(path) {
+        return this.renderer.isTemplateLoaded(path);
     }
 
     /**
-     * Load Partials/Templates used for test cases and stencil-cli
-     * @param  {Object}   templates
-     * @return {Object}
-     */
-    loadTemplatesSync(templates) {
-        _.each(templates,(content, fileName) => {
-            this.handlebars.templates[fileName] = this.handlebars.compile(content, handlebarsOptions);
-        });
-
-        this.handlebars.partials = this.handlebars.templates;
-
-        return this;
-    };
-
-    /**
-     * @param {String} acceptLanguage
-     * @param {Object} translations
+     * Load translation files and give a translator to renderer.
+     *
+     * @param {String} acceptLanguage The accept-language header, used to select a locale
+     * @param {Function} callback
      */
     loadTranslations(acceptLanguage, callback) {
-        this.assembler.getTranslations((error, translations) => {
-            if (error) {
-                return callback(error);
+        // Ask assembler to fetch translations file
+        this.assembler.getTranslations((err, translations) => {
+            if (err) {
+                return callback(err);
             }
 
-            // Make translations available to the helpers
-            this.translator = Translator.create(acceptLanguage, translations);
-
+            // Make translations available to renderer
+            const translator = Translator.create(acceptLanguage, translations);
+            this.renderer.setTranslator(translator);
             callback();
         });
     };
 
     /**
-     * Add CDN base url to the relative path
-     * @param  {String} path     Relative path
-     * @return {String}          Url cdn
-     */
-    cdnify(path) {
-        const cdnUrl = this.settings['cdn_url'] || '';
-        const versionId = this.settings['theme_version_id'];
-        const sessionId = this.settings['theme_session_id'];
-        const protocolMatch = /(.*!?:)/;
-
-        if (path instanceof Handlebars.SafeString) {
-            path = path.string;
-        }
-
-        if (!path) {
-            return '';
-        }
-
-        if (/^(?:https?:)?\/\//.test(path)) {
-            return path;
-        }
-
-        if (protocolMatch.test(path)) {
-            var match = path.match(protocolMatch);
-            path = path.slice(match[0].length, path.length);
-
-            if (path[0] === '/') {
-                path = path.slice(1, path.length);
-            }
-
-            if (match[0] === 'webdav:') {
-                return [cdnUrl, 'content', path].join('/');
-            }
-
-            if (this.themeSettings.cdn) {
-                var endpointKey = match[0].substr(0, match[0].length - 1);
-                if (this.themeSettings.cdn.hasOwnProperty(endpointKey)) {
-                    if (cdnUrl) {
-                        return [this.themeSettings.cdn[endpointKey], path].join('/');
-                    }
-
-                    return ['/assets/cdn', endpointKey, path].join('/');
-                }
-            }
-
-            if (path[0] !== '/') {
-                path = '/' + path;
-            }
-
-            return path;
-        }
-
-        if (path[0] !== '/') {
-            path = '/' + path;
-        }
-
-        if (!versionId) {
-            return path;
-        }
-
-        if (path.match(/^\/assets\//)) {
-            path = path.substr(8, path.length);
-        }
-
-        if (sessionId) {
-            return [cdnUrl, 'stencil', versionId, 'e', sessionId, path].join('/');
-        }
-
-        return [cdnUrl, 'stencil', versionId, path].join('/');
-    };
-
-    /**
+     * Add a decorator to wrap output during render().
+     *
      * @param {Function} decorator
      */
     addDecorator(decorator) {
-        this.decorators.push(decorator);
+        this.renderer.addDecorator(decorator);
     };
 
     /**
+     * Add content to be rendered in the given regions.
+     *
+     * @param {Object} Regions with widgets
+     */
+    addContent(regions) {
+        this.renderer.addContent(regions);
+    };
+
+    /**
+     * Get page content.
+     *
+     * @return {Object} Regions with widgets
+     */
+    getContent() {
+        return this.renderer.getContent();
+    };
+
+    /**
+     * Render a string with the given context.
+     *
+     * @param  {String} string
+     * @param  {Object} context
+     * @return {String}
+     * @throws [CompileError|RenderError]
+     */
+    renderString(string, context) {
+        return this.renderer.renderString(string, context);
+    }
+
+    /**
+     * Renders a template with the given context
+     *
      * @param {String} path
      * @param {Object} context
      * @return {String}
+     * @throws [TemplateNotFoundError|RenderError|DecoratorError]
      */
     render(path, context) {
-        let output;
-
-        context = context || {};
-        context.template = path;
-
-        if (this.translator) {
-            context.locale_name = this.translator.getLocale();
-        }
-
-        output = this.handlebars.templates[path](context);
-
-        _.each(this.decorators, function (decorator) {
-            output = decorator(output);
-        });
-
-        return output;
-    };
+        return this.renderer.render(path, context);
+    }
 
     /**
      * Theme rendering logic
+     *
      * @param  {String|Array} templatePath
      * @param  {Object} data
      * @return {String|Object}
+     * @throws [TemplateNotFoundError|RenderError|DecoratorError]
      */
     renderTheme(templatePath, data) {
         let html;
@@ -336,7 +260,6 @@ class Paper {
 
         return output;
     }
-
 }
 
 module.exports = Paper;

@@ -1,7 +1,7 @@
 # stencil-paper
 [![Build Status](https://travis-ci.org/bigcommerce/paper.svg?branch=master)](https://travis-ci.org/bigcommerce/paper) [![npm (scoped)](https://img.shields.io/npm/v/@bigcommerce/stencil-paper.svg)](https://www.npmjs.com/package/@bigcommerce/stencil-paper)
 
-*stencil-paper* is a plugin for `stencil-cli` and `stapler`. Its duty is to render the themes using [Handlebars](http://handlebarsjs.com/) template engine.
+*stencil-paper* is a plugin for `stencil-cli` and `stapler`. Its duty is to load templates and translations, and call out to [paper-handlebars](https://github.com/bigcommerce/paper-handlebars) to render pages.
 
 ## Usage
 
@@ -49,7 +49,7 @@ See the [stencil API reference](https://stencil.bigcommerce.com/docs/handlebars-
 
 #### License
 
-Copyright (c) 2015-2016, Bigcommerce Inc.
+Copyright (c) 2015-2018, Bigcommerce Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
