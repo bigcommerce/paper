@@ -188,7 +188,7 @@ describe('Translator', () => {
     it('should return a translation object', done => {
         const translator = Translator.create('en', translations);
 
-        expect(translator.getLanguage()).to.deep.equal({
+        expect(translator.getLanguage()).to.equal({
             locale: 'en',
             locales: {
                 'level1.level2': 'en',
@@ -212,7 +212,7 @@ describe('Translator', () => {
     it('should return a cascaded translation object', done => {
         const translator = Translator.create('fr-CA', translations);
 
-        expect(translator.getLanguage()).to.deep.equal({
+        expect(translator.getLanguage()).to.equal({
             locale: 'fr-CA',
             locales: {
                 'level1.level2': 'fr',
@@ -236,7 +236,7 @@ describe('Translator', () => {
     it('should return a translation object filtered by key', done => {
         const translator = Translator.create('en', translations);
 
-        expect(translator.getLanguage('hello')).to.deep.equal({
+        expect(translator.getLanguage('hello')).to.equal({
             locale: 'en',
             locales: {
                 hello: 'en',
@@ -246,7 +246,7 @@ describe('Translator', () => {
             },
         });
 
-        expect(translator.getLanguage('level1')).to.deep.equal({
+        expect(translator.getLanguage('level1')).to.equal({
             locale: 'en',
             locales: {
                 'level1.level2': 'en',

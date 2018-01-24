@@ -1,12 +1,14 @@
 {
   "name": "@bigcommerce/stencil-paper",
-  "version": "2.0.7",
-  "description": "A stencil plugin to register partials and helpers from handlebars and returns the compiled version for the stencil platform.",
+  "version": "3.0.0-rc.1",
+  "description": "A Stencil plugin to load template files and render pages using backend renderer plugins.",
   "main": "index.js",
   "author": "Bigcommerce",
   "license": "BSD-4-Clause",
   "scripts": {
-    "test": "lab -l -t 90"
+    "linter": "eslint .",
+    "test": "npm run linter && lab -v -t 94 --ignore i18n,WebAssembly spec",
+    "coverage": "lab -c -r console -o stdout -r html -o coverage.html spec"
   },
   "repository": {
     "type": "git",
@@ -21,23 +23,16 @@
   },
   "homepage": "https://github.com/bigcommerce/paper",
   "dependencies": {
-    "accept-language-parser": "^1.0.2",
-    "async": "^1.4.2",
-    "handlebars": "^3.0.1",
-    "handlebars-helpers": "^0.8.0",
-    "lodash": "^3.6.0",
-    "messageformat": "^0.2.2",
-    "stringz": "^0.1.1",
-    "tarjan-graph": "^0.3.0"
+    "@bigcommerce/stencil-paper-handlebars": "~2.0.0",
+    "accept-language-parser": "~1.4.1",
+    "async": "~1.5.2",
+    "lodash": "~3.10.1",
+    "messageformat": "~0.2.2"
   },
   "devDependencies": {
-    "code": "^1.4.0",
-    "eslint": "^2.7.0",
-    "eslint-config-airbnb": "^6.2.0",
-    "eslint-plugin-react": "^4.3.0",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^2.0.0",
-    "lab": "^5.8.1",
-    "sinon": "^1.17.2"
+    "code": "~4.0.0",
+    "eslint": "~4.10.0",
+    "lab": "~13.0.1",
+    "sinon": "~2.1.0"
   }
 }
