@@ -62,23 +62,91 @@ class Paper {
     * @param {assemblerGetTranslations} assembler.getTranslations - Method to assemble translations
     */
     constructor(siteSettings, themeSettings, assembler, rendererType) {
-        this.siteSettings = siteSettings || {};
-        this.themeSettings = themeSettings || {};
-        this.assembler = assembler || {};
+        this._assembler = assembler || {};
 
         // Build renderer based on type
         switch(rendererType) {
         case 'handlebars-v4':
-            this.renderer = new HandlebarsRenderer(this.siteSettings, this.themeSettings, 'v4');
+            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v4');
             break;
         case 'handlebars-v3':
         default:
-            this.renderer = new HandlebarsRenderer(this.siteSettings, this.themeSettings, 'v3');
+            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v3');
             break;
         }
 
         this.preProcessor = this.renderer.getPreProcessor();
     }
+
+    /**
+     * Get the siteSettings object containing global site settings.
+     *
+     * @return {object} settings An object containing global site settings.
+     */
+    getSiteSettings() {
+        return this.renderer.getSiteSettings();
+    };
+
+    /**
+     * Set the siteSettings object containing global site settings.
+     *
+     * @param {object} settings An object containing global site settings.
+     */
+    setSiteSettings(settings) {
+        this.renderer.setSiteSettings(settings);
+    };
+
+    /**
+     * Get the themeSettings object containing the theme configuration.
+     *
+     * @return {object} settings An object containing the theme configuration.
+     */
+    getThemeSettings() {
+        return this.renderer.getThemeSettings();
+    };
+
+    /**
+     * Set the themeSettings object containing the theme configuration.
+     *
+     * @param {object} settings An object containing the theme configuration.
+     */
+    setThemeSettings(settings) {
+        this.renderer.setThemeSettings(settings);
+    };
+
+    /**
+     * Reset decorator list.
+     */
+    resetDecorators() {
+        this.renderer.resetDecorators();
+    };
+
+    /**
+     * Add a decorator to wrap output during render().
+     *
+     * @param {Function} decorator
+     */
+    addDecorator(decorator) {
+        this.renderer.addDecorator(decorator);
+    };
+
+    /**
+     * Get page content.
+     *
+     * @return {Object} Regions with widgets
+     */
+    getContent() {
+        return this.renderer.getContent();
+    };
+
+    /**
+     * Add content to be rendered in the given regions.
+     *
+     * @param {Object} Regions with widgets
+     */
+    setContent(regions) {
+        this.renderer.setContent(regions);
+    };
 
     /**
      * Use the assembler to fetch partials/templates, and translations, then load them
@@ -111,7 +179,7 @@ class Paper {
      * @param {Function} callback
     */
     loadTemplates(path, callback) {
-        this.assembler.getTemplates(path, this.preProcessor, (err, templates) => {
+        this._assembler.getTemplates(path, this.preProcessor, (err, templates) => {
             if (err) {
                 return callback(err);
             }
@@ -144,7 +212,7 @@ class Paper {
      */
     loadTranslations(acceptLanguage, callback) {
         // Ask assembler to fetch translations file
-        this.assembler.getTranslations((err, translations) => {
+        this._assembler.getTranslations((err, translations) => {
             if (err) {
                 return callback(err);
             }
@@ -154,33 +222,6 @@ class Paper {
             this.renderer.setTranslator(translator);
             callback();
         });
-    };
-
-    /**
-     * Add a decorator to wrap output during render().
-     *
-     * @param {Function} decorator
-     */
-    addDecorator(decorator) {
-        this.renderer.addDecorator(decorator);
-    };
-
-    /**
-     * Add content to be rendered in the given regions.
-     *
-     * @param {Object} Regions with widgets
-     */
-    addContent(regions) {
-        this.renderer.addContent(regions);
-    };
-
-    /**
-     * Get page content.
-     *
-     * @return {Object} Regions with widgets
-     */
-    getContent() {
-        return this.renderer.getContent();
     };
 
     /**
