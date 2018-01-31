@@ -1,9 +1,10 @@
 # Changelog
 
-## 3.0.0-rc.2 (2018-01-31)
+## 3.0.0-rc.3 (2018-01-31)
 - Major refactor, moving rendering functionality into paper-handlebars [#130](https://github.com/bigcommerce/paper/pull/130) to
 allow for alternate template engines.
-- Remove access to siteSettings and themeSettings, use accessors instead [#131](https://github.com/bigcommerce/paper/pull/131) to
+- Remove access to siteSettings and themeSettings, use accessors instead [#131](https://github.com/bigcommerce/paper/pull/131)
+- Bring in bug fix from paper-handlebars [#132](https://github.com/bigcommerce/paper/pull/132)
 
 v3.0 Contains several breaking changes:
 - Removed the direct access of `contentServiceContext` for setting page content. From now on, use `setContent()`
