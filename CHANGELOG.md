@@ -1,19 +1,26 @@
 # Changelog
 
-## 3.0.0-rc.1 (2018-01-10)
-Refactor rendering functionality into paper-handlebars [#130](https://github.com/bigcommerce/paper/pull/130) to
+## 3.0.0-rc.2 (2018-01-31)
+- Major refactor, moving rendering functionality into paper-handlebars [#130](https://github.com/bigcommerce/paper/pull/130) to
 allow for alternate template engines.
+- Remove access to siteSettings and themeSettings, use accessors instead [#131](https://github.com/bigcommerce/paper/pull/131) to
 
 v3.0 Contains several breaking changes:
-- Removed the direct access of `contentServiceContext` for setting page content. From now on, use `addContent()` and `getContent()`.
+- Removed the direct access of `contentServiceContext` for setting page content. From now on, use `setContent()`
+  and `getContent()`.
+- Removed direct access of `siteSettings` and `themeSettings`. From now on, use `getSiteSettings()`, `setSiteSettings()`,
+  `getThemeSettings()`, and `setThemeSettings()` if you need to get/set these values after calling the constructor.
 - Removed `getTemplateProcessor()`. This is an internal concern of `paper-handlebars` and is used by `loadTemplates`.
 - Removed `loadTemplatesSync()`. This was only used by helper tests and is no longer needed.
-- Removed `handlebars` instance variable. Hopefully nobody is accessing that directly. Any helpers that were accessing it have been updated in `paper-handlebars` to use the global context they are given rather than accessing Paper directly at all.
+- Removed `handlebars` instance variable. Hopefully nobody is accessing that directly. Any helpers that were accessing
+  it have been updated in `paper-handlebars` to use the global context they are given rather than accessing Paper
+  directly at all.
 - The `translator` attribute has been moved to `paper-handlebars` and is no longer accessible directly on Paper.
 - The `decorators` attribute has been moved to `paper-handlebars` and is no longer accessible directly on Paper.
 - The `settings` attribute has been renamed to `siteSettings`. This should only be accessed by `paper-handlebars`.
 - The `cdnify()` function has been moved into a helper library in `paper-handlebars`.
-- The `inject` attribute has been removed. This is storage used by two of the helpers, and the implementation has moved to `paper-handlebars`.
+- The `inject` attribute has been removed. This is storage used by two of the helpers, and the implementation has
+  moved to `paper-handlebars`.
 
 ## 2.0.7 (2017-10-17)
 - Always render region wrapper even if no content is present [#128](https://github.com/bigcommerce/paper/pull/128)
