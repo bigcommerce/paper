@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.8 (2018-05-09)
+- Add resourceHints and getFontLoaderConfig helpers [#133](https://github.com/bigcommerce/paper/pull/133)
+
+## 2.0.7 (2017-10-17)
+- Always render region wrapper even if no content is present [#128](https://github.com/bigcommerce/paper/pull/128)
+
 ## 2.0.6 (2017-09-20)
 - Fix a bug in the `replace` helper [#127](https://github.com/bigcommerce/paper/pull/127)
 
@@ -13,6 +19,9 @@
 
 ## 2.0.3 (2017-06-21)
 - Adds `region` helper [#118](https://github.com/bigcommerce/paper/pull/118)
+- Bug fix in the `stylesheet` helper [#116](https://github.com/bigcommerce/paper/pull/116)
+
+## 2.0.2 (2017-04-20)
 - Bug fix in the `stylesheet` helper [#116](https://github.com/bigcommerce/paper/pull/116)
 
 ## 2.0.1 (2017-04-12)
