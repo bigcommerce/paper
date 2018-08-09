@@ -43,6 +43,9 @@ describe('if helper', () => {
         expect(c('{{#if 0}}big{{else}}small{{/if}}', context))
             .to.be.equal('small');
 
+        expect(c('{{#if "2" "gtnum" "1"}}big{{/if}}', context))
+            .to.be.equal('big');
+
         expect(c('{{#if num2}}big{{else}}small{{/if}}', context))
             .to.be.equal('big');
 
@@ -73,6 +76,9 @@ describe('if helper', () => {
             .to.be.equal('big');
 
         expect(c('{{#if num1 "<" num2}}big{{/if}}', context))
+            .to.be.equal('big');
+
+        expect(c('{{#if "2" "gtnum" "1"}}big{{/if}}', context))
             .to.be.equal('big');
 
         expect(c('{{#if num2 ">=" num1}}big{{/if}}', context))
@@ -114,6 +120,12 @@ describe('if helper', () => {
             .to.be.equal('');
 
         expect(c('{{#if num2 "<=" num1}}big{{/if}}', context))
+            .to.be.equal('');
+
+        expect(c('{{#if "1" "gtnum" "2"}}big{{/if}}', context))
+            .to.be.equal('');
+
+        expect(c('{{#if "1" "gtnum" "1"}}big{{/if}}', context))
             .to.be.equal('');
 
         expect(c('{{#if product "typeof" "string"}}big{{/if}}', context))
@@ -228,6 +240,43 @@ describe('if helper', () => {
             .to.be.equal('big');
 
         done();
+    });
+
+    it('should throw an exeption when non string value sent to gtnum', function (done) {
+        try {
+            c('{{#if num1 "gtnum" "2"}}big{{/if}}');
+        } catch(e) {
+            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+        }
+         try {
+            c('{{#if "2" "gtnum" num2}}big{{/if}}');
+        } catch(e) {
+            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+        }
+         try {
+            c('{{#if num1 "gtnum" num2}}big{{/if}}');
+        } catch(e) {
+            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+        }
+         done();
+    });
+     it('should throw an exeption when NaN value sent to gtnum', function (done) {
+        try {
+            c('{{#if "aaaa" "gtnum" "2"}}big{{/if}}');
+        } catch(e) {
+            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+        }
+         try {
+            c('{{#if "2" "gtnum" "bbbb"}}big{{/if}}');
+        } catch(e) {
+            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+        }
+         try {
+            c('{{#if "aaaa" "gtnum" "bbbb"}}big{{/if}}');
+        } catch(e) {
+            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+        }
+         done();
     });
 });
 
