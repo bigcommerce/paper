@@ -1,10 +1,29 @@
 # Changelog
 
+## 3.0.0-rc.6 (2018-10-04)
+Breaking change:
+- Use paper-handlebars 4.0.0, which uses Promises for `render` and `renderString`.
+- Change `loadTheme`, `loadTemplates`, `loadTranslations`, `render`, `renderString`,
+  and `renderTheme` to be based on Promises rather than callbacks.
+
+## 3.0.0-rc.5 (2018-08-23)
+- Bump paper-handlebars to 3.0.3 [#136](https://github.com/bigcommerce/paper/pull/136) which adds support for
+  `gtnum` operator in `if` helper.
+
+## 3.0.0-rc.4 (2018-05-31)
+- Bump paper-handlebars to 3.0.2 [#135](https://github.com/bigcommerce/paper/pull/135) which adds the
+  `resourceHints` helper.
+
 ## 3.0.0-rc.3 (2018-01-31)
+- Bump paper-handlebars to 3.0.1 [#132](https://github.com/bigcommerce/paper/pull/132) which has fixes for
+  cdn and stylesheet helpers.
+
+## 3.0.0-rc.2 (2018-01-31)
+- Remove access to siteSettings and themeSettings, use accessors instead [#131](https://github.com/bigcommerce/paper/pull/131)
+
+## 3.0.0-rc.1 (2018-01-24)
 - Major refactor, moving rendering functionality into paper-handlebars [#130](https://github.com/bigcommerce/paper/pull/130) to
 allow for alternate template engines.
-- Remove access to siteSettings and themeSettings, use accessors instead [#131](https://github.com/bigcommerce/paper/pull/131)
-- Bring in bug fix from paper-handlebars [#132](https://github.com/bigcommerce/paper/pull/132)
 
 v3.0 Contains several breaking changes:
 - Removed the direct access of `contentServiceContext` for setting page content. From now on, use `setContent()`
@@ -22,6 +41,12 @@ v3.0 Contains several breaking changes:
 - The `cdnify()` function has been moved into a helper library in `paper-handlebars`.
 - The `inject` attribute has been removed. This is storage used by two of the helpers, and the implementation has
   moved to `paper-handlebars`.
+
+## 2.0.9 (2018-08-14)
+- Add `gtnum` support to `if` helper [#138](https://github.com/bigcommerce/paper/pull/138)
+
+## 2.0.8 (2018-05-09)
+- Add resourceHints helper [#133](https://github.com/bigcommerce/paper/pull/133)
 
 ## 2.0.7 (2017-10-17)
 - Always render region wrapper even if no content is present [#128](https://github.com/bigcommerce/paper/pull/128)

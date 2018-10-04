@@ -1,46 +1,45 @@
 # stencil-paper
 [![Build Status](https://travis-ci.org/bigcommerce/paper.svg?branch=master)](https://travis-ci.org/bigcommerce/paper) [![npm (scoped)](https://img.shields.io/npm/v/@bigcommerce/stencil-paper.svg)](https://www.npmjs.com/package/@bigcommerce/stencil-paper)
 
-*stencil-paper* is a plugin for `stencil-cli` and `stapler`. Its duty is to load templates and translations, and call out to [paper-handlebars](https://github.com/bigcommerce/paper-handlebars) to render pages.
+*stencil-paper* is a plugin for `stencil-cli`. Its duty is to load templates and translations, and call
+out to [paper-handlebars](https://github.com/bigcommerce/paper-handlebars) to render pages.
 
 ## Usage
-
 Load Paper into your app:
-
 ```
-var Paper = require('@bigcommerce/stencil-paper');
-```
-
-Instatiate paper passing an `assembler`:
-```
-var paper = new Paper(assembler);
+const Paper = require('@bigcommerce/stencil-paper');
 ```
 
-The `assembler` is the interface that paper uses to load the templates and translations. This way we can use paper to load the templates from the file system or any other source.
-Is just an object that implements two methods: `getTemplates()` & `getTranslations()`:
+Instatiate paper passing `siteSettings`, `themeSettings`, and an `assembler`:
 ```
-var assembler = {
-    getTemplates: function (path, processor, callback) {
-      // inplement me
+const paper = new Paper(siteSettings, themeSettings, assembler);
+```
 
-      callback(null, processor(templates));
+The `assembler` is the interface that Paper uses to load the templates and translations. This way we can use paper to load the templates
+from the file system or any other source. It's just an object that implements two methods: `getTemplates()` & `getTranslations()`:
+```
+const assembler = {
+    getTemplates: (path, processor) => {
+        return new Promise((resolve, reject) => {
+            // implement me
+            resolve(processor(templates));
+        });
     },
-    getTranslations: function (callback) {
-      // inplement me
-
-      callback(null, translations);
+    getTranslations: () => {
+        return new Promise((resolve, reject) => {
+            // implement me
+            resolve(translations);
+        });
     }
 };
-
-var paper = new Paper(assembler);
 ```
 
 Now we can load the theme for the page we want to render:
 ```
-paper.loadTheme(path, 'en', function (err) {
-  var html = paper.render(path, context);
-
-  reply(html);
+paper.loadTheme(path, 'en').then(() => {
+    paper.render(path, context).then(html => {
+        reply(html);
+    });
 });
 ```
 
@@ -48,7 +47,6 @@ paper.loadTheme(path, 'en', function (err) {
 See the [stencil API reference](https://stencil.bigcommerce.com/docs/handlebars-helpers-reference) for documentation on the available helpers.
 
 #### License
-
 Copyright (c) 2015-2018, Bigcommerce Inc.
 All rights reserved.
 

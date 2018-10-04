@@ -2,7 +2,6 @@
 
 const _ = require('lodash');
 const Translator = require('./lib/translator');
-const Async = require('async');
 const HandlebarsRenderer = require('@bigcommerce/stencil-paper-handlebars');
 
 /**
@@ -16,36 +15,20 @@ const HandlebarsRenderer = require('@bigcommerce/stencil-paper-handlebars');
 */
 
 /**
-* getTemplatesCallback is a function to call on completion of Assembler.getTemplates
-*
-* @callback getTemplatesCallback
-* @param {Error} err - Error if it occurred, null otherwise
-* @param {Object} templates - Object that contains the gathered templates, including processing
-*/
-
-/**
-* getTranslationsCallback is a function to call on completion of Assembler.getTranslations
-*
-* @callback getTranslationsCallback
-* @param {Error} err - Error if it occurred, null otherwise
-* @param {Object} translations - Object that contains the translations
-*/
-
-/**
 * Assembler.getTemplates assembles all the templates required to render the given
 * top-level template.
 *
 * @callback assemblerGetTemplates
 * @param {string} path - The path to the templates, relative to the templates directory
 * @param {processor} processor - An optional processor to apply to each template during assembly
-* @param {getTemplatesCallback} callback - Callback when Assembler.getTemplates is done.
+* @return {Promise} A promise to return the (optionally processed) templates
 */
 
 /**
 * Assembler.getTranslations assembles all the translations for the theme.
 *
 * @callback assemblerGetTranslations
-* @param {getTranslationsCallback} callback - Callback when Assembler.getTranslations is done.
+* @return {Promise} A promise to return the translations
 */
 
 class Paper {
@@ -57,9 +40,9 @@ class Paper {
     * @param {Object} siteSettings - Site settings
     * @param {Object} themeSettings - Theme settings (configuration)
     * @param {Object} assembler - Assembler with getTemplates and getTranslations methods.
-    * @param {String} rendererType - One of ['handlebars-v3', 'handlebars-v4']
     * @param {assemblerGetTemplates} assembler.getTemplates - Method to assemble templates
     * @param {assemblerGetTranslations} assembler.getTranslations - Method to assemble translations
+    * @param {String} rendererType - One of ['handlebars-v3', 'handlebars-v4']
     */
     constructor(siteSettings, themeSettings, assembler, rendererType) {
         this._assembler = assembler || {};
@@ -154,21 +137,20 @@ class Paper {
      *
      * @param {String|Array} paths A string or array of strings - the template path(s) to load.
      * @param {String} acceptLanguage The accept-language header - used to select a locale.
-     * @param {Function} callback
+     * @return {Promise} Promise to load the templates and translations into the renderer.
     */
-    loadTheme(paths, acceptLanguage, callback) {
+    loadTheme(paths, acceptLanguage) {
         if (!_.isArray(paths)) {
             paths = paths ? [paths] : [];
         }
 
-        Async.parallel([
-            next => {
-                this.loadTranslations(acceptLanguage, next);
-            },
-            next => {
-                Async.map(paths, this.loadTemplates.bind(this), next);
-            }
-        ], callback);
+        const promises = [];
+        promises.push(this.loadTranslations(acceptLanguage));
+        paths.forEach(path => {
+            promises.push(this.loadTemplates(path));
+        });
+
+        return Promise.all(promises);
     }
 
     /**
@@ -176,21 +158,11 @@ class Paper {
      * into the renderer.
      *
      * @param {String} path The root template path to load. All dependencies will be loaded as well.
-     * @param {Function} callback
+     * @return {Promise} Promise to load the templates into the renderer.
     */
-    loadTemplates(path, callback) {
-        this._assembler.getTemplates(path, this.preProcessor, (err, templates) => {
-            if (err) {
-                return callback(err);
-            }
-
-            try {
-                this.renderer.addTemplates(templates);
-            } catch(ex) {
-                return callback(ex);
-            }
-
-            callback();
+    loadTemplates(path) {
+        return this._assembler.getTemplates(path, this.preProcessor).then(templates => {
+            return this.renderer.addTemplates(templates);
         });
     }
 
@@ -208,19 +180,13 @@ class Paper {
      * Load translation files and give a translator to renderer.
      *
      * @param {String} acceptLanguage The accept-language header, used to select a locale
-     * @param {Function} callback
+     * @return {Promise} Promise to load the translations into the renderer.
      */
-    loadTranslations(acceptLanguage, callback) {
-        // Ask assembler to fetch translations file
-        this._assembler.getTranslations((err, translations) => {
-            if (err) {
-                return callback(err);
-            }
-
-            // Make translations available to renderer
+    loadTranslations(acceptLanguage) {
+        return this._assembler.getTranslations().then(translations => {
             const translator = Translator.create(acceptLanguage, translations);
             this.renderer.setTranslator(translator);
-            callback();
+            return translations;
         });
     };
 
@@ -239,9 +205,9 @@ class Paper {
     /**
      * Renders a template with the given context
      *
-     * @param {String} path
-     * @param {Object} context
-     * @return {String}
+     * @param {String} path The path to the template
+     * @param {Object} context The context to provide to the template
+     * @return {Promise} A promise to return the rendered template
      * @throws [TemplateNotFoundError|RenderError|DecoratorError]
      */
     render(path, context) {
@@ -249,57 +215,58 @@ class Paper {
     }
 
     /**
-     * Theme rendering logic
+     * Theme rendering logic. This is used by Stencil CLI.
      *
-     * @param  {String|Array} templatePath
+     * @param  {String|Array} templatePath A single template or list of templates to render.
      * @param  {Object} data
-     * @return {String|Object}
+     * @return {Promise} A promise that returns a {String|Object} depending on whether multiple templates were rendered
      * @throws [TemplateNotFoundError|RenderError|DecoratorError]
      */
     renderTheme(templatePath, data) {
-        let html;
-        let output;
-
-        // Is an ajax request?
-        if (data.remote || _.isArray(templatePath)) {
-
-            if (data.remote) {
-                data.context = Object.assign({}, data.context, data.remote_data);
-            }
-
-            // Is render_with ajax request?
-            if (templatePath) {
-                // if multiple render_with
-                if (_.isArray(templatePath)) {
-                    // if templatePath is an array ( multiple templates using render_with option)
-                    // compile all the template required files into a hash table
-                    html = templatePath.reduce((table, file) => {
-                        table[file] = this.render(file, data.context);
-                        return table;
-                    }, {});
-                } else {
-                    html = this.render(templatePath, data.context);
-                }
-
-                if (data.remote) {
-                    // combine the context & rendered html
-                    output = {
-                        data: data.remote_data,
-                        content: html
-                    };
-                } else {
-                    output = html;
-                }
-            } else {
-                output = {
-                    data: data.remote_data
-                };
-            }
-        } else {
-            output = this.render(templatePath, data.context);
+        // Simple case of a single non-ajax template
+        if (!data.remote && !_.isArray(templatePath)) {
+            return this.render(templatePath, data.context);
         }
 
-        return output;
+        // If no template path provided, just return the remote data
+        if (!templatePath) {
+            return Promise.resolve({ data: data.remote_data });
+        }
+
+        // If ajax request, merge remote_data into context
+        if (data.remote) {
+            data.context = Object.assign({}, data.context, data.remote_data);
+        }
+
+        const renderPromises = [];
+        let result;
+
+        if (_.isArray(templatePath)) {
+            // If templatePath is an array (multiple templates using render_with option),
+            // compile all the template required files into an object
+            result = {};
+            for (let path in templatePath) {
+                renderPromises.push(this.render(path, data.context).then(html => {
+                    result[path] = html;
+                }));
+            }
+        } else {
+            renderPromises.push(this.render(templatePath, data.context).then(html => {
+                result = html;
+            }));
+        }
+
+        return Promise.all(renderPromises).then(() => {
+            // Remote requests get both the remote data & rendered html
+            if (data.remote) {
+                result = {
+                    data: data.remote_data,
+                    content: result
+                };
+            }
+
+            return result;
+        });
     }
 }
 
