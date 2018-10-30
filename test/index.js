@@ -114,6 +114,18 @@ describe('cdnify()', function () {
 
         done();
     });
+
+    it('should avoid double slash in path', function (done) {
+        var paper = new Paper({
+            cdn_url: 'http://cdn.example.com/foo',
+            theme_version_id: '123',
+        });
+
+        expect(paper.cdnify('img/icon-sprite.svg'))
+            .to.be.equal('http://cdn.example.com/foo/stencil/123/img/icon-sprite.svg');
+
+        done();
+    });
 });
 
 describe('render()', function() {

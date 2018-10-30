@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.10 (2018-05-09)
+-- Fix `cdnify` to avoid double slash in the genrated url [#141](https://github.com/bigcommerce/paper/pull/141) 
+
+## 2.0.9 (2018-08-14)
+-- Adds to `if` helper `gtnum` to determine greater than for numbers [#138](https://github.com/bigcommerce/paper/pull/138) 
+
 ## 2.0.8 (2018-05-09)
 - Add resourceHints and getFontLoaderConfig helpers [#133](https://github.com/bigcommerce/paper/pull/133)
 

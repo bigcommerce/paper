@@ -235,16 +235,20 @@ class Paper {
             return path;
         }
 
-        if (path[0] !== '/') {
-            path = '/' + path;
-        }
-
         if (!versionId) {
+            if (path[0] !== '/') {
+                path = '/' + path;
+            }
+            
             return path;
         }
 
-        if (path.match(/^\/assets\//)) {
-            path = path.substr(8, path.length);
+        if (path[0] === '/') {
+            path = path.slice(1, path.length);
+        }
+
+        if (path.match(/^assets\//)) {
+            path = path.substr(7, path.length);
         }
 
         if (sessionId) {
