@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-rc.7 (2018-10-30)
+- Bump paper-handlebars to 4.0.1 [#140](https://github.com/bigcommerce/paper/pull/140) to fix 
+  `cdnify` and avoid double slash in the genrated url.
+
 ## 3.0.0-rc.6 (2018-10-04)
 Breaking change:
 - Use paper-handlebars 4.0.0, which uses Promises for `render` and `renderString`.
