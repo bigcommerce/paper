@@ -248,35 +248,35 @@ describe('if helper', () => {
         } catch(e) {
             expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
         }
-         try {
+        try {
             c('{{#if "2" "gtnum" num2}}big{{/if}}');
         } catch(e) {
             expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
         }
-         try {
+        try {
             c('{{#if num1 "gtnum" num2}}big{{/if}}');
         } catch(e) {
             expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
         }
-         done();
+        done();
     });
-     it('should throw an exeption when NaN value sent to gtnum', function (done) {
+    it('should throw an exeption when NaN value sent to gtnum', function (done) {
         try {
             c('{{#if "aaaa" "gtnum" "2"}}big{{/if}}');
         } catch(e) {
             expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
         }
-         try {
+        try {
             c('{{#if "2" "gtnum" "bbbb"}}big{{/if}}');
         } catch(e) {
             expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
         }
-         try {
+        try {
             c('{{#if "aaaa" "gtnum" "bbbb"}}big{{/if}}');
         } catch(e) {
             expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
         }
-         done();
+        done();
     });
 });
 
