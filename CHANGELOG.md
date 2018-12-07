@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-rc.8 (2018-12-7)
+- Bump paper-handlebars to 4.0.2 [#142](https://github.com/bigcommerce/paper/pull/142) to fix 
+  `region` helper, should render regardless of empty content.
+
 ## 3.0.0-rc.7 (2018-10-30)
 - Bump paper-handlebars to 4.0.1 [#140](https://github.com/bigcommerce/paper/pull/140) to fix 
   `cdnify` and avoid double slash in the genrated url.
