@@ -27,7 +27,7 @@ describe('fonts helper', function () {
         var template = "{{getFontsCollection}}";
 
         expect(c(template, themeSettings))
-            .to.be.equal('<link href="//fonts.googleapis.com/css?family=Open+Sans:,400italic,700|Karla:700|' +
+            .to.be.equal('<link href="https://fonts.googleapis.com/css?family=Open+Sans:,400italic,700|Karla:700|' +
             'Lora:400|Volkron:|Droid:400,700|Crimson+Text:400,700" rel="stylesheet">');
         done();
     });
@@ -42,7 +42,7 @@ describe('fonts helper', function () {
         var template = "{{getFontsCollection}}";
 
         expect(c(template, themeSettings))
-            .to.be.equal('<link href="//fonts.googleapis.com/css?family=Open+Sans:" rel="stylesheet">');
+            .to.be.equal('<link href="https://fonts.googleapis.com/css?family=Open+Sans:" rel="stylesheet">');
         done();
     });
 });

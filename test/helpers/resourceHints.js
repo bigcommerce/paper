@@ -27,7 +27,7 @@ describe('resourceHints helper', function () {
         var template = "{{resourceHints}}";
 
         expect(c(template, themeSettings))
-            .to.be.equal('<link rel="dns-prefetch preconnect" href="//ajax.googleapis.com" crossorigin><link rel="dns-prefetch preconnect" href="//fonts.googleapis.com" crossorigin><link rel="dns-prefetch preconnect" href="//fonts.gstatic.com" crossorigin>');
+            .to.be.equal('<link rel="dns-prefetch preconnect" href="https://fonts.googleapis.com" crossorigin><link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com" crossorigin>');
         done();
     });
 });
