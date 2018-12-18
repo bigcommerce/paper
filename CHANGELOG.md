@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-rc.9 (2018-12-18)
+- Bump paper-handlebars to 4.0.3 [#143](https://github.com/bigcommerce/paper/pull/143) to fix 
+  resourceHints to always use https for font providers.
+
 ## 3.0.0-rc.8 (2018-12-7)
 - Bump paper-handlebars to 4.0.2 [#142](https://github.com/bigcommerce/paper/pull/142) to fix 
   `region` helper, should render regardless of empty content.
