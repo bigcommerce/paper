@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-rc.10 (2019-2-4)
+- Bump paper-handlebars to 4.0.4 [#149](https://github.com/bigcommerce/paper/pull/149) to fix  
+  cdn url.
+
 ## 3.0.0-rc.9 (2018-12-18)
 - Bump paper-handlebars to 4.0.3 [#143](https://github.com/bigcommerce/paper/pull/143) to fix 
   resourceHints to always use https for font providers.
