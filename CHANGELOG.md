@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-rc.11 (2019-2-14)
+- Bump paper-handlebars to 4.0.4 [#150](https://github.com/bigcommerce/paper/pull/150) to fix
+  regex performance to match precompiled templates.
+
 ## 3.0.0-rc.10 (2019-2-4)
 - Bump paper-handlebars to 4.0.4 [#149](https://github.com/bigcommerce/paper/pull/149) to fix  
   cdn url.
@@ -14,7 +18,7 @@
 
 ## 3.0.0-rc.7 (2018-10-30)
 - Bump paper-handlebars to 4.0.1 [#140](https://github.com/bigcommerce/paper/pull/140) to fix 
-  `cdnify` and avoid double slash in the genrated url.
+  `cdnify` and avoid double slash in the generated url.
 
 ## 3.0.0-rc.6 (2018-10-04)
 Breaking change:
