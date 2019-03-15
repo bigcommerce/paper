@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.12 (2019-03-18)
+-- Bump handlebars-helpers to 0.10.0 [#152](https://github.com/bigcommerce/paper/pull/152)
+
 ## 2.0.11 (2018-12-19)
 -- Use https for font providers and resource hints [#144](https://github.com/bigcommerce/paper/pull/144)
 
