@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.12 (2019-3-18)
+- Bump paper-handlebars to 4.0.6 [#151](https://github.com/bigcommerce/paper/pull/151)
+
 ## 3.0.0-rc.11 (2019-2-14)
 - Bump paper-handlebars to 4.0.4 [#150](https://github.com/bigcommerce/paper/pull/150) to fix
   regex performance to match precompiled templates.
