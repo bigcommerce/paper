@@ -15,7 +15,6 @@ const it = lab.it;
 
 describe('Translator', () => {
     let errorLoggerStub;
-    let loggerStub;
     let translations;
 
     beforeEach(done => {
@@ -47,15 +46,13 @@ describe('Translator', () => {
             },
         };
 
-        errorLoggerStub = Sinon.stub(Logger, 'logError');
-        loggerStub = Sinon.stub(Logger, 'log');
+        errorLoggerStub = Sinon.stub(Logger, 'error');
 
         done();
     });
 
     afterEach(done => {
         errorLoggerStub.restore();
-        loggerStub.restore();
 
         done();
     });
@@ -109,7 +106,7 @@ describe('Translator', () => {
         const translator = Translator.create('nl', Object.assign({}, translations, { nl: nl }));
 
         expect(translator.translate('bye')).to.equal('Bye bye');
-        expect(loggerStub.called).to.equal(true);
+        expect(errorLoggerStub.called).to.equal(true);
 
         done();
     });
@@ -127,7 +124,7 @@ describe('Translator', () => {
         const translator = Translator.create('en', translations);
 
         expect(translator.translate('hello')).to.equal('');
-        expect(loggerStub.called).to.equal(true);
+        expect(errorLoggerStub.called).to.equal(true);
 
         done();
     });
