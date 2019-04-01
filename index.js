@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Translator = require('./lib/translator');
+var Logger = require('./lib/logger');
 var Path = require('path');
 var Fs = require('fs');
 var Handlebars = require('handlebars');
@@ -69,9 +70,10 @@ Fs.readdirSync(Path.join(__dirname, 'helpers')).forEach(function (file) {
 * @param {Object} assembler - Assembler with getTemplates and getTranslations methods.
 * @param {assemblerGetTemplates} assembler.getTemplates - Method to assemble templates
 * @param {assemblerGetTranslations} assembler.getTranslations - Method to assemble translations
+* @param {Object} logger - optional, override the default logger
 */
 class Paper {
-    constructor(settings, themeSettings, assembler) {
+    constructor(settings, themeSettings, assembler, logger = Logger) {
         this.handlebars = Handlebars.create();
 
         this.handlebars.templates = {};
@@ -83,6 +85,7 @@ class Paper {
         this.themeSettings = themeSettings || {};
         this.assembler = assembler || {};
         this.contentServiceContext = {};
+        this.logger = logger;
 
         helpers.forEach(helper => helper(this));
     }
@@ -176,7 +179,7 @@ class Paper {
             }
 
             // Make translations available to the helpers
-            this.translator = Translator.create(acceptLanguage, translations);
+            this.translator = Translator.create(acceptLanguage, translations, this.logger);
 
             callback();
         });
