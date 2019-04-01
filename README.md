@@ -10,9 +10,9 @@ Load Paper into your app:
 const Paper = require('@bigcommerce/stencil-paper');
 ```
 
-Instatiate paper passing `siteSettings`, `themeSettings`, and an `assembler`:
+Instatiate paper passing `siteSettings`, `themeSettings`, `assembler`, and an optional `logger` (overriding the default logger):
 ```
-const paper = new Paper(siteSettings, themeSettings, assembler);
+const paper = new Paper(siteSettings, themeSettings, assembler, logger);
 ```
 
 The `assembler` is the interface that Paper uses to load the templates and translations. This way we can use paper to load the templates
