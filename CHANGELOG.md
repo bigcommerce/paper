@@ -1,4 +1,6 @@
 # Changelog
+## 2.0.12 (2018-04-01)
+-- Added an option to pass in logger and override the default logger of the app [#155](https://github.com/bigcommerce/paper/pull/155)
 
 ## 2.0.11 (2018-12-19)
 -- Use https for font providers and resource hints [#144](https://github.com/bigcommerce/paper/pull/144)

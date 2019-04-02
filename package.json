@@ -1,6 +1,6 @@
 {
   "name": "@bigcommerce/stencil-paper",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "A stencil plugin to register partials and helpers from handlebars and returns the compiled version for the stencil platform.",
   "main": "index.js",
   "author": "Bigcommerce",
@@ -37,7 +37,7 @@
     "eslint-plugin-react": "^4.3.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^2.0.0",
-    "lab": "^5.8.1",
+    "lab": "^13.0.1",
     "sinon": "^1.17.2"
   }
 }
