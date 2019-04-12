@@ -7,7 +7,7 @@
  */
 function helper(paper) {
     paper.handlebars.registerHelper('concat', function (value, otherValue) {
-        return new paper.handlebars.SafeString(value + otherValue);
+        return `${value}${otherValue}`;
     });
 }
 
