@@ -1,4 +1,6 @@
-# Changelog
+## 2.0.13 (2019-05-24)
+-- Change default behavior of {{getFontsCollection}} to use font-display: swap for Google Fonts and allow configuration
+
 ## 2.0.12 (2018-04-01)
 -- Added an option to pass in logger and override the default logger of the app [#155](https://github.com/bigcommerce/paper/pull/155)
 
