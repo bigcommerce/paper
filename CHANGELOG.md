@@ -1,4 +1,6 @@
 # Changelog
+## 3.0.0-rc.13 (2019-5-24)
+- Bump paper-handlebars to 4.0.6 [#157](https://github.com/bigcommerce/paper/pull/157) to add display support for Google fonts
 
 ## 3.0.0-rc.12 (2019-3-29)
 - Added an option to pass in logger and override the default logger of the app [#153](https://github.com/bigcommerce/paper/pull/153)
