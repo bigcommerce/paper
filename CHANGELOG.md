@@ -1,4 +1,7 @@
 # Changelog
+## 3.0.0-rc.14 (2019-6-10)
+-reduce usage of Lodash [#160](https://github.com/bigcommerce/paper/pull/160) in order to improve performance
+
 ## 3.0.0-rc.13 (2019-5-24)
 - Bump paper-handlebars to 4.0.6 [#157](https://github.com/bigcommerce/paper/pull/157) to add display support for Google fonts
 

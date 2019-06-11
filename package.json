@@ -25,7 +25,6 @@
   "dependencies": {
     "@bigcommerce/stencil-paper-handlebars": "~4.0.6",
     "accept-language-parser": "~1.4.1",
-    "lodash": "~3.10.1",
     "messageformat": "~0.2.2"
   },
   "devDependencies": {
