@@ -25,7 +25,7 @@ function helper(paper) {
             }
         }
 
-        if (to <= from) {
+        if (to < from) {
             return;
         }
 

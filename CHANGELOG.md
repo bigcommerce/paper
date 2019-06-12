@@ -1,3 +1,6 @@
+## Unreleased
+-- Fix for helper to allow for one iteration
+
 ## 2.0.13 (2019-05-24)
 -- Change default behavior of {{getFontsCollection}} to use font-display: swap for Google Fonts and allow configuration
 
