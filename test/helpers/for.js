@@ -13,7 +13,23 @@ function c(template, context) {
 describe('for helper', function() {
 
     var context = {name: 'Joe'};
+    
+    it('should iterate once', function(done) {
 
+        expect(c('{{#for 1 this}}{{$index}}:{{name}} {{/for}}', context))
+            .to.contain('1:Joe');
+
+        expect(c('{{#for 1 1 this}}{{$index}}:{{name}} {{/for}}', context))
+            .to.contain('1:Joe');
+
+        expect(c('{{#for 0 0 this}}{{$index}}:{{name}} {{/for}}', context))
+            .to.contain('0:Joe');
+
+        expect(c('{{#for 1000 1000 this}}{{$index}}:{{name}} {{/for}}', context))
+            .to.contain('1000:Joe');
+
+        done();
+    })
     it('should itarate 10 times', function(done) {
 
         expect(c('{{#for 10 this}}{{$index}}:{{name}} {{/for}}', context))
