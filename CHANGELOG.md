@@ -1,5 +1,8 @@
 ## Unreleased
 
+## 2.0.15 (2019-06-30)
+-- Update handlebars to latest
+
 ## 2.0.14 (2019-06-28)
 -- Fix for helper to allow for one iteration
 
