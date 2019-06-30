@@ -1,28 +1,32 @@
 # Changelog
-## 3.0.0-rc.13 (2019-5-24)
+
+## 3.0.0-rc.14 (2019-06-30)
+- Bump paper-handlebars to 4.0.8 [#163](https://github.com/bigcommerce/paper/pull/163) to update Handlebars
+
+## 3.0.0-rc.13 (2019-05-24)
 - Bump paper-handlebars to 4.0.6 [#157](https://github.com/bigcommerce/paper/pull/157) to add display support for Google fonts
 
-## 3.0.0-rc.12 (2019-3-29)
+## 3.0.0-rc.12 (2019-03-29)
 - Added an option to pass in logger and override the default logger of the app [#153](https://github.com/bigcommerce/paper/pull/153)
 
-## 3.0.0-rc.11 (2019-2-14)
+## 3.0.0-rc.11 (2019-02-14)
 - Bump paper-handlebars to 4.0.4 [#150](https://github.com/bigcommerce/paper/pull/150) to fix
   regex performance to match precompiled templates.
 
-## 3.0.0-rc.10 (2019-2-4)
-- Bump paper-handlebars to 4.0.4 [#149](https://github.com/bigcommerce/paper/pull/149) to fix  
+## 3.0.0-rc.10 (2019-02-04)
+- Bump paper-handlebars to 4.0.4 [#149](https://github.com/bigcommerce/paper/pull/149) to fix
   cdn url.
 
 ## 3.0.0-rc.9 (2018-12-18)
-- Bump paper-handlebars to 4.0.3 [#143](https://github.com/bigcommerce/paper/pull/143) to fix 
+- Bump paper-handlebars to 4.0.3 [#143](https://github.com/bigcommerce/paper/pull/143) to fix
   resourceHints to always use https for font providers.
 
 ## 3.0.0-rc.8 (2018-12-7)
-- Bump paper-handlebars to 4.0.2 [#142](https://github.com/bigcommerce/paper/pull/142) to fix 
+- Bump paper-handlebars to 4.0.2 [#142](https://github.com/bigcommerce/paper/pull/142) to fix
   `region` helper, should render regardless of empty content.
 
 ## 3.0.0-rc.7 (2018-10-30)
-- Bump paper-handlebars to 4.0.1 [#140](https://github.com/bigcommerce/paper/pull/140) to fix 
+- Bump paper-handlebars to 4.0.1 [#140](https://github.com/bigcommerce/paper/pull/140) to fix
   `cdnify` and avoid double slash in the generated url.
 
 ## 3.0.0-rc.6 (2018-10-04)
