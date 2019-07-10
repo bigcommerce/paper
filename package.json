@@ -25,6 +25,7 @@
     "async": "^1.4.2",
     "handlebars": "3.0.7",
     "handlebars-helpers": "^0.8.0",
+    "handlebars-utils": "^1.0.6",
     "lodash": "^3.6.0",
     "messageformat": "^0.2.2",
     "stringz": "^0.1.1",
