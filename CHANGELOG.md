@@ -1,4 +1,6 @@
 ## Unreleased
+-- Add getImageSrcset helper
+-- Return image URLs as SafeString
 
 ## 2.0.15 (2019-06-30)
 -- Update handlebars to latest

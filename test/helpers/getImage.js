@@ -28,11 +28,15 @@ function c(template, context) {
 
 describe('getImage helper', function() {
     var urlData = 'https://cdn.example.com/path/to/{:size}/image.png';
+    const urlData_2_qs = 'https://cdn.example.com/path/to/{:size}/image.png?c=2&imbypass=on';
     var context = {
         image_url: 'http://example.com/image.png',
         not_an_image: null,
         image: {
             data: urlData
+        },
+        image_with_2_qs: {
+            data: urlData_2_qs
         },
         logoPreset: 'logo',
     };
@@ -59,10 +63,12 @@ describe('getImage helper', function() {
     });
 
     it('should use the preset from _images', function(done) {
-
         expect(c('{{getImage image "logo"}}', context))
             .to.be.equal(urlData.replace('{:size}', '250x100'));
-
+        expect(c('{{getImage image_with_2_qs "logo"}}', context))
+            .to.be.equal(urlData_2_qs.replace('{:size}', '250x100'));
+        expect(c('{{getImage image_with_2_qs "gallery"}}', context))
+            .to.be.equal(urlData_2_qs.replace('{:size}', '300x300'));
         expect(c('{{getImage image "gallery"}}', context))
             .to.be.equal(urlData.replace('{:size}', '300x300'));
 
@@ -100,10 +106,10 @@ describe('getImage helper', function() {
     it('should default to max value (width & height) if value is not provided', function(done) {
 
         expect(c('{{getImage image "missing_values"}}', context))
-            .to.be.equal(urlData.replace('{:size}', '4096x4096'));
+            .to.be.equal(urlData.replace('{:size}', '5120x5120'));
 
         expect(c('{{getImage image "missing_width"}}', context))
-            .to.be.equal(urlData.replace('{:size}', '4096x100'));
+            .to.be.equal(urlData.replace('{:size}', '5120x100'));
 
         done();
     });
