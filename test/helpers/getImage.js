@@ -65,12 +65,15 @@ describe('getImage helper', function() {
     it('should use the preset from _images', function(done) {
         expect(c('{{getImage image "logo"}}', context))
             .to.be.equal(urlData.replace('{:size}', '250x100'));
-        expect(c('{{getImage image_with_2_qs "logo"}}', context))
+
+        expect(c('{{{getImage image_with_2_qs "logo"}}}', context))
             .to.be.equal(urlData_2_qs.replace('{:size}', '250x100'));
-        expect(c('{{getImage image_with_2_qs "gallery"}}', context))
-            .to.be.equal(urlData_2_qs.replace('{:size}', '300x300'));
+
         expect(c('{{getImage image "gallery"}}', context))
             .to.be.equal(urlData.replace('{:size}', '300x300'));
+
+        expect(c('{{{getImage image_with_2_qs "gallery"}}}', context))
+            .to.be.equal(urlData_2_qs.replace('{:size}', '300x300'));
 
         done();
     });
@@ -101,7 +104,6 @@ describe('getImage helper', function() {
 
         done();
     });
-
 
     it('should default to max value (width & height) if value is not provided', function(done) {
 

@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-const SafeString = require('handlebars').SafeString;
 const common = require('./../lib/common');
 
 function helper(paper) {
@@ -34,7 +33,7 @@ function helper(paper) {
             size = 'original';
         }
 
-        return new SafeString(image.data.replace('{:size}', size));
+        return image.data.replace('{:size}', size);
     });
 };
 

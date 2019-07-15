@@ -1,5 +1,8 @@
 ## Unreleased
 
+## 2.0.17 (2019-07-10)
+- Revert SafeString for getImage
+
 ## 2.0.16 (2019-07-10)
 - Add getImageSrcset helper
 - Return image URLs as SafeString
