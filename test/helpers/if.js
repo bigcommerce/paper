@@ -242,7 +242,7 @@ describe('if helper', () => {
         done();
     });
 
-    it('should throw an exeption when non string value sent to gtnum', function (done) {
+    it('should throw an exception when non string value sent to gtnum', function (done) {
         try {
             c('{{#if num1 "gtnum" "2"}}big{{/if}}');
         } catch(e) {
@@ -260,7 +260,7 @@ describe('if helper', () => {
         }
         done();
     });
-    it('should throw an exeption when NaN value sent to gtnum', function (done) {
+    it('should throw an exception when NaN value sent to gtnum', function (done) {
         try {
             c('{{#if "aaaa" "gtnum" "2"}}big{{/if}}');
         } catch(e) {

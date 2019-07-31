@@ -1,5 +1,12 @@
 ## Unreleased
 
+## 2.0.18 (2019-07-30)
+- Add setURLQueryParam helper
+- Make getImageSrcset not generate default srcsets larger than the original image when the dimensions are known
+- Make getImage not generate an image larger than the dimensions of the original image if the dimensions are known
+- Allow stripQuerystring to accept a Safestring as an argument
+- Refactor getImage helper to return image URL as SafeString instead of string
+
 ## 2.0.17 (2019-07-10)
 - Revert SafeString for getImage
 

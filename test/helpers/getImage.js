@@ -33,7 +33,14 @@ describe('getImage helper', function() {
         image_url: 'http://example.com/image.png',
         not_an_image: null,
         image: {
-            data: urlData
+            data: urlData,
+            width: null,
+            height: null,
+        },
+        image_with_dimensions: {
+            data: urlData,
+            width: 123,
+            height: 123,
         },
         image_with_2_qs: {
             data: urlData_2_qs
@@ -66,13 +73,13 @@ describe('getImage helper', function() {
         expect(c('{{getImage image "logo"}}', context))
             .to.be.equal(urlData.replace('{:size}', '250x100'));
 
-        expect(c('{{{getImage image_with_2_qs "logo"}}}', context))
+        expect(c('{{getImage image_with_2_qs "logo"}}', context))
             .to.be.equal(urlData_2_qs.replace('{:size}', '250x100'));
 
         expect(c('{{getImage image "gallery"}}', context))
             .to.be.equal(urlData.replace('{:size}', '300x300'));
 
-        expect(c('{{{getImage image_with_2_qs "gallery"}}}', context))
+        expect(c('{{getImage image_with_2_qs "gallery"}}', context))
             .to.be.equal(urlData_2_qs.replace('{:size}', '300x300'));
 
         done();
@@ -112,6 +119,17 @@ describe('getImage helper', function() {
 
         expect(c('{{getImage image "missing_width"}}', context))
             .to.be.equal(urlData.replace('{:size}', '5120x100'));
+
+        done();
+    });
+
+    it('should default to size of the image dimensions if known and a larger size is requested', function(done) {
+
+        expect(c('{{getImage image_with_dimensions "logo"}}', context))
+            .to.be.equal(urlData.replace('{:size}', '123x100'));
+
+        expect(c('{{getImage image_with_dimensions "logo_image"}}', context))
+            .to.be.equal(urlData.replace('{:size}', '123x123'));
 
         done();
     });
