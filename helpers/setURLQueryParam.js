@@ -6,15 +6,9 @@ const SafeString = require('handlebars').SafeString;
 
 function helper(paper) {
     paper.handlebars.registerHelper('setURLQueryParam', function(string, key, value) {
-        if (string instanceof SafeString) {
-            string = string.toString();
-        }
-        if (key instanceof SafeString) {
-            key = key.toString();
-        }
-        if (value instanceof SafeString) {
-            value = value.toString();
-        }
+        string = common.unwrapIfSafeString(string);
+        key = common.unwrapIfSafeString(key);
+        value = common.unwrapIfSafeString(value);
         if (!utils.isString(string) || !common.isValidURL(string)){
             throw new TypeError("Invalid URL passed to setURLQueryParam");
         } else if (!utils.isString(key)){

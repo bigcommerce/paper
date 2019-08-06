@@ -12,13 +12,24 @@ function c(template, context) {
 
 describe('json helper', function() {
 
-    it('should render object to json format', function(done) {
-        var context = {
-            object: {a: 1, b: "hello"}
-        };
+    const urlData_2_qs = 'https://cdn.example.com/path/to/{:size}/image.png?c=2&imbypass=on';
+    const context = {
+        image_with_2_qs: {
+            data: urlData_2_qs
+        },
+        object: { a: 1, b: "hello" }
+    };
 
+    it('should render object to json format', function(done) {
         expect(c('{{{json object}}}', context))
             .to.contain('{"a":1,"b":"hello"}');
+
+        done();
+    });
+
+    it('should work together with getImage', function(done) {
+        expect(c('{{{json (getImage image_with_2_qs)}}}', context))
+            .to.contain('"https://cdn.example.com/path/to/original/image.png?c=2&imbypass=on"');
 
         done();
     });
