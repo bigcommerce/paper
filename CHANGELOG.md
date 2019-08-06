@@ -1,5 +1,9 @@
 ## Unreleased
 
+## 2.0.19 (2019-08-06)
+- Allow json helper to accept a SafeString as an argument
+- Move SafeString unwrapping to common module
+
 ## 2.0.18 (2019-07-30)
 - Add setURLQueryParam helper
 - Make getImageSrcset not generate default srcsets larger than the original image when the dimensions are known
