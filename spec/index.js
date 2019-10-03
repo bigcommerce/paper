@@ -122,3 +122,36 @@ describe('render()', function() {
         });
     });
 });
+
+describe('renderTheme()', function() {
+    const assembler = {
+        getTemplates: (path, processor) => {
+            return Promise.resolve(processor({
+                'pages/product': '<html>{{> pages/partial}}</html>',
+                'pages/partial': '<h1>Hello world</h1>',
+                'pages/greet': '<h2>{{lang \'good\'}} {{lang \'morning\'}}</h2>',
+                'pages/pre': '<p>Let it go!</p>',
+            }));
+        },
+        getTranslations: () => {
+            return Promise.resolve({});
+        }
+    };
+
+    const themeComponents = ['pages/product', 'pages/partial', 'pages/greet', 'pages/pre'];
+
+    it('should render theme', function(done) {
+        const paper = new Paper(null, null, assembler);
+        paper.loadTheme(themeComponents, '').then(() => {
+            paper.renderTheme(themeComponents, {}).then(result => {
+                expect(result).to.be.equal({
+                    'pages/product': '<html><h1>Hello world</h1></html>',
+                    'pages/partial': '<h1>Hello world</h1>',
+                    'pages/greet': '<h2>good morning</h2>',
+                    'pages/pre': '<p>Let it go!</p>' }
+                );
+                done();
+            });
+        });
+    });
+});
