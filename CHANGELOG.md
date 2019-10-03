@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.23 (2019-10-03)
+- Fix renderTheme function so that it may work with Stencil CLI [#181](https://github.com/bigcommerce/paper/pull/181)
+
 ## 3.0.0-rc.22 (2019-10-02)
 - Bump paper version [#180](https://github.com/bigcommerce/paper/pull/180)
 

@@ -249,7 +249,8 @@ class Paper {
             // If templatePath is an array (multiple templates using render_with option),
             // compile all the template required files into an object
             result = {};
-            for (let path in templatePath) {
+            for (let i = 0; i < templatePath.length; i++) {
+                const path = templatePath[i];
                 renderPromises.push(this.render(path, data.context).then(html => {
                     result[path] = html;
                 }));
