@@ -2,7 +2,6 @@
 
 const _ = require('lodash');
 const Translator = require('./lib/translator');
-const Logger = require('./lib/logger');
 const HandlebarsRenderer = require('@bigcommerce/stencil-paper-handlebars');
 
 /**
@@ -44,19 +43,19 @@ class Paper {
     * @param {assemblerGetTemplates} assembler.getTemplates - Method to assemble templates
     * @param {assemblerGetTranslations} assembler.getTranslations - Method to assemble translations
     * @param {String} rendererType - One of ['handlebars-v3', 'handlebars-v4']
-    * @param {Object} logger
+    * @param {Object} logger - a console-like logger object
     */
-    constructor(siteSettings, themeSettings, assembler, rendererType, logger = Logger) {
+    constructor(siteSettings, themeSettings, assembler, rendererType, logger = console) {
         this._assembler = assembler || {};
 
         // Build renderer based on type
         switch(rendererType) {
         case 'handlebars-v4':
-            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v4');
+            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v4', logger);
             break;
         case 'handlebars-v3':
         default:
-            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v3');
+            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v3', logger);
             break;
         }
 
