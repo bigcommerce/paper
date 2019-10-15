@@ -3,18 +3,16 @@
 const Code = require('code');
 const Lab = require('lab');
 const Sinon = require('sinon');
-const Logger = require('../../lib/logger');
 const Translator = require('../../lib/translator');
 
 const lab = exports.lab = Lab.script();
-const afterEach = lab.afterEach;
 const beforeEach = lab.beforeEach;
 const describe = lab.experiment;
 const expect = Code.expect;
 const it = lab.it;
 
 describe('Translator', () => {
-    let errorLoggerStub;
+    let loggerStub;
     let translations;
 
     beforeEach(done => {
@@ -46,13 +44,10 @@ describe('Translator', () => {
             },
         };
 
-        errorLoggerStub = Sinon.stub(Logger, 'error');
-
-        done();
-    });
-
-    afterEach(done => {
-        errorLoggerStub.restore();
+        loggerStub = {
+            log: Sinon.fake(),
+            error: Sinon.fake(),
+        };
 
         done();
     });
@@ -103,10 +98,10 @@ describe('Translator', () => {
 
         nl.level1.level2 = nl.level1;
 
-        const translator = Translator.create('nl', Object.assign({}, translations, { nl: nl }));
+        const translator = Translator.create('nl', Object.assign({}, translations, { nl: nl }), loggerStub);
 
         expect(translator.translate('bye')).to.equal('Bye bye');
-        expect(errorLoggerStub.called).to.equal(true);
+        expect(loggerStub.error.called).to.equal(true);
 
         done();
     });
@@ -121,10 +116,10 @@ describe('Translator', () => {
     });
 
     it('should return an empty string and log a message if missing required parameters', done => {
-        const translator = Translator.create('en', translations);
+        const translator = Translator.create('en', translations, loggerStub);
 
         expect(translator.translate('hello')).to.equal('');
-        expect(errorLoggerStub.called).to.equal(true);
+        expect(loggerStub.error.called).to.equal(true);
 
         done();
     });
@@ -134,11 +129,11 @@ describe('Translator', () => {
             en: {
                 items_with_syntax_error: '{count, plurral, one{1 Item} other{# Items}}',
             },
-        });
+        }, loggerStub);
 
         translator.translate('items_with_syntax_error', { count: 1 });
 
-        expect(errorLoggerStub.called).to.equal(true);
+        expect(loggerStub.error.called).to.equal(true);
 
         done();
     });

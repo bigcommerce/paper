@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/bigcommerce/paper",
   "dependencies": {
-    "@bigcommerce/stencil-paper-handlebars": "4.2.2",
+    "@bigcommerce/stencil-paper-handlebars": "4.2.3",
     "accept-language-parser": "~1.4.1",
     "lodash": "~3.10.1",
     "messageformat": "~0.2.2"
@@ -32,6 +32,6 @@
     "code": "~4.0.0",
     "eslint": "~4.10.0",
     "lab": "~13.0.1",
-    "sinon": "~2.1.0"
+    "sinon": "~7.5.0"
   }
 }
