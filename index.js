@@ -198,7 +198,7 @@ class Paper {
      *
      * @param  {String} string
      * @param  {Object} context
-     * @return {String}
+     * @return {Promise} A promise to return the rendered text
      * @throws [CompileError|RenderError]
      */
     renderString(string, context) {
