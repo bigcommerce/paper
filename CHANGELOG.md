@@ -1,15 +1,15 @@
 # Changelog
 
+## 3.0.0-rc.25 (2019-10-15)
+- Bump paper-handlebars version to 4.2.3 [#183](https://github.com/bigcommerce/paper/pull/183)
+- Refactor logging. You can now pass an optional console-like logger object which will be used for internal logging as well as Handlebars logging. [#183](https://github.com/bigcommerce/paper/pull/183)
+
 ## 3.0.0-rc.24 (2019-10-09)
 - Bump paper version [#182](https://github.com/bigcommerce/paper/pull/182)
-
-## 3.0.0-rc.23 (2019-10-03)
 - Fix renderTheme function so that it may work with Stencil CLI [#181](https://github.com/bigcommerce/paper/pull/181)
 
 ## 3.0.0-rc.22 (2019-10-02)
-- Bump paper version [#180](https://github.com/bigcommerce/paper/pull/180)
-
-## 3.0.0-rc.21 (2019-10-02)
+- Bump paper-handlebars version [#180](https://github.com/bigcommerce/paper/pull/180)
 - Bump paper-handlebars version to 4.2.2 [#179](https://github.com/bigcommerce/paper/pull/179)
 
 ## 3.0.0-rc.20 (2019-08-06)
