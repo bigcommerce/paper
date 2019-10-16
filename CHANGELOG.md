@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.26 (2019-10-16)
+- Fix Stencil language translation in Safari[#186](https://github.com/bigcommerce/paper/pull/186)
+
 ## 3.0.0-rc.25 (2019-10-15)
 - Bump paper-handlebars version to 4.2.3 [#183](https://github.com/bigcommerce/paper/pull/183)
 - Refactor logging. You can now pass an optional console-like logger object which will be used for internal logging as well as Handlebars logging. [#183](https://github.com/bigcommerce/paper/pull/183)
