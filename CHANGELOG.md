@@ -1,5 +1,8 @@
 ## Unreleased
 
+## 2.0.20 (2019-10-22)
+- Fix Stencil language translation in Safari[#187](https://github.com/bigcommerce/paper/pull/187)
+
 ## 2.0.19 (2019-08-06)
 - Allow json helper to accept a SafeString as an argument
 - Move SafeString unwrapping to common module
