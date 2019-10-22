@@ -57,6 +57,16 @@ describe('Translator', () => {
         done();
     });
 
+    it('should return translated strings in default language if it cannot find a translation file for a specified language', done => {
+        const translator = Translator.create('fr-FR', translations);
+
+        expect(translator.translate('bye')).to.equal('au revoir');
+        expect(translator.translate('hello', { name: 'Joe' })).to.equal('Bonjour Joe');
+        expect(translator.translate('level1.level2')).to.equal('nous sommes dans le deuxième niveau');
+
+        done();
+    });
+
     it('should return translated strings', done => {
         const translator = Translator.create('fr-CA', translations);
 
