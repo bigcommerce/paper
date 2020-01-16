@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+const utils = require('handlebars-utils');
 
 function helper(paper) {
     paper.handlebars.registerHelper('unless', function () {
@@ -18,18 +18,14 @@ function helper(paper) {
         const options = arguments[arguments.length - 1];
         let result;
 
-        function isOptions(obj) {
-            return _.isObject(obj) && obj.fn;
-        }
-
         // Only parameter
-        if (isOptions(operator)) {
+        if (utils.isOptions(operator)) {
             // If an array is passed as the only parameter
-            if (_.isArray(lvalue)) {
+            if (utils.isArray(lvalue)) {
                 result = !!lvalue.length;
             }
             // If an empty object is passed, treat as false
-            else if (_.isEmpty(lvalue) && _.isObject(lvalue)) {
+            else if (utils.isEmpty(lvalue) && utils.isObject(lvalue)) {
                 result = false;
             }
             // Everything else
@@ -38,7 +34,7 @@ function helper(paper) {
             }
         } else {
 
-            if (isOptions(rvalue)) {
+            if (utils.isOptions(rvalue)) {
                 // @TODO: this is block is for backwards compatibility with 'compare' helper
                 // Remove after operator='==' is removed from stencil theme
                 rvalue = operator;
@@ -78,13 +74,13 @@ function helper(paper) {
                 result = (lvalue >= rvalue);
                 break;
 
-            case 'gtnum':  
-                if ((typeof lvalue === 'string') && (typeof(rvalue) === 'string') && (!isNaN(lvalue)) && (!isNaN(rvalue))) {
-                    result = (parseInt(lvalue) > parseInt(rvalue));
-                    break;
+            case 'gtnum':
+                if (typeof lvalue === 'string' && typeof(rvalue) === 'string' && !isNaN(lvalue) && !isNaN(rvalue)) {
+                    result = parseInt(lvalue) > parseInt(rvalue);
                 } else {
-                    throw new Error("Handlerbars Helper if gtnum accepts ONLY valid number string");
+                    throw new Error("if gtnum only accepts numbers (as strings)");
                 }
+                break;
 
             case 'typeof':
                 result = (typeof lvalue === rvalue);
