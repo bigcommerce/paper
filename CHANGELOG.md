@@ -1,5 +1,8 @@
 ## Unreleased
 
+## 2.0.21 (2020-01-17)
+- Backport more permissive behavior of if helper in subexpressions[#190](https://github.com/bigcommerce/paper/pull/190)
+
 ## 2.0.20 (2019-10-22)
 - Fix Stencil language translation in Safari[#187](https://github.com/bigcommerce/paper/pull/187)
 
