@@ -246,17 +246,17 @@ describe('if helper', () => {
         try {
             c('{{#if num1 "gtnum" "2"}}big{{/if}}');
         } catch(e) {
-            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+            expect(e.message).to.equal('if gtnum only accepts numbers (as strings)');
         }
         try {
             c('{{#if "2" "gtnum" num2}}big{{/if}}');
         } catch(e) {
-            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+            expect(e.message).to.equal('if gtnum only accepts numbers (as strings)');
         }
         try {
             c('{{#if num1 "gtnum" num2}}big{{/if}}');
         } catch(e) {
-            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+            expect(e.message).to.equal('if gtnum only accepts numbers (as strings)');
         }
         done();
     });
@@ -264,17 +264,17 @@ describe('if helper', () => {
         try {
             c('{{#if "aaaa" "gtnum" "2"}}big{{/if}}');
         } catch(e) {
-            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+            expect(e.message).to.equal('if gtnum only accepts numbers (as strings)');
         }
         try {
             c('{{#if "2" "gtnum" "bbbb"}}big{{/if}}');
         } catch(e) {
-            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+            expect(e.message).to.equal('if gtnum only accepts numbers (as strings)');
         }
         try {
             c('{{#if "aaaa" "gtnum" "bbbb"}}big{{/if}}');
         } catch(e) {
-            expect(e.message).to.equal('Handlerbars Helper if gtnum accepts ONLY valid number string');
+            expect(e.message).to.equal('if gtnum only accepts numbers (as strings)');
         }
         done();
     });
