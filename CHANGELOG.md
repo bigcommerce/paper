@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.27 (2020-01-29)
+- Bump paper-handlebars version to 4.3.0 [#193](https://github.com/bigcommerce/paper/pull/193)
+
 ## 3.0.0-rc.26 (2019-10-16)
 - Fix Stencil language translation in Safari[#186](https://github.com/bigcommerce/paper/pull/186)
 
