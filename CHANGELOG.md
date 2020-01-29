@@ -1,5 +1,8 @@
 ## Unreleased
 
+## 2.0.22 (2020-01-28)
+- Add encodeHtmlEntities helper
+
 ## 2.0.21 (2020-01-17)
 - Backport more permissive behavior of if helper in subexpressions[#190](https://github.com/bigcommerce/paper/pull/190)
 
