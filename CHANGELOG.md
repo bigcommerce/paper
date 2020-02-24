@@ -1,5 +1,8 @@
 ## Unreleased
 
+## 2.0.23 (2020-02-21)
+- Support more `he` arguments on encodeHtmlEntities helper
+
 ## 2.0.22 (2020-01-28)
 - Add encodeHtmlEntities helper
 
