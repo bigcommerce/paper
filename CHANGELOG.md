@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.29 (2020-06-05)
+- Bump paper-handlebars version to 4.3.2 [#199](https://github.com/bigcommerce/paper/pull/199)
+
 ## 3.0.0-rc.28 (2020-02-21)
 - Bump paper-handlebars version to 4.3.1 [#195](https://github.com/bigcommerce/paper/pull/195)
 
