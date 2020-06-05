@@ -14,6 +14,7 @@ describe('replace helper', function() {
     const context = {
         content: "Either you run the %%var%% or the  %%var%% runs you",
         price: '$49.99',
+        facet: 'brand',
     };
 
     it('should replace all ocurrance of %%var%% with "day"', function(done) {
@@ -41,6 +42,13 @@ describe('replace helper', function() {
 
         expect(c("{{#replace '$' '$10.00'}}USD {{/replace}}", context))
             .to.be.equal('USD 10.00');
+
+        done();
+    });
+
+    it('should work nicely with other helpers that use safestring', function(done) {
+        expect(c("Replace+Concat+Hyphenated: fifth-{{#replace '&' (concat '&' (hyphenate facet)) }}{{/replace}}", context))
+            .to.be.equal("Replace+Concat+Hyphenated: fifth-brand");
 
         done();
     });
