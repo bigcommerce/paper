@@ -1,13 +1,13 @@
 {
   "name": "@bigcommerce/stencil-paper",
-  "version": "3.0.0-rc.29",
+  "version": "3.0.0-rc.30",
   "description": "A Stencil plugin to load template files and render pages using backend renderer plugins.",
   "main": "index.js",
   "author": "Bigcommerce",
   "license": "BSD-4-Clause",
   "scripts": {
     "linter": "eslint .",
-    "test": "npm run linter && lab -v -t 94 --ignore i18n,WebAssembly,SharedArrayBuffer,Atomics,BigUint64Array,BigInt64Array,BigInt,URL,URLSearchParams,TextEncoder,TextDecoder,queueMicrotask spec",
+    "test": "npm run linter && lab -v -t 94 --ignore i18n,WebAssembly,SharedArrayBuffer,Atomics,BigUint64Array,BigInt64Array,BigInt,URL,URLSearchParams,TextEncoder,TextDecoder,queueMicrotask,FinalizationRegistry,WeakRef spec",
     "coverage": "lab -c -r console -o stdout -r html -o coverage.html spec"
   },
   "repository": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/bigcommerce/paper",
   "dependencies": {
-    "@bigcommerce/stencil-paper-handlebars": "4.3.2",
+    "@bigcommerce/stencil-paper-handlebars": "4.4.0",
     "accept-language-parser": "~1.4.1",
     "lodash": "~3.10.1",
     "messageformat": "~0.2.2"
