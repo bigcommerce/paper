@@ -79,6 +79,7 @@ class Paper {
         this.handlebars.templates = {};
         this.translator = null;
         this.inject = {};
+        this.variables = {};
         this.decorators = [];
 
         this.settings = settings || {};
@@ -242,7 +243,7 @@ class Paper {
             if (path[0] !== '/') {
                 path = '/' + path;
             }
-            
+
             return path;
         }
 
