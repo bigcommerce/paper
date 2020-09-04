@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
 const Translator = require('./lib/translator');
 const HandlebarsRenderer = require('@bigcommerce/stencil-paper-handlebars');
 
@@ -143,7 +142,7 @@ class Paper {
      * @return {Promise} Promise to load the templates and translations into the renderer.
     */
     loadTheme(paths, acceptLanguage) {
-        if (!_.isArray(paths)) {
+        if (!Array.isArray(paths)) {
             paths = paths ? [paths] : [];
         }
 
@@ -227,7 +226,7 @@ class Paper {
      */
     renderTheme(templatePath, data) {
         // Simple case of a single non-ajax template
-        if (!data.remote && !_.isArray(templatePath)) {
+        if (!data.remote && !Array.isArray(templatePath)) {
             return this.render(templatePath, data.context);
         }
 
@@ -244,7 +243,7 @@ class Paper {
         const renderPromises = [];
         let result;
 
-        if (_.isArray(templatePath)) {
+        if (Array.isArray(templatePath)) {
             // If templatePath is an array (multiple templates using render_with option),
             // compile all the template required files into an object
             result = {};
