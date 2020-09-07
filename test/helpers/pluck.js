@@ -14,8 +14,8 @@ describe('pluck helper', function() {
 
     var context = {
         users: [
-          { 'user': 'barney', 'age': 36 },
-          { 'user': 'fred',   'age': 40 }
+            { 'user': 'barney', 'age': 36 },
+            { 'user': 'fred',   'age': 40 }
         ]
     };
 
