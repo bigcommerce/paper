@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint-and-fix": "eslint . --fix",
-    "test": "lab -l -t 90"
+    "test": "lab -l -v -t 90"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,6 @@
     "handlebars-helpers": "^0.8.0",
     "handlebars-utils": "^1.0.6",
     "he": "^1.2.0",
-    "lodash": "^3.6.0",
     "messageformat": "^0.2.2",
     "stringz": "^0.1.1",
     "tarjan-graph": "^0.3.0"

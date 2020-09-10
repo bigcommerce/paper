@@ -1,6 +1,6 @@
 'use strict';
-
-var _ = require('lodash');
+const isObject = require('../lib/utils/isObject');
+const isMatch = require("../lib/utils/isMatch");
 
 /**
  * Yield block if any object within a collection matches supplied predicate
@@ -9,48 +9,29 @@ var _ = require('lodash');
  * {{#any items selected=true}} ... {{/any}}
  */
 function helper(paper) {
-    paper.handlebars.registerHelper('any', function () {
+    paper.handlebars.registerHelper('any', function (...args) {
+        const opts = args.pop();
+        let any;
 
-        var args = [],
-            opts,
-            predicate,
-            any;
-
-        // Translate arguments to array safely
-        for (var i = 0; i < arguments.length; i++) {
-            args.push(arguments[i]);
-        }
-
-        // Take the last argument (content) out of testing array
-        opts = args.pop();
-        predicate = opts.hash;
-
-        if (!_.isEmpty(predicate)) {
-            // With options hash, we check the contents of first argument
-            any = _.any(args[0], predicate);
+        // With options hash, we check the contents of first argument
+        if (opts.hash && Object.keys(opts.hash).length) {
+            // This works fine for both arrays and objects
+            any = isObject(args[0]) && Object.values(args[0]).some(item => isMatch(item, opts.hash));
         } else {
             // DEPRECATED: Moved to #or helper
             // Without options hash, we check all the arguments
-            any = _.any(args, function (arg) {
-                if (_.isArray(arg)) {
+            any = args.some(arg => {
+                if (Array.isArray(arg)) {
                     return !!arg.length;
                 }
-                // If an empty object is passed, arg is false
-                else if (_.isEmpty(arg) && _.isObject(arg)) {
+                if (isObject(arg) && !Object.keys(arg).length) {
                     return false;
                 }
-                // Everything else
-                else {
-                    return !!arg;
-                }
+                return !!arg;
             });
         }
 
-        if (any) {
-            return opts.fn(this);
-        }
-
-        return opts.inverse(this);
+        return any ? opts.fn(this) : opts.inverse(this);
     });
 }
 

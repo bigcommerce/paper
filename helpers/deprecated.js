@@ -1,10 +1,10 @@
 'use strict';
 
-var _ = require('lodash');
+const pickBy = require("../lib/utils/pickBy");
 
 function helper(paper) {
-    paper.handlebars.registerHelper('pick', function () {
-        return _.pick.apply(null, arguments);
+    paper.handlebars.registerHelper('pick', function (...args) {
+        return pickBy(...args);
     });
 
     /**
