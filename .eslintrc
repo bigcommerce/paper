@@ -1,16 +1,14 @@
 {
   "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module"
-  },
-  "ecmaFeatures": {
-    "modules": true
+    "ecmaVersion": 2018, // suppport syntax features (like Object spread operator) up to es2018
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true
+    }
   },
   "env": {
-    "node": true
-  },
-  "globals": {
-
+    "node": true,
+    "es2017": true // suppport globals (like Promise) up to es2017 (es2018 doesn't have new globals)
   },
   "rules": {
     "curly": 2,

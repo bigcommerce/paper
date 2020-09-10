@@ -6,6 +6,8 @@
   "author": "Bigcommerce",
   "license": "BSD-4-Clause",
   "scripts": {
+    "lint": "eslint .",
+    "lint-and-fix": "eslint . --fix",
     "test": "lab -l -t 90"
   },
   "repository": {
@@ -34,11 +36,8 @@
   },
   "devDependencies": {
     "code": "^1.4.0",
-    "eslint": "^2.7.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^6.2.0",
-    "eslint-plugin-react": "^4.3.0",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^2.0.0",
     "lab": "^13.0.1",
     "sinon": "^1.17.2"
   }
