@@ -49,10 +49,10 @@ class Paper {
 
         // Build renderer based on type
         switch(rendererType) {
-        case 'handlebars-v4':
+        case 'handlebars_v4':
             this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v4', logger);
             break;
-        case 'handlebars-v3':
+        case 'handlebars_v3':
         default:
             this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v3', logger);
             break;
