@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.33 (2020-09-21)
+- Bumps paper-handlebars to 4.5.0-rc.2 [#208](https://github.com/bigcommerce/paper/pull/214)
+
 ## 3.0.0-rc.32 (2020-09-04)
 - Refactor Translator and drop unneeded dependency. Bumps paper-handlebars to 4.5.0-rc.1 [#208](https://github.com/bigcommerce/paper/pull/208)
 
