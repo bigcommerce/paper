@@ -5,8 +5,34 @@ function helper(paper) {
         if (typeof value === 'function') {
             return;
         }
+        function filterValues(value) {
+            let result = value;
+            try {
+                JSON.parse(value);
+            } catch (e) {
+                if (typeof value === 'string') {
+                    result = paper.handlebars.escapeExpression(value);
+                }
+                if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                    result = filterObjectValues(value);
+                }
+                if (Array.isArray(value)) {
+                    result = value.map(item => {
+                        return filterValues(item);
+                    });
+                }
+            }
+            return result;
+        }
+        function filterObjectValues(obj) {
+            let filteredObject = {};
+            Object.keys(obj).forEach(key => {
+                filteredObject[key] = filterValues(obj[key]);
+            });
+            return filteredObject;
+        }
 
-        paper.inject[key] = value;
+        paper.inject[key] = filterValues(value);
     });
 
     paper.handlebars.registerHelper('jsContext', function () {
