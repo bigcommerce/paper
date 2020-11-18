@@ -171,5 +171,4 @@ describe('Transformer', () => {
         expect(Transformer.transform(translations, 'en')).to.equal(cascaded);
         done();
     });
-
 });
