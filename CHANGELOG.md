@@ -1,7 +1,10 @@
 # Changelog
 
-## 3.0.0-rc.34 (2020-09-21)
-- Bumps paper-handlebars to 4.4.1 [#208](https://github.com/bigcommerce/paper/pull/216)
+## 3.0.0-rc.35 (2020-11-17)
+- Bumps paper-handlebars to 4.4.2 [#208](https://github.com/bigcommerce/paper/pull/219)
+
+## 3.0.0-rc.34 (2020-11-16)
+- Rollback paper-handlebars to 4.4.1 [#208](https://github.com/bigcommerce/paper/pull/216)
 
 ## 3.0.0-rc.33 (2020-09-21)
 - Bumps paper-handlebars to 4.5.0-rc.2 [#208](https://github.com/bigcommerce/paper/pull/214)
