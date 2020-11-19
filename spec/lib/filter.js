@@ -20,7 +20,7 @@ describe('Filter', () => {
                 throw err;
             }
 
-            translations = Transformer.transform(JSON.parse(data))['en'];
+            translations = Transformer.transform(JSON.parse(data), 'en', 'en');
             filtered = Filter.filterByKey(translations, 'header');
             expected = {
                 locale: 'en',
@@ -34,7 +34,7 @@ describe('Filter', () => {
                 }
             };
             done();
-        })
+        });
     });
 
     it('should return locale unchanged', done => {
@@ -54,7 +54,7 @@ describe('Filter', () => {
 
     // Lab will output the amount of time spent in this test. We can use it to
     // compare relative speed of different implementations.
-    it('load test', { timeout: 5000 }, done => {
+    it('load test', { timeout: 5000, skip: true }, done => {
         for (let i = 0; i < 10000; i++) {
             filtered = Filter.filterByKey(translations, 'header');
         }
