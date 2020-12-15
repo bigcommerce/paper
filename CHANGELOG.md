@@ -1,13 +1,16 @@
 # Changelog
 
+## 3.0.0-rc.36 (2020-12-15)
+- Bumps paper-handlebars to 4.4.3 [#223](https://github.com/bigcommerce/paper/pull/223)
+
 ## 3.0.0-rc.35 (2020-11-17)
-- Bumps paper-handlebars to 4.4.2 [#208](https://github.com/bigcommerce/paper/pull/219)
+- Bumps paper-handlebars to 4.4.2 [#219](https://github.com/bigcommerce/paper/pull/219)
 
 ## 3.0.0-rc.34 (2020-11-16)
-- Rollback paper-handlebars to 4.4.1 [#208](https://github.com/bigcommerce/paper/pull/216)
+- Rollback paper-handlebars to 4.4.1 [#216](https://github.com/bigcommerce/paper/pull/216)
 
 ## 3.0.0-rc.33 (2020-09-21)
-- Bumps paper-handlebars to 4.5.0-rc.2 [#208](https://github.com/bigcommerce/paper/pull/214)
+- Bumps paper-handlebars to 4.5.0-rc.2 [#214](https://github.com/bigcommerce/paper/pull/214)
 
 ## 3.0.0-rc.32 (2020-09-04)
 - Refactor Translator and drop unneeded dependency. Bumps paper-handlebars to 4.5.0-rc.1 [#208](https://github.com/bigcommerce/paper/pull/208)
