@@ -1,5 +1,25 @@
 ## Unreleased
 
+## 2.0.27 (2020-12-14)
+- Lift `occurrences` helper from handlebars-helpers
+- Use eslint instead of gulp for linting
+- Update eslint
+
+## 2.0.26 (2020-09-08)
+- Bump handlebars to 3.0.8
+- Remove package-lock.json
+
+## 2.0.25 (2020-08-26)
+- Add getContentImage helper
+- Add getContentImageSrcset helper
+- Add getImageManagerImage helper
+- Add getImageManagerImageSrcset helper
+- Add getVar and assignVar helpers
+- Add incrementVar and decrementVar helpers
+
+## 2.0.24 (2020-06-05)
+- Allow replace helper to accept SafeStrings
+
 ## 2.0.23 (2020-02-21)
 - Support more `he` arguments on encodeHtmlEntities helper
 
