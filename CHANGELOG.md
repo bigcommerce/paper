@@ -1,5 +1,8 @@
 ## Unreleased
 
+## 2.0.28 (2021-02-22)
+- Escape values in inject helper
+
 ## 2.0.27 (2020-12-14)
 - Lift `occurrences` helper from handlebars-helpers
 - Use eslint instead of gulp for linting
