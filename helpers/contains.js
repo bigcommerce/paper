@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+const includes = require('../lib/utils/includes');
 
 /**
  * Is any value included in a collection or a string?
@@ -10,17 +10,12 @@ var _ = require('lodash');
  * {{#contains font_path "Roboto"}} ... {{/contains}}
  */
 function helper(paper) {
-    paper.handlebars.registerHelper('contains', function () {
-        var args = Array.prototype.slice.call(arguments, 0, -1),
-            options = _.last(arguments),
-            contained = _.contains.apply(_, args);
+    paper.handlebars.registerHelper('contains', function (...args) {
+        const options = args.pop();
+        const contained = includes(...args);
 
         // Yield block if true
-        if (contained) {
-            return options.fn(this);
-        } else {
-            return options.inverse(this);
-        }
+        return contained ? options.fn(this) : options.inverse(this);
     });
 }
 

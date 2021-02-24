@@ -1,6 +1,6 @@
 'use strict';
 
-const _ = require('lodash');
+const pickBy = require('../lib/utils/pickBy');
 const helpers = require('handlebars-helpers');
 const whitelist = [
     {
@@ -142,7 +142,12 @@ const whitelist = [
 ];
 
 function helper(paper) {
-    whitelist.forEach(helper => paper.handlebars.registerHelper(_.pick(helpers[helper.name](), helper.include)));
+    for (const { name, include } of whitelist) {
+        const includeSet = new Set(include);
+        paper.handlebars.registerHelper(
+            pickBy(helpers[name](), (value, key) => includeSet.has(key))
+        )
+    }
 }
 
 module.exports = helper;

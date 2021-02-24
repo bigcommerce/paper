@@ -1,14 +1,14 @@
 'use strict';
 
-var _ = require('lodash');
-var Translator = require('./lib/translator');
-var Logger = require('./lib/logger');
-var Path = require('path');
-var Fs = require('fs');
-var Handlebars = require('handlebars');
-var Async = require('async');
-var helpers = [];
-var handlebarsOptions = {
+const Translator = require('./lib/translator');
+const Logger = require('./lib/logger');
+const Path = require('path');
+const Fs = require('fs');
+const Handlebars = require('handlebars');
+const Async = require('async');
+
+const helpers = [];
+const handlebarsOptions = {
     preventIndent: true
 };
 
@@ -101,7 +101,7 @@ class Paper {
     }
 
     loadTheme(paths, acceptLanguage, done) {
-        if (!_.isArray(paths)) {
+        if (!Array.isArray(paths)) {
             paths = paths ? [paths] : [];
         }
 
@@ -117,7 +117,7 @@ class Paper {
 
     /**
      * Load Partials/Templates
-     * @param  {Object}   templates
+     * @param  {Object}   path
      * @param  {Function} callback
     */
     loadTemplates(path, callback) {
@@ -128,13 +128,13 @@ class Paper {
                 return callback(error);
             }
 
-            _.each(templates, (precompiled, path) => {
-                var template;
+            for (const [path, precompiled] of Object.entries(templates)) {
+                let template;
                 if (!this.handlebars.templates[path]) {
                     eval('template = ' + precompiled);
                     this.handlebars.templates[path] = this.handlebars.template(template);
                 }
-            });
+            }
 
             this.handlebars.partials = this.handlebars.templates;
 
@@ -144,13 +144,10 @@ class Paper {
 
     getTemplateProcessor() {
         return (templates) => {
-            let precompiledTemplates = {};
-
-            _.each(templates,(content, path) => {
+            return Object.entries(templates).reduce((precompiledTemplates, [path, content]) => {
                 precompiledTemplates[path] = this.handlebars.precompile(content, handlebarsOptions);
-            });
-
-            return precompiledTemplates;
+                return precompiledTemplates;
+            }, {});
         }
     }
 
@@ -160,9 +157,9 @@ class Paper {
      * @return {Object}
      */
     loadTemplatesSync(templates) {
-        _.each(templates,(content, fileName) => {
+        for (const [fileName, content] of Object.entries(templates)) {
             this.handlebars.templates[fileName] = this.handlebars.compile(content, handlebarsOptions);
-        });
+        }
 
         this.handlebars.partials = this.handlebars.templates;
 
@@ -171,7 +168,7 @@ class Paper {
 
     /**
      * @param {String} acceptLanguage
-     * @param {Object} translations
+     * @param {Function} callback
      */
     loadTranslations(acceptLanguage, callback) {
         this.assembler.getTranslations((error, translations) => {
@@ -274,21 +271,18 @@ class Paper {
      * @param {Object} context
      * @return {String}
      */
-    render(path, context) {
-        let output;
-
-        context = context || {};
+    render(path, context = {}) {
         context.template = path;
 
         if (this.translator) {
             context.locale_name = this.translator.getLocale();
         }
 
-        output = this.handlebars.templates[path](context);
+        let output = this.handlebars.templates[path](context);
 
-        _.each(this.decorators, function (decorator) {
+        for (const decorator of this.decorators) {
             output = decorator(output);
-        });
+        }
 
         return output;
     };
@@ -304,7 +298,7 @@ class Paper {
         let output;
 
         // Is an ajax request?
-        if (data.remote || _.isArray(templatePath)) {
+        if (data.remote || Array.isArray(templatePath)) {
 
             if (data.remote) {
                 data.context = Object.assign({}, data.context, data.remote_data);
@@ -313,7 +307,7 @@ class Paper {
             // Is render_with ajax request?
             if (templatePath) {
                 // if multiple render_with
-                if (_.isArray(templatePath)) {
+                if (Array.isArray(templatePath)) {
                     // if templatePath is an array ( multiple templates using render_with option)
                     // compile all the template required files into a hash table
                     html = templatePath.reduce((table, file) => {

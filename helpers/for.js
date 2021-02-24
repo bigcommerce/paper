@@ -1,28 +1,25 @@
 'use strict';
 
-var _ = require('lodash');
+const isObject = require('../lib/utils/isObject');
 
 function helper(paper) {
     paper.handlebars.registerHelper('for', function (from, to, context) {
         const options = arguments[arguments.length - 1];
         const maxIterations = 100;
-        var output = '';
+        let output = '';
 
         function isOptions(obj) {
-            return _.isObject(obj) && obj.fn;
+            return obj && obj.fn;
         }
 
         if (isOptions(to)) {
             context = {};
             to = from;
             from = 1;
-
-        } else if (isOptions(context)) {
-            if (_.isObject(to)) {
-                context = to;
-                to = from;
-                from = 1;
-            }
+        } else if (isOptions(context) && isObject(to)) {
+            context = to;
+            to = from;
+            from = 1;
         }
 
         if (to < from) {
@@ -36,7 +33,7 @@ function helper(paper) {
             to = from + maxIterations - 1;
         }
 
-        for (var i = from; i <= to; i++) {
+        for (let i = from; i <= to; i++) {
             context.$index = i;
             output += options.fn(context);
         }

@@ -1,13 +1,12 @@
 'use strict';
 
-var _ = require('lodash');
-
 /**
  * Format numbers
  *
- * @param integer n: length of decimal
- * @param mixed   s: thousands delimiter
- * @param mixed   c: decimal delimiter
+ * @param {number} value
+ * @param {number} n - length of decimal
+ * @param {string} s - thousands delimiter
+ * @param {string} c - decimal delimiter
  */
 function numberFormat(value, n, s, c) {
     var re = '\\d(?=(\\d{3})+' + (n > 0 ? '\\D' : '$') + ')',
@@ -18,9 +17,9 @@ function numberFormat(value, n, s, c) {
 
 function helper(paper) {
     paper.handlebars.registerHelper('money', function (value) {
-        var money = paper.settings.money;
+        const money = paper.settings.money;
 
-        if (!_.isNumber(value)) {
+        if (typeof value !== 'number') {
             return '';
         }
 

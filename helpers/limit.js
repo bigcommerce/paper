@@ -1,7 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
-
 /**
  * Limit an array to the second argument
  *
@@ -10,11 +8,10 @@ var _ = require('lodash');
  */
 function helper(paper) {
     paper.handlebars.registerHelper('limit', function (data, limit) {
-
-        if (_.isString(data)) {
+        if (typeof data === 'string') {
             return data.substring(0, limit);
         }
-        if (!_.isArray(data)) {
+        if (!Array.isArray(data)) {
             return [];
         }
 

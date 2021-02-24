@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
 const getFonts = require('../lib/fonts');
 
 const fontResources = {
@@ -10,28 +9,26 @@ const fontResources = {
     ],
 };
 
+function format(host) {
+    return `<link rel="dns-prefetch preconnect" href="${host}" crossorigin>`;
+}
+
 module.exports = function(paper) {
     paper.handlebars.registerHelper('resourceHints', function() {
-        function format(host) {
-            return `<link rel="dns-prefetch preconnect" href="${host}" crossorigin>`;
-        }
-
-        var hosts = [];
+        const hosts = [];
 
         // Add cdn
-        const cdnUrl = paper.settings['cdn_url'] || '';
-        if (cdnUrl != '') {
-            hosts.push(cdnUrl);
+        if (paper.settings['cdn_url']) {
+            hosts.push(paper.settings['cdn_url']);
         }
 
         // Add font providers
-        const fontProviders = _.keys(getFonts(paper, 'providerLists'));
-        _.each(fontProviders, function(provider) {
-            if (typeof fontResources[provider] !== 'undefined') {
-                hosts = hosts.concat(fontResources[provider]);
+        for (let provider of Object.keys(getFonts(paper, 'providerLists'))) {
+            if (fontResources[provider]) {
+                hosts.push(...fontResources[provider]);
             }
-        });
+        }
 
-        return new paper.handlebars.SafeString(_.map(hosts, format).join(''));
+        return new paper.handlebars.SafeString(hosts.map(format).join(''));
     });
 }
