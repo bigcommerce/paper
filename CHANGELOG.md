@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-rc.38 (2021-03-15)
+- Added public interface for handlebars to add templates and preprocess them [#228](https://github.com/bigcommerce/paper/pull/228)
+- Bumps paper-handlebars to 4.4.6 [#226](https://github.com/bigcommerce/paper/pull/229)
+
 ## 3.0.0-rc.37 (2021-02-12)
 - Bumps paper-handlebars to 4.4.4 [#226](https://github.com/bigcommerce/paper/pull/226)
 
