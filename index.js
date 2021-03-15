@@ -271,6 +271,23 @@ class Paper {
             return result;
         });
     }
+
+    /**
+     * 
+     * @param {Object} templates 
+     */
+    preprocess(templates) {
+        return this.preProcessor(templates);
+    }
+
+    /**
+     * Registers templates for the handlebars
+     * 
+     * @param {Object} templats 
+     */
+    addTemplates(templates) {
+        this.renderer.addTemplates(templates);
+    }
 }
 
 module.exports = Paper;
