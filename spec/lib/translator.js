@@ -4,6 +4,7 @@ const Code = require('code');
 const Lab = require('lab');
 const Sinon = require('sinon');
 const Translator = require('../../lib/translator');
+const Transformer = require('../../lib/translator/transformer');
 
 const lab = exports.lab = Lab.script();
 const beforeEach = lab.beforeEach;
@@ -260,4 +261,65 @@ describe('Translator', () => {
 
         done();
     });
+
+    describe('translations flattening', () => {
+        const flattenedLanguages = {
+            "en": {
+              "locale": "en",
+              "locales": {
+                "welcome": "en",
+                "hello": "en",
+                "bye": "en",
+                "items": "en",
+                "level1.level2": "en"
+              },
+              "translations": {
+                "welcome": "Welcome",
+                "hello": "Hello {name}",
+                "bye": "Bye bye",
+                "items": "{count, plural, one{1 Item} other{# Items}}",
+                "level1.level2": "we are on the second level"
+              }
+            }
+        };
+
+        it('should provide flattened translations object', done => {
+            const flattenedTranslator = Translator.create('en', flattenedLanguages, console, true);
+            const translator = Translator.create('en', translations);
+            expect(flattenedTranslator.getLanguage('en')).to.equal(translator.getLanguage('en'));
+    
+            done();
+        });
+    
+        it('should omit transforming languages, when flattened languages are provided', done => {
+            const stub = Sinon.stub(Transformer, 'transform');
+            Translator.create('en', flattenedLanguages, console, true);
+            expect(stub.called).to.equal(false);
+            stub.restore();
+    
+            done();
+        });
+    
+        it('should successfully translate en language without transforming translations', done => {
+            const locale = 'en';
+            const translator = Translator.create(locale, flattenedLanguages, console, true);
+            expect(translator.translate('hello', {name: 'User'})).to.equal('Hello User');
+
+            const key = 'level1.level2';
+            expect(translator.translate(key)).to.equal(flattenedLanguages[locale].translations[key]);
+            done();
+        });
+
+        it('should successfully translate fr language with transforming translations', done => {
+            const locale = 'fr-CA';
+            const translator = Translator.create(locale, translations);
+            expect(translator.translate('hello', {name: 'User'})).to.equal('Salut User');
+
+            const key = 'level1.level2';
+            expect(translator.translate(key)).to.equal(translations.fr.level1.level2);
+            done();
+        })
+
+    })
+
 });

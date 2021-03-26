@@ -155,3 +155,64 @@ describe('renderTheme()', function() {
         });
     });
 });
+
+
+describe('loadTranslations', () => {
+    it('should load translations in normal flow (transforming and flattening translations)', done => {
+        const assembler = {
+            getTemplates: () => Promise.resolve({}),
+            getTranslations: () => {
+                return Promise.resolve({
+                    'en': {
+                        hello: 'Hello {name}',
+                        level1: {
+                            level2: 'we are in the second level'
+                        }
+                    },
+                    'fr': {
+                        hello: 'Bonjour {name}',
+                        level1: {
+                            level2: 'nous sommes dans le deuxième niveau'
+                        }
+                    },
+                    'fr-CA': {
+                        hello: 'Salut {name}'
+                    }
+                });
+            }
+        };
+        const paper = new Paper(null, null, assembler);
+        paper.loadTranslations('en').then(() => {
+            expect(paper.renderer.getTranslator().getLanguage().locales).to.equal({ hello: 'en', 'level1.level2': 'en' });
+            done();
+        });
+    });
+
+    it('should load translations and omit trasnformation', done => {
+        const assembler = {
+            getTemplates: () => Promise.resolve({}),
+            getTranslations: () => {
+                return Promise.resolve({
+                    en: {
+                        locale: 'en',
+                        locales: {
+                            'hello': 'en',
+                            'level1.level2': 'en'
+                        },
+                        translations: {
+                            hello: 'Hello {name}',
+                            'level1.level2': 'we are in the second level'
+                        }
+                    }
+                });
+            }
+        };
+        const paper = new Paper(null, null, assembler);
+        paper.loadTranslations('en', true).then(() => {
+            expect(paper.renderer.getTranslator().getLanguage().locales).to.equal({ hello: 'en', 'level1.level2': 'en' });
+            done();
+        }).catch(e => {
+            console.log(e);
+        });
+    })
+});
