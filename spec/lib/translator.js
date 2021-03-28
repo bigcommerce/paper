@@ -5,6 +5,7 @@ const Lab = require('lab');
 const Sinon = require('sinon');
 const Translator = require('../../lib/translator');
 
+const fs = require('fs');
 const lab = exports.lab = Lab.script();
 const beforeEach = lab.beforeEach;
 const describe = lab.experiment;
@@ -259,5 +260,23 @@ describe('Translator', () => {
         });
 
         done();
+    });
+
+    // Lab will output the amount of time spent in this test. We can use it to
+    // compare relative speed of different implementations.
+    it('load test', { timeout: 5000, skip: true }, done => {
+        fs.readFile('./spec/fixtures/lang.json', 'utf8' , (err, data) => {
+            if (err) {
+                console.error(err);
+                throw err;
+            }
+
+            translations = data;
+
+            for (let i = 0; i < 1000; i++) {
+                Translator.create('fr-CA', translations);
+            }
+            done();
+        });
     });
 });
