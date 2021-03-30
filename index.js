@@ -182,11 +182,12 @@ class Paper {
      * Load translation files and give a translator to renderer.
      *
      * @param {String} acceptLanguage The accept-language header, used to select a locale
+     * @param {Boolean} omitTransforming If set to true, translations won't be transformted(flattened) and used as provided
      * @return {Promise} Promise to load the translations into the renderer.
      */
-    loadTranslations(acceptLanguage) {
+    loadTranslations(acceptLanguage, omitTransforming = false) {
         return this._assembler.getTranslations().then(translations => {
-            const translator = Translator.create(acceptLanguage, translations, this.logger);
+            const translator = Translator.create(acceptLanguage, translations, this.logger, omitTransforming);
             this.renderer.setTranslator(translator);
             return translations;
         });
