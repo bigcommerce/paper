@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.40 (2021-03-30)
+- paper.loadTranslations now supports additional parameter to omit transforming translations [#226](https://github.com/bigcommerce/paper/pull/231)
+
 ## 3.0.0-rc.39 (2021-03-15)
 - Bumps paper-handlebars to 4.4.7 [#226](https://github.com/bigcommerce/paper/pull/230)
 
