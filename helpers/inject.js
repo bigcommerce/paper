@@ -1,7 +1,7 @@
 'use strict';
 
 function helper(paper) {
-    paper.handlebars.registerHelper('inject', function (key, value) {
+    paper.handlebars.registerHelper('inject', function (key, value, escape) {
         if (typeof value === 'function') {
             return;
         }
@@ -31,8 +31,12 @@ function helper(paper) {
             });
             return filteredObject;
         }
+        
+        if (typeof escape === 'object') {
+            escape = false;
+        }
 
-        paper.inject[key] = filterValues(value);
+        paper.inject[key] = escape ? filterValues(value) : value;
     });
 
     paper.handlebars.registerHelper('jsContext', function () {
