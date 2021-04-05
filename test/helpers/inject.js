@@ -7,7 +7,7 @@ var Code = require('code'),
     it = lab.it;
 
 function c(template, context) {
-    return new Paper().loadTemplatesSync({template: template}).render('template', context);
+    return new Paper().loadTemplatesSync({ template: template }).render('template', context);
 }
 
 describe('inject helper', function() {
@@ -15,7 +15,7 @@ describe('inject helper', function() {
         value1: "Big",
         value2: "Commerce",
         badChars: "&<>\"'`",
-        jsonString: JSON.stringify({"big": "commerce"}),
+        jsonString: JSON.stringify({ "big": "commerce" }),
         nested: {
             firstName: "&<>",
             lastName: "\"'`",
@@ -36,12 +36,12 @@ describe('inject helper', function() {
         done();
     });
 
-    it('should escape strings', function(done) {
-        var template = "{{inject 'filtered' badChars}}{{jsContext}}";
+    it('should escape strings when escape is set to true', function(done) {
+        var template = "{{inject 'filtered' badChars true}}{{jsContext}}";
 
         expect(c(template, context))
             .to.be.equal('"{\\"filtered\\":\\"&amp;&lt;&gt;&quot;&#x27;&#x60;\\"}"');
-        
+
         done();
     });
 
@@ -50,16 +50,34 @@ describe('inject helper', function() {
 
         expect(c(template, context))
             .to.be.equal('"{\\"filtered\\":\\"{\\\\\\"big\\\\\\":\\\\\\"commerce\\\\\\"}\\"}"');
-        
+
         done();
     });
 
-    it('should escape strings nested in objects and arrays', function(done) {
-        var template = "{{inject 'filtered' nested}}{{jsContext}}";
+    it('should escape strings nested in objects and arrays when escape is set to true', function(done) {
+        var template = "{{inject 'filtered' nested true}}{{jsContext}}";
 
         expect(c(template, context))
             .to.be.equal('"{\\"filtered\\":{\\"firstName\\":\\"&amp;&lt;&gt;\\",\\"lastName\\":\\"&quot;&#x27;&#x60;\\",\\"addresses\\":[{\\"street\\":\\"123 &amp;&lt;&gt;&quot;&#x27;&#x60; St\\"}]}}"');
-        
+
         done()
     });
+
+    it('should not escape characters by default', function(done) {
+        var template = "{{inject 'unfiltered' nested.firstName}}{{jsContext}}";
+
+        expect(c(template, context))
+            .to.be.equal('"{\\"unfiltered\\":\\"&<>\\"}"');
+
+        done();
+    })
+
+    it('should not escape characters when escape is set to false', function(done) {
+        var template = "{{inject 'unfiltered' nested.firstName false}}{{jsContext}}";
+
+        expect(c(template, context))
+            .to.be.equal('"{\\"unfiltered\\":\\"&<>\\"}"');
+
+        done();
+    })
 });
