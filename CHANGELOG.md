@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.41 (2021-05-07)
+- Improved filtering language object by key for langJSON helper, that was struggling with perfomance on GraalVM [#226](https://github.com/bigcommerce/paper/pull/234)
+
 ## 3.0.0-rc.40 (2021-03-30)
 - paper.loadTranslations now supports additional parameter to omit transforming translations [#226](https://github.com/bigcommerce/paper/pull/231)
 
