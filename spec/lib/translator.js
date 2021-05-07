@@ -303,6 +303,8 @@ describe('Translator', () => {
         it('should successfully translate en language without transforming translations', done => {
             const locale = 'en';
             const translator = Translator.create(locale, flattenedLanguages, console, true);
+            const precompiledTranslations = Translator.precompileTranslations(flattenedLanguages);
+            translator.setLanguage(precompiledTranslations)
             expect(translator.translate('hello', {name: 'User'})).to.equal('Hello User');
 
             const key = 'level1.level2';
