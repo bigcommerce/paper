@@ -1,17 +1,20 @@
 # Changelog
 
+## 3.0.0-rc.42 (2021-05-11)
+- Improved filtering language object by key for langJSON helper, that was struggling with perfomance on GraalVM [#236](https://github.com/bigcommerce/paper/pull/236)
+
 ## 3.0.0-rc.41 (2021-05-07)
-- Improved filtering language object by key for langJSON helper, that was struggling with perfomance on GraalVM [#226](https://github.com/bigcommerce/paper/pull/234)
+- Improved filtering language object by key for langJSON helper, that was struggling with perfomance on GraalVM [#234](https://github.com/bigcommerce/paper/pull/234)
 
 ## 3.0.0-rc.40 (2021-03-30)
-- paper.loadTranslations now supports additional parameter to omit transforming translations [#226](https://github.com/bigcommerce/paper/pull/231)
+- paper.loadTranslations now supports additional parameter to omit transforming translations [#231](https://github.com/bigcommerce/paper/pull/231)
 
 ## 3.0.0-rc.39 (2021-03-15)
-- Bumps paper-handlebars to 4.4.7 [#226](https://github.com/bigcommerce/paper/pull/230)
+- Bumps paper-handlebars to 4.4.7 [#230](https://github.com/bigcommerce/paper/pull/230)
 
 ## 3.0.0-rc.38 (2021-03-15)
 - Added public interface for handlebars to add templates and preprocess them [#228](https://github.com/bigcommerce/paper/pull/228)
-- Bumps paper-handlebars to 4.4.6 [#226](https://github.com/bigcommerce/paper/pull/229)
+- Bumps paper-handlebars to 4.4.6 [#229](https://github.com/bigcommerce/paper/pull/229)
 
 ## 3.0.0-rc.37 (2021-02-12)
 - Bumps paper-handlebars to 4.4.4 [#226](https://github.com/bigcommerce/paper/pull/226)
