@@ -259,6 +259,12 @@ describe('Translator', () => {
             },
         });
 
+        expect(translator.getLanguage('non-existent')).to.equal({
+            locale: 'en',
+            locales: {},
+            translations: {},
+        });
+
         done();
     });
 
