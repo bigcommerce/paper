@@ -289,6 +289,15 @@ class Paper {
     addTemplates(templates) {
         this.renderer.addTemplates(templates);
     }
+
+    /**
+     * Precompiles translations to string representations of translation function source code 
+     * 
+     * @param {Object} translations transformed translations object 
+     */
+    precompileTranslations(translations) {
+        return Translator.precompileTranslations(translations);
+    }
 }
 
 module.exports = Paper;
