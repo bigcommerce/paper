@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.43 (2021-05-18)
+- Created an endpoint for precaching lang helper function [#235](https://github.com/bigcommerce/paper/pull/235)
+
 ## 3.0.0-rc.42 (2021-05-11)
 - Improved filtering language object by key for langJSON helper, that was struggling with perfomance on GraalVM [#236](https://github.com/bigcommerce/paper/pull/236)
 
