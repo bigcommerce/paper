@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.44 (2021-05-18)
+- Bump messageformat library to latest version [#239](https://github.com/bigcommerce/paper/pull/239)
+
 ## 3.0.0-rc.43 (2021-05-18)
 - Created an endpoint for precaching lang helper function [#235](https://github.com/bigcommerce/paper/pull/235)
 
