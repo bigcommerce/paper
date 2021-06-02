@@ -26,7 +26,7 @@
   "dependencies": {
     "@bigcommerce/stencil-paper-handlebars": "4.4.7",
     "accept-language-parser": "~1.4.1",
-    "messageformat": "~0.2.2"
+    "messageformat": "~2.3.0"
   },
   "devDependencies": {
     "code": "~4.0.0",
