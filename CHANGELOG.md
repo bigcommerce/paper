@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-rc.45 (2021-06-10)
+- Introduced disablePluralKeyChecks option for disabling plural keys 
+[checks](http://messageformat.github.io/messageformat/v2/MessageFormat#disablePluralKeyChecks__anchor) on messageformat library [#241](https://github.com/bigcommerce/paper/pull/241)
+
 ## 3.0.0-rc.44 (2021-05-18)
 - Bump messageformat library to latest version [#239](https://github.com/bigcommerce/paper/pull/239)
 
