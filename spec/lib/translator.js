@@ -328,6 +328,27 @@ describe('Translator', () => {
             done();
         })
 
+        it('should not throw an error on compiling translation', done => {
+            const flattenedLanguages = {
+                "en": {
+                  "locale": "en",
+                  "locales": {
+                    "items": "en",
+                  },
+                  "translations": {
+                    "items": "{count, plural, zero{No results} one{# result} other{# results}} found for {term}",
+                  }
+                }
+            };
+            const locale = 'en';
+            const translator = Translator.create(locale, flattenedLanguages, console, true);
+            const precompiledTranslations = Translator.precompileTranslations(flattenedLanguages);
+            translator.setLanguage(precompiledTranslations)
+            const result = translator.translate('items', {count: 0, term: 'product'});
+            expect(result).to.equal('0 results found for product');
+
+            done();
+        })
     })
 
 });
