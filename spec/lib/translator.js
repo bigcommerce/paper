@@ -349,6 +349,31 @@ describe('Translator', () => {
 
             done();
         })
+
+        it('should log error and return key', done => {
+            const flattenedValue = "Calificado {rating, plural, one {# Star} otro {# Stars}} O Mas";
+            const flattenedLanguages = {
+                "es": {
+                  "locale": "es",
+                  "locales": {
+                    "items": "es",
+                  },
+                  "translations": {
+                    "items": flattenedValue,
+                  }
+                }
+            };
+            const locale = 'es';
+            const translator = Translator.create(locale, flattenedLanguages, console, true);
+            const precompiledTranslations = Translator.precompileTranslations(flattenedLanguages);
+            translator.setLanguage(precompiledTranslations)
+            const result = translator.translate('items', {rating: 10});
+
+            expect(result).to.equal(flattenedValue);
+
+            done();
+
+        });
     })
 
 });
