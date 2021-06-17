@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.46 (2021-06-17)
+- Do not break render operation if some translation key is not possible to precompile because of wrongly formatted value [#243](https://github.com/bigcommerce/paper/pull/243)
+
 ## 3.0.0-rc.45 (2021-06-10)
 - Introduced disablePluralKeyChecks option for disabling plural keys 
 [checks](http://messageformat.github.io/messageformat/v2/MessageFormat#disablePluralKeyChecks__anchor) on messageformat library [#241](https://github.com/bigcommerce/paper/pull/241)
