@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.47 (2021-06-17)
+- Bump paper-handlebars to latest version, includes changes to support region translations [#245](https://github.com/bigcommerce/paper/pull/245)
+
 ## 3.0.0-rc.46 (2021-06-17)
 - Do not break render operation if some translation key is not possible to precompile because of wrongly formatted value [#243](https://github.com/bigcommerce/paper/pull/243)
 
