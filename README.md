@@ -1,5 +1,5 @@
 # stencil-paper
-[![Build Status](https://travis-ci.org/bigcommerce/paper.svg?branch=master)](https://travis-ci.org/bigcommerce/paper) [![npm (scoped)](https://img.shields.io/npm/v/@bigcommerce/stencil-paper.svg)](https://www.npmjs.com/package/@bigcommerce/stencil-paper)
+[![Build Status](https://github.com/bigcommerce/paper/workflows/Build/badge.svg)](https://travis-ci.org/bigcommerce/paper) [![npm (scoped)](https://img.shields.io/npm/v/@bigcommerce/stencil-paper.svg)](https://www.npmjs.com/package/@bigcommerce/stencil-paper)
 
 *stencil-paper* is a plugin for `stencil-cli`. Its duty is to load templates and translations, and call
 out to [paper-handlebars](https://github.com/bigcommerce/paper-handlebars) to render pages.
