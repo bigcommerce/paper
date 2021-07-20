@@ -1,6 +1,9 @@
 # Changelog
 
-## 3.0.0-rc.47 (2021-06-17)
+## 3.0.0-rc.48 (2021-07-20)
+- Upgrade deprecated messageformat library to @messageformat/core [#246](https://github.com/bigcommerce/paper/pull/246)
+
+## 3.0.0-rc.47 (2021-07-20)
 - Bump paper-handlebars to latest version, includes changes to support region translations [#245](https://github.com/bigcommerce/paper/pull/245)
 
 ## 3.0.0-rc.46 (2021-06-17)
