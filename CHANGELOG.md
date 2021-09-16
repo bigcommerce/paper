@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.49 (2021-09-16)
+- Bumps paper-handlebars to 4.4.9 [#252](https://github.com/bigcommerce/paper/pull/252)
+
 ## 3.0.0-rc.48 (2021-07-20)
 - Upgrade deprecated messageformat library to @messageformat/core [#246](https://github.com/bigcommerce/paper/pull/246)
 
