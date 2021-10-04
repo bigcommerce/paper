@@ -4,7 +4,6 @@ const Code = require('code');
 const Lab = require('lab');
 const Sinon = require('sinon');
 const Translator = require('../../lib/translator');
-const Transformer = require('../../lib/translator/transformer');
 
 const lab = exports.lab = Lab.script();
 const beforeEach = lab.beforeEach;
@@ -269,56 +268,19 @@ describe('Translator', () => {
         done();
     });
 
-    describe('translations flattening', () => {
-        const flattenedLanguages = {
-            "en": {
-              "locale": "en",
-              "locales": {
-                "welcome": "en",
-                "hello": "en",
-                "bye": "en",
-                "items": "en",
-                "level1.level2": "en"
-              },
-              "translations": {
-                "welcome": "Welcome",
-                "hello": "Hello {name}",
-                "bye": "Bye bye",
-                "items": "{count, plural, one{1 Item} other{# Items}}",
-                "level1.level2": "we are on the second level"
-              }
-            }
+    it('should translate with single quotes left', done => {
+        translations = {
+            en: {
+                search: "{ count, plural, one {# product result} other {# product results} } for '{search_query}'",
+            },
         };
+        const translator = Translator.create('en', translations);
+        const result = translator.translate('search', { search_query: 'basket', count: 0});
+        expect(result).to.equal("0 product results for 'basket'");
+        done();
+    })
 
-        it('should provide flattened translations object', done => {
-            const flattenedTranslator = Translator.create('en', flattenedLanguages, console, true);
-            const translator = Translator.create('en', translations);
-            expect(flattenedTranslator.getLanguage('en')).to.equal(translator.getLanguage('en'));
-    
-            done();
-        });
-    
-        it('should omit transforming languages, when flattened languages are provided', done => {
-            const stub = Sinon.stub(Transformer, 'transform');
-            Translator.create('en', flattenedLanguages, console, true);
-            expect(stub.called).to.equal(false);
-            stub.restore();
-    
-            done();
-        });
-    
-        it('should successfully translate en language without transforming translations', done => {
-            const locale = 'en';
-            const translator = Translator.create(locale, flattenedLanguages, console, true);
-            const precompiledTranslations = Translator.precompileTranslations(flattenedLanguages);
-            translator.setLanguage(precompiledTranslations)
-            expect(translator.translate('hello', {name: 'User'})).to.equal('Hello User');
-
-            const key = 'level1.level2';
-            expect(translator.translate(key)).to.equal(flattenedLanguages[locale].translations[key]);
-            done();
-        });
-
+    describe('translations flattening', () => {
         it('should successfully translate fr language with transforming translations', done => {
             const locale = 'fr-CA';
             const translator = Translator.create(locale, translations);
@@ -328,53 +290,6 @@ describe('Translator', () => {
             expect(translator.translate(key)).to.equal(translations.fr.level1.level2);
             done();
         })
-
-        it('should not throw an error on compiling translation (zero key is invalid for locale=en', done => {
-            const flattenedLanguages = {
-                "en": {
-                  "locale": "en",
-                  "locales": {
-                    "items": "en",
-                  },
-                  "translations": {
-                    "items": "{count, plural, zero{No results} one{# result} other{# results}} found for {term}",
-                  }
-                }
-            };
-            const locale = 'en';
-            const translator = Translator.create(locale, flattenedLanguages, console, true);
-            const precompiledTranslations = Translator.precompileTranslations(flattenedLanguages);
-            translator.setLanguage(precompiledTranslations)
-            const result = translator.translate('items', {count: 0, term: 'product'});
-            expect(result).to.equal('{count, plural, zero{No results} one{# result} other{# results}} found for {term}');
-
-            done();
-        })
-
-        it('should log error and return key', done => {
-            const flattenedValue = "Calificado {rating, plural, one {# Star} otro {# Stars}} O Mas";
-            const flattenedLanguages = {
-                "es": {
-                  "locale": "es",
-                  "locales": {
-                    "items": "es",
-                  },
-                  "translations": {
-                    "items": flattenedValue,
-                  }
-                }
-            };
-            const locale = 'es';
-            const translator = Translator.create(locale, flattenedLanguages, console, true);
-            const precompiledTranslations = Translator.precompileTranslations(flattenedLanguages);
-            translator.setLanguage(precompiledTranslations)
-            const result = translator.translate('items', {rating: 10});
-
-            expect(result).to.equal(flattenedValue);
-
-            done();
-
-        });
     })
 
 });

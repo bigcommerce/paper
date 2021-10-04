@@ -187,32 +187,4 @@ describe('loadTranslations', () => {
             done();
         });
     });
-
-    it('should load translations and omit trasnformation', done => {
-        const assembler = {
-            getTemplates: () => Promise.resolve({}),
-            getTranslations: () => {
-                return Promise.resolve({
-                    en: {
-                        locale: 'en',
-                        locales: {
-                            'hello': 'en',
-                            'level1.level2': 'en'
-                        },
-                        translations: {
-                            hello: 'Hello {name}',
-                            'level1.level2': 'we are in the second level'
-                        }
-                    }
-                });
-            }
-        };
-        const paper = new Paper(null, null, assembler);
-        paper.loadTranslations('en', true).then(() => {
-            expect(paper.renderer.getTranslator().getLanguage().locales).to.equal({ hello: 'en', 'level1.level2': 'en' });
-            done();
-        }).catch(e => {
-            console.log(e);
-        });
-    })
 });
