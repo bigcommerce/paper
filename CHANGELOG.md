@@ -1,5 +1,7 @@
 # Changelog
 
+## 3.0.0-rc.50 (2021-10-04)
+- Reverted messageformat library to 0.2.2 [#253](https://github.com/bigcommerce/paper/pull/253)
 ## 3.0.0-rc.49 (2021-09-16)
 - Bumps paper-handlebars to 4.4.9 [#252](https://github.com/bigcommerce/paper/pull/252)
 
