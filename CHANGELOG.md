@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.52 (2021-12-8)
+- Bumps paper-handlebars to 4.5.1 [#255](https://github.com/bigcommerce/paper/pull/255)
+
 ## 3.0.0-rc.51 (2021-10-22)
 - Bumps paper-handlebars to 4.5.0 [#255](https://github.com/bigcommerce/paper/pull/255)
 
