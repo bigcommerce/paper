@@ -290,6 +290,59 @@ describe('Translator', () => {
             expect(translator.translate(key)).to.equal(translations.fr.level1.level2);
             done();
         })
-    })
+    });
 
+    describe('multiple languages support in accept language header', () => {
+        it('should sucessfully translate phrase and fallback to de', done => {
+            translations = {
+                en: {
+                    search: 'Search',
+                },
+                'es-mx': {
+                    test: 'Test',
+                },
+                de: {
+                    search: 'German translation',
+                },
+            };
+            console.log('before');
+            const translator = Translator.create('es-mx,es,de,en', translations);
+            expect(translator.translate('search')).to.equal(translations.de.search);
+            done();
+        });
+
+        it('should sucessfully translate phrase and fallback to es-mx, when it is presented in header', done => {
+            translations = {
+                en: {
+                    search: 'English translation',
+                },
+                'es-mx': {
+                    search: 'Spanish Mexico Translation',
+                },
+                de: {
+                    search: 'German translation',
+                },
+            };
+            const translator = Translator.create('es,es-mx,de,en', translations);
+            expect(translator.translate('search')).to.equal(translations['es-mx'].search);
+            done();
+        });
+
+        it('should sucessfully translate phrase and fallback to en when no en in header', done => {
+            translations = {
+                en: {
+                    search: 'English translation',
+                },
+                'es-mx': {
+                    Test: 'Spanish Mexico Translation',
+                },
+                pt: {
+                    search: 'Portuguese translation',
+                },
+            };
+            const translator = Translator.create('es-mx,de', translations);
+            expect(translator.translate('search')).to.equal(translations.en.search);
+            done();
+        });
+    });
 });
