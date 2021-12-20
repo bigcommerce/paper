@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-rc.53 (2021-12-20)
+- STRF-9553 Fallback languages in the chain [#258](https://github.com/bigcommerce/paper/pull/258)
+
 ## 3.0.0-rc.52 (2021-12-8)
 - Bumps paper-handlebars to 4.5.1 [#255](https://github.com/bigcommerce/paper/pull/255)
 
