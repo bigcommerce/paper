@@ -155,8 +155,7 @@ describe('Translator', () => {
             },
         });
 
-        const result = translator.translate('gender_error', { gender: 'shemale' });
-        expect(result).to.equal("");
+        expect(() => translator.translate('gender_error', { gender: 'asdf' })).to.throw(Error);
 
         done();
     });
