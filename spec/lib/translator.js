@@ -304,7 +304,6 @@ describe('Translator', () => {
                     search: 'German translation',
                 },
             };
-            console.log('before');
             const translator = Translator.create('es-mx,es,de,en', translations);
             expect(translator.translate('search')).to.equal(translations.de.search);
             done();
