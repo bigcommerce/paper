@@ -152,12 +152,12 @@ describe('Transformer', () => {
 
     describe('.flatten', done => {
         it('should return object with flattened keys', done => {
-            expect(Transformer.flatten(translations, 'en', 'en')).to.equal({ en: flattened['en']});
+            expect(Transformer.flatten(translations, ['en'])).to.equal({ en: flattened['en']});
             done();
         });
 
         it('should filter based on the languages needed to resolve translations for given preferred locale', done => {
-            expect(Transformer.flatten(translations, 'fr-CA', 'en')).to.equal({
+            expect(Transformer.flatten(translations, ['fr-CA', 'fr', 'en'])).to.equal({
                 en: flattened['en'],
                 fr: flattened['fr'],
                 'fr-CA': flattened['fr-CA'],
@@ -168,19 +168,19 @@ describe('Transformer', () => {
 
     describe('.flatten', done => {
         it('should return object with cascading translations', done => {
-            expect(Transformer.cascade(flattened, 'en', 'en')).to.equal(cascaded['en']);
+            expect(Transformer.cascade(flattened, ['en'])).to.equal(cascaded['en']);
             done();
         });
 
         it('should return object based on preferred locale', done => {
-            expect(Transformer.cascade(flattened, 'zh', 'en')).to.equal(cascaded['zh']);
+            expect(Transformer.cascade(flattened, ['zh', 'en'])).to.equal(cascaded['zh']);
             done();
         });
     });
 
     describe('.transform', done => {
         it('transform should do both flatten and cascade', done => {
-            expect(Transformer.transform(translations, 'en', 'en')).to.equal(cascaded['en']);
+            expect(Transformer.transform(translations, ['en'])).to.equal(cascaded['en']);
             done();
         });
     });
