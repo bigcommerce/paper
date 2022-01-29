@@ -1,5 +1,10 @@
 # Changelog
 
+## Pending
+* Revert some unused code that should have been removed as part of previous reversions [#260](https://github.com/bigcommerce/paper/pull/260)
+* Cleanup filterByKey [#261](https://github.com/bigcommerce/paper/pull/261)
+* Improve performance of Translator constructor through internal refactor of Transformer [#262](https://github.com/bigcommerce/paper/pull/262)
+
 ## 3.0.0-rc.53 (2021-12-20)
 - STRF-9553 Fallback languages in the chain [#258](https://github.com/bigcommerce/paper/pull/258)
 

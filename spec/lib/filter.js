@@ -20,8 +20,8 @@ describe('Filter', () => {
                 throw err;
             }
 
-            const translations = Transformer.transform(JSON.parse(data), ['en'], 'en');
-            filtered = Filter.filterByKey(translations['en'], 'header');
+            const translations = Transformer.transform(JSON.parse(data), ['en']);
+            filtered = Filter.filterByKey(translations, 'header');
             expected = {
                 locale: 'en',
                 locales: {
