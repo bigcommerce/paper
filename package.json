@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint-and-fix": "eslint . --fix",
-    "test": "lab -v -t 94 --ignore i18n,WebAssembly,SharedArrayBuffer,Atomics,BigUint64Array,BigInt64Array,BigInt,URL,URLSearchParams,TextEncoder,TextDecoder,queueMicrotask,FinalizationRegistry,WeakRef,plural,en,number,select spec",
+    "test": "lab -v -t 95 --ignore i18n,WebAssembly,SharedArrayBuffer,Atomics,BigUint64Array,BigInt64Array,BigInt,URL,URLSearchParams,TextEncoder,TextDecoder,queueMicrotask,FinalizationRegistry,WeakRef,plural,en,number,select spec",
     "coverage": "lab -c -r console -o stdout -r html -o coverage.html spec"
   },
   "repository": {
