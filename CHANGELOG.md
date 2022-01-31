@@ -1,6 +1,8 @@
 # Changelog
 
 ## Pending
+
+## 3.0.0-rc.54 (2022-01-31)
 * Revert some unused code that should have been removed as part of previous reversions [#260](https://github.com/bigcommerce/paper/pull/260)
 * Cleanup filterByKey [#261](https://github.com/bigcommerce/paper/pull/261)
 * Improve performance of Translator constructor through internal refactor of Transformer [#262](https://github.com/bigcommerce/paper/pull/262)
