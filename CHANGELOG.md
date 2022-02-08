@@ -1,6 +1,9 @@
 # Changelog
 
 ## Pending
+## 3.0.0 (2022-02-08)
+* Deprecating 2x branch as it's not used and maintained anymore
+
 
 ## 3.0.0-rc.54 (2022-01-31)
 * Revert some unused code that should have been removed as part of previous reversions [#260](https://github.com/bigcommerce/paper/pull/260)
