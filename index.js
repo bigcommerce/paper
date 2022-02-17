@@ -44,17 +44,17 @@ class Paper {
     * @param {String} rendererType - One of ['handlebars-v3', 'handlebars-v4']
     * @param {Object} logger - a console-like logger object
     */
-    constructor(siteSettings, themeSettings, assembler, rendererType, logger = console) {
+    constructor(siteSettings, themeSettings, assembler, rendererType, logger = console, logLevel = 'info') {
         this._assembler = assembler || {};
 
         // Build renderer based on type
         switch(rendererType) {
         case 'handlebars-v4':
-            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v4', logger);
+            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v4', logger, logLevel);
             break;
         case 'handlebars-v3':
         default:
-            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v3', logger);
+            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v3', logger, logLevel);
             break;
         }
 
