@@ -1,7 +1,8 @@
 # Changelog
 
 ## Pending
-- Bumps paper-handlebars to 4.5.2 [#262](https://github.com/bigcommerce/paper/pull/262)
+## 3.0.1 (2022-02-17)
+- Bumps paper-handlebars to 4.5.2 [#266](https://github.com/bigcommerce/paper/pull/266)
 ## 3.0.0 (2022-02-08)
 * Deprecating 2x branch as it's not used and maintained anymore
 
