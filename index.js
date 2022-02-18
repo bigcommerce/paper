@@ -43,6 +43,7 @@ class Paper {
     * @param {assemblerGetTranslations} assembler.getTranslations - Method to assemble translations
     * @param {String} rendererType - One of ['handlebars-v3', 'handlebars-v4']
     * @param {Object} logger - a console-like logger object
+    * @param {String} logLevel - log level used by handlebars logger (debug, info, warning, error)
     */
     constructor(siteSettings, themeSettings, assembler, rendererType, logger = console, logLevel = 'info') {
         this._assembler = assembler || {};
