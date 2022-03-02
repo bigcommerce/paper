@@ -131,6 +131,7 @@ describe('Translator', () => {
 
         expect(translator.translate('hello')).to.equal('');
         expect(loggerStub.error.called).to.equal(true);
+        expect(loggerStub.error.getCall(0).args[0]).to.equal("MessageFormat: Data required for 'name'.")
 
         done();
     });
@@ -143,8 +144,10 @@ describe('Translator', () => {
         }, loggerStub);
 
         const result = translator.translate('items_with_syntax_error', { count: 1 });
+        const errMessage = 'Language File Syntax Error: Expected "plural" or "select" but "p" found. for key "items_with_syntax_error"';
         expect(result).to.equal("");
         expect(loggerStub.error.called).to.equal(true);
+        expect(loggerStub.error.getCall(0).args[0]).to.equal(errMessage);
 
         done();
     });
