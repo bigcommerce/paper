@@ -1,6 +1,7 @@
 # Changelog
 
 ## Pending
+ - bump paper-handlerbars [#x](https://github.com/bigcommerce/paper/pull/x)
 ## 3.0.3 (2022-03-02)
 - STRF-9658 logger accepts strings instead of objects [#270](https://github.com/bigcommerce/paper/pull/270)
 
