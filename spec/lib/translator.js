@@ -48,6 +48,7 @@ describe('Translator', () => {
         loggerStub = {
             log: Sinon.fake(),
             error: Sinon.fake(),
+            warn: Sinon.fake(),
         };
 
         done();
@@ -112,7 +113,7 @@ describe('Translator', () => {
         const translator = Translator.create('nl', Object.assign({}, translations, { nl: nl }), loggerStub);
 
         expect(translator.translate('bye')).to.equal('Bye bye');
-        expect(loggerStub.error.called).to.equal(true);
+        expect(loggerStub.warn.called).to.equal(true);
 
         done();
     });
@@ -130,8 +131,8 @@ describe('Translator', () => {
         const translator = Translator.create('en', translations, loggerStub);
 
         expect(translator.translate('hello')).to.equal('');
-        expect(loggerStub.error.called).to.equal(true);
-        expect(loggerStub.error.getCall(0).args[0]).to.equal("MessageFormat: Data required for 'name'.")
+        expect(loggerStub.warn.called).to.equal(true);
+        expect(loggerStub.warn.getCall(0).args[0]).to.equal("MessageFormat: Data required for 'name'.")
 
         done();
     });
@@ -146,8 +147,8 @@ describe('Translator', () => {
         const result = translator.translate('items_with_syntax_error', { count: 1 });
         const errMessage = 'Language File Syntax Error: Expected "plural" or "select" but "p" found. for key "items_with_syntax_error"';
         expect(result).to.equal("");
-        expect(loggerStub.error.called).to.equal(true);
-        expect(loggerStub.error.getCall(0).args[0]).to.equal(errMessage);
+        expect(loggerStub.warn.called).to.equal(true);
+        expect(loggerStub.warn.getCall(0).args[0]).to.equal(errMessage);
 
         done();
     });
