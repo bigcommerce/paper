@@ -1,6 +1,9 @@
 # Changelog
 
 ## Pending
+## 3.0.4 (2022-03-23)
+- bump paper-handlerbars [#275](https://github.com/bigcommerce/paper/pull/275)
+
 ## 3.0.4 (2022-03-18)
 - bump paper-handlerbars [#273](https://github.com/bigcommerce/paper/pull/273)
 - STRF-9705 MessageFormat errors mark as warning [#272](https://github.com/bigcommerce/paper/pull/272)
