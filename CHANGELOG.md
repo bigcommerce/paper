@@ -1,6 +1,9 @@
 # Changelog
 
 ## Pending
+- drop node 12 support  [277](https://github.com/bigcommerce/paper/pull/277)
+
+
 ## 3.0.4 (2022-03-23)
 - bump paper-handlerbars [#275](https://github.com/bigcommerce/paper/pull/275)
 
