@@ -2,6 +2,9 @@
 
 ## Pending
 
+## 4.0.1 (2022-06-16)
+- bump paper-handlebars: STRF-9873 use modified implementations of `get`, `getObject`, `moment`, `option` 3p helpers [280](https://github.com/bigcommerce/paper/pull/280)
+
 ## 4.0.0 (2022-06-07)
 - bump paper-handlebars: STRF-9835 Reduce proto usage [278](https://github.com/bigcommerce/paper/pull/278)
 - drop node 12 support  [277](https://github.com/bigcommerce/paper/pull/277)
