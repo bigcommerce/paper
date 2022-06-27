@@ -1,9 +1,11 @@
 # Changelog
 
 ## Pending
+## 4.0.2 (2022-06-27)
+- bump paper-handlebars: Fix replacement `get` and `option` helpers for backwards-compatibility [280](https://github.com/bigcommerce/paper/pull/280)
 
 ## 4.0.1 (2022-06-16)
-- bump paper-handlebars: STRF-9873 use modified implementations of `get`, `getObject`, `moment`, `option` 3p helpers [280](https://github.com/bigcommerce/paper/pull/280)
+- bump paper-handlebars: STRF-9873 use modified implementations of `get`, `getObject`, `moment`, `option` 3p helpers [279](https://github.com/bigcommerce/paper/pull/279)
 
 ## 4.0.0 (2022-06-07)
 - bump paper-handlebars: STRF-9835 Reduce proto usage [278](https://github.com/bigcommerce/paper/pull/278)
