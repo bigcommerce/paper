@@ -1,6 +1,9 @@
 # Changelog
 
 ## Pending
+## 4.0.3 (2022-07-11)
+- bump paper-handlebars: bugfix & setup to replace 3p helpers incrementally: `moment` and `option` ([#178](https://github.com/bigcommerce/paper-handlebars/pull/178))
+
 ## 4.0.2 (2022-06-27)
 - bump paper-handlebars: Fix replacement `get` and `option` helpers for backwards-compatibility [280](https://github.com/bigcommerce/paper/pull/280)
 
