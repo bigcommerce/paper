@@ -1,6 +1,9 @@
 # Changelog
 
 ## Pending
+## 4.0.4 (2022-07-12)
+- bump paper-handlebars: patch for helper-date 0.2.3 compatibility ([#180](https://github.com/bigcommerce/paper-handlebars/pull/180))
+
 ## 4.0.3 (2022-07-11)
 - bump paper-handlebars: bugfix & setup to replace 3p helpers incrementally: `moment` and `option` ([#178](https://github.com/bigcommerce/paper-handlebars/pull/178))
 
