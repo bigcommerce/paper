@@ -1,6 +1,9 @@
 # Changelog
 
 ## Pending
+## 4.0.5 (2022-07-13)
+- bump paper-handlebars: setup to replace `get` & `getObject` helpers ([#183](https://github.com/bigcommerce/paper-handlebars/pull/183))
+
 ## 4.0.4 (2022-07-12)
 - bump paper-handlebars: patch for helper-date 0.2.3 compatibility ([#180](https://github.com/bigcommerce/paper-handlebars/pull/180))
 
