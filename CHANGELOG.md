@@ -1,6 +1,8 @@
 # Changelog
 
 ## Pending
+## 4.0.6 (2022-07-14)
+- bump paper-handlebars: bugfix for edge case affecting `get`, `getObject`, and `option` ([#185](https://github.com/bigcommerce/paper-handlebars/pull/185))
 ## 4.0.5 (2022-07-13)
 - bump paper-handlebars: setup to replace `get` & `getObject` helpers ([#183](https://github.com/bigcommerce/paper-handlebars/pull/183))
 
