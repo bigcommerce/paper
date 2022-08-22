@@ -1,6 +1,10 @@
 # Changelog
 
 ## Pending
+
+## 4.1.0 (2022-08-22)
+- `Paper` exposes a getter to extract renderer' resource hints. ([#285](https://github.com/bigcommerce/paper/pull/285))
+
 ## 4.0.6 (2022-07-14)
 - bump paper-handlebars: bugfix for edge case affecting `get`, `getObject`, and `option` ([#185](https://github.com/bigcommerce/paper-handlebars/pull/185))
 ## 4.0.5 (2022-07-13)
