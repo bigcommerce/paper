@@ -272,6 +272,27 @@ class Paper {
             return result;
         });
     }
+
+    /**
+     * Get resource hints produced by rendering process.
+     * If any helper included in the theme/template/string was
+     * configured to produce a resource hint, then,
+     * AFTER A SUCCESSFUL rendering, this getter may be called.
+     *
+     * Objects in the returned array will contain following properties:
+     * 1. `src: String`
+     * 1. `state: String`
+     *
+     * and MAY contain all or some of the following optional properties:
+     * 1. `type: String`
+     * 1. `cors: String`
+     *
+     * For more details check https://github.com/bigcommerce/paper-handlebars/blob/master/helpers/lib/resourceHints.js
+     * @returns {Object[]}
+     */
+    getResourceHints() {
+        return this.renderer.getResourceHints();
+    }
 }
 
 module.exports = Paper;

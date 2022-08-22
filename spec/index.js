@@ -90,6 +90,7 @@ describe('render()', function() {
                 'pages/partial': '<p>{{variable}}</p>',
                 'pages/greet': '<h1>{{lang \'good\'}} {{lang \'morning\'}}</h1>',
                 'pages/pre': '{{{pre object}}}',
+                'pages/hints': '{{{ earlyHint themeCss "preload" type="style" }}}'
             }));
         },
         getTranslations: () => {
@@ -99,7 +100,8 @@ describe('render()', function() {
 
     const context = {
         variable: 'hello world',
-        object: {}
+        object: {},
+        themeCss: '/my/asset/style.css'
     };
 
     it('should render pages/product', function(done) {
@@ -120,6 +122,19 @@ describe('render()', function() {
                 done();
             });
         });
+    });
+
+    it('should render pages/hints and find resource hints', done => {
+        const paper = new Paper(null, null, assembler);
+        paper.loadTheme('pages/product', '')
+            .then(() => paper.render('pages/hints', context))
+            .then(result => {
+                expect(result).to.equals(context.themeCss);
+                let hints = paper.getResourceHints();
+                expect(hints).to.have.length(1);
+                expect(hints[0]).to.equals({src: context.themeCss, state: 'preload', type: 'style', cors: 'no'});
+                done();
+            });
     });
 });
 
