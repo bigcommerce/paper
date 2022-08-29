@@ -65,6 +65,15 @@ class Paper {
     }
 
     /**
+     * Get the current renderer instance.
+     * 
+     * @returns An instance of HandlebarsRenderer
+     */
+    getRenderer() {
+        return this.renderer;
+    }
+
+    /**
      * Get the siteSettings object containing global site settings.
      *
      * @return {object} settings An object containing global site settings.
