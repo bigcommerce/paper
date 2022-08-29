@@ -2,6 +2,9 @@
 
 ## Pending
 
+## 4.1.1 (2022-08-29)
+- Add a a getter in Paper to access the renderer object. ([#287](https://github.com/bigcommerce/paper/pull/287))
+
 ## 4.1.0 (2022-08-22)
 - `Paper` exposes a getter to extract renderer' resource hints. ([#285](https://github.com/bigcommerce/paper/pull/285))
 
