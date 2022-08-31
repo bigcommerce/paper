@@ -2,6 +2,9 @@
 
 ## Pending
 
+## 4.1.2 (2020-08-31)
+- Bumps paper-handlebars version. ([#289](https://github.com/bigcommerce/paper/pull/289))
+
 ## 4.1.1 (2022-08-29)
 - Add a a getter in Paper to access the renderer object. ([#287](https://github.com/bigcommerce/paper/pull/287))
 
