@@ -90,7 +90,7 @@ describe('render()', function() {
                 'pages/partial': '<p>{{variable}}</p>',
                 'pages/greet': '<h1>{{lang \'good\'}} {{lang \'morning\'}}</h1>',
                 'pages/pre': '{{{pre object}}}',
-                'pages/hints': '{{{ earlyHint themeCss "preload" type="style" }}}'
+                'pages/hints': '{{{ earlyHint themeCss "preload" }}}'
             }));
         },
         getTranslations: () => {
@@ -132,7 +132,7 @@ describe('render()', function() {
                 expect(result).to.equals(context.themeCss);
                 let hints = paper.getResourceHints();
                 expect(hints).to.have.length(1);
-                expect(hints[0]).to.equals({src: context.themeCss, state: 'preload', type: 'style', cors: 'no'});
+                expect(hints[0]).to.equals({src: context.themeCss, state: 'preload', cors: 'no'});
                 done();
             });
     });
