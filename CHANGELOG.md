@@ -2,6 +2,9 @@
 
 ## Pending
 
+## 4.1.4 (2022-10-06)
+- Bumps paper-handlebars version ([#293](https://github.com/bigcommerce/paper/pull/293))
+
 ## 4.1.3 (2022-09-27)
 - Bumps paper-handlebars version ([#291](https://github.com/bigcommerce/paper/pull/291))
 
