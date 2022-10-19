@@ -1,6 +1,9 @@
 # Changelog
 
 ## Pending
+
+- ref: Bump paper-handlebars version: STRF-10124 clean up hbs helpers ([#299](https://github.com/bigcommerce/paper/pull/299))
+
 ## 4.1.7 (2022-10-17)
 - ref: Bump paper-handlebars version: STRF-10124 clean up hbs helpers ([#297](https://github.com/bigcommerce/paper/pull/297))
 
