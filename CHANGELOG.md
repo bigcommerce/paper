@@ -2,6 +2,7 @@
 
 ## Pending
 
+## 4.1.8 (2022-10-19)
 - ref: Bump paper-handlebars version to fox `udnefined` URI produced by early hint code ([#299](https://github.com/bigcommerce/paper/pull/299))
 
 ## 4.1.7 (2022-10-17)
