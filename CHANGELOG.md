@@ -2,6 +2,10 @@
 
 ## Pending
 
+## 4.1.9 (2022-10-25)
+- feat: Bump paper-handlebars version ([#303](https://github.com/bigcommerce/paper/pull/303))
+- feat: STRF-10157 Create PR on hbs bump version ([#301])[https://github.com/bigcommerce/paper/pull/301]
+
 ## 4.1.8 (2022-10-19)
 - ref: Bump paper-handlebars version to fox `udnefined` URI produced by early hint code ([#299](https://github.com/bigcommerce/paper/pull/299))
 
