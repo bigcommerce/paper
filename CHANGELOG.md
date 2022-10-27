@@ -1,3 +1,10 @@
+# [4.2.0](https://github.com/bigcommerce/paper/compare/v4.1.9...v4.2.0) (2022-10-26)
+
+
+### Features
+
+* STRF-10157 Introduce Semantic Release ([#302](https://github.com/bigcommerce/paper/issues/302)) ([8d4376f](https://github.com/bigcommerce/paper/commit/8d4376f747016df7002a0bf1ebbc888fc9600dcd))
+
 # Changelog
 
 ## Pending
