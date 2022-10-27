@@ -1,3 +1,10 @@
+## [4.2.1](https://github.com/bigcommerce/paper/compare/v4.2.0...v4.2.1) (2022-10-27)
+
+
+### Bug Fixes
+
+* STRF-10175 Bump paper handlebars ([#306](https://github.com/bigcommerce/paper/issues/306)) ([ca4bf60](https://github.com/bigcommerce/paper/commit/ca4bf603398196c9a98d919f57a2956b873a1195))
+
 # [4.2.0](https://github.com/bigcommerce/paper/compare/v4.1.9...v4.2.0) (2022-10-26)
 
 
