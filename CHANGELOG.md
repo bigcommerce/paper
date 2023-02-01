@@ -1,3 +1,10 @@
+# [4.3.0](https://github.com/bigcommerce/paper/compare/v4.2.3...v4.3.0) (2023-02-01)
+
+
+### Features
+
+* bump paper-hadlerbars to 5.3.0 ([#313](https://github.com/bigcommerce/paper/issues/313)) ([8a783a3](https://github.com/bigcommerce/paper/commit/8a783a3737664ee64199ddf2aaa5f52b44a6e887))
+
 ## [4.2.3](https://github.com/bigcommerce/paper/compare/v4.2.2...v4.2.3) (2022-12-05)
 
 
