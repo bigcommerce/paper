@@ -1,3 +1,10 @@
+# [4.5.0](https://github.com/bigcommerce/paper/compare/v4.4.3...v4.5.0) (2023-02-09)
+
+
+### Features
+
+* bump hbs to 5.5.0 ([#323](https://github.com/bigcommerce/paper/issues/323)) ([533b8f3](https://github.com/bigcommerce/paper/commit/533b8f3ff75e84e8ef8a9502327b5ad4da0d91d9))
+
 ## [4.4.3](https://github.com/bigcommerce/paper/compare/v4.4.2...v4.4.3) (2023-02-08)
 
 
