@@ -1,3 +1,10 @@
+# [4.8.0](https://github.com/bigcommerce/paper/compare/v4.7.0...v4.8.0) (2023-03-15)
+
+
+### Features
+
+* bump paper-handlebars ([#329](https://github.com/bigcommerce/paper/issues/329)) ([02272fa](https://github.com/bigcommerce/paper/commit/02272fa901fddb4e5bb2c74811308197b06b624a))
+
 # [4.7.0](https://github.com/bigcommerce/paper/compare/v4.6.0...v4.7.0) (2023-03-15)
 
 
