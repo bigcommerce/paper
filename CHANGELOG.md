@@ -1,3 +1,10 @@
+## [4.8.3](https://github.com/bigcommerce/paper/compare/v4.8.2...v4.8.3) (2023-03-29)
+
+
+### Bug Fixes
+
+* bump hbs to 5.7.5 ([#335](https://github.com/bigcommerce/paper/issues/335)) ([f6f633d](https://github.com/bigcommerce/paper/commit/f6f633dff2974e81e924e9b8c6e3ab3c43f69a05))
+
 ## [4.8.2](https://github.com/bigcommerce/paper/compare/v4.8.1...v4.8.2) (2023-03-20)
 
 
