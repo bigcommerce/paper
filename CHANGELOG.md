@@ -1,3 +1,11 @@
+## [4.8.6](https://github.com/bigcommerce/paper/compare/v4.8.5...v4.8.6) (2023-06-15)
+
+
+### Bug Fixes
+
+* STRF-10878 Bump handlebars to 5.7.8 ([#341](https://github.com/bigcommerce/paper/issues/341)) ([e2142ab](https://github.com/bigcommerce/paper/commit/e2142ab852d5a568f39c3d52f0c70b12e1c70c5d))
+
+
 ## [4.8.5](https://github.com/bigcommerce/paper/compare/v4.8.4...v4.8.5) (2023-05-09)
 
 
