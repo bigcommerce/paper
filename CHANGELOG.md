@@ -1,3 +1,25 @@
+## [4.10.1](https://github.com/bigcommerce/paper/compare/v4.10.0...v4.10.1) (2023-08-15)
+
+
+### Bug Fixes
+
+* semantic release auto-PR creation ([#345](https://github.com/bigcommerce/paper/issues/345)) ([ec88faa](https://github.com/bigcommerce/paper/commit/ec88faa74d70e8f85d3900825cadf0d2e26fcba0))
+  
+# [4.10.0](https://github.com/bigcommerce/paper/compare/v4.9.0...v4.10.0) (2023-08-09)
+
+
+### Features
+
+* **merc:** Bump paper handlebars - webdav cache control ([caf7a19](https://github.com/bigcommerce/paper/commit/caf7a193baad950e013c2e05d4e0ebbef41fc46f))
+
+# [4.9.0](https://github.com/bigcommerce/paper/compare/v4.8.6...v4.9.0) (2023-07-20)
+
+
+### Features
+
+* STRF-11041 Use Node 18 for CI tools ([#344](https://github.com/bigcommerce/paper/issues/344)) ([4390a23](https://github.com/bigcommerce/paper/commit/4390a232e73f9b5786bb5d0c2c78682e071aaa67))
+
+
 ## [4.8.6](https://github.com/bigcommerce/paper/compare/v4.8.5...v4.8.6) (2023-06-15)
 
 
