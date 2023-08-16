@@ -1,3 +1,10 @@
+## [4.10.2](https://github.com/bigcommerce/paper/compare/v4.10.1...v4.10.2) (2023-08-16)
+
+
+### Bug Fixes
+
+* **merc:** MERC-9364 bump paper handlebars - revert CDN Webdav Url ([752d24d](https://github.com/bigcommerce/paper/commit/752d24d4851629587973510305d40ef86b873315))
+
 ## [4.10.1](https://github.com/bigcommerce/paper/compare/v4.10.0...v4.10.1) (2023-08-15)
 
 
