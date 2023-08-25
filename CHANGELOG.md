@@ -1,3 +1,10 @@
+## [4.10.3](https://github.com/bigcommerce/paper/compare/v4.10.2...v4.10.3) (2023-08-25)
+
+
+### Bug Fixes
+
+* bump paper hbs with chrono updates ([#349](https://github.com/bigcommerce/paper/issues/349)) ([25fe87d](https://github.com/bigcommerce/paper/commit/25fe87dc671b61a34a69b3a83673ae9723a1fc25))
+
 ## [4.10.1](https://github.com/bigcommerce/paper/compare/v4.10.0...v4.10.1) (2023-08-15)
 
 
