@@ -1,9 +1,15 @@
 ## [4.10.3](https://github.com/bigcommerce/paper/compare/v4.10.2...v4.10.3) (2023-08-25)
 
-
 ### Bug Fixes
 
 * bump paper hbs with chrono updates ([#349](https://github.com/bigcommerce/paper/issues/349)) ([25fe87d](https://github.com/bigcommerce/paper/commit/25fe87dc671b61a34a69b3a83673ae9723a1fc25))
+
+## [4.10.2](https://github.com/bigcommerce/paper/compare/v4.10.1...v4.10.2) (2023-08-16)
+
+
+### Bug Fixes
+
+* **merc:** MERC-9364 bump paper handlebars - revert CDN Webdav Url ([752d24d](https://github.com/bigcommerce/paper/commit/752d24d4851629587973510305d40ef86b873315))
 
 ## [4.10.1](https://github.com/bigcommerce/paper/compare/v4.10.0...v4.10.1) (2023-08-15)
 
