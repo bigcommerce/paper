@@ -1,3 +1,10 @@
+## [4.10.4](https://github.com/bigcommerce/paper/compare/v4.10.3...v4.10.4) (2023-09-18)
+
+
+### Bug Fixes
+
+* bump paper handblers to 5.9.5 ([#351](https://github.com/bigcommerce/paper/issues/351)) ([3710750](https://github.com/bigcommerce/paper/commit/371075067b09faab0745870a0a44137a81806441))
+
 ## [4.10.3](https://github.com/bigcommerce/paper/compare/v4.10.2...v4.10.3) (2023-08-25)
 
 ### Bug Fixes
