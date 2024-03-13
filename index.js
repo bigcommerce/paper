@@ -44,18 +44,19 @@ class Paper {
     * @param {String} rendererType - One of ['handlebars-v3', 'handlebars-v4']
     * @param {Object} logger - a console-like logger object
     * @param {String} logLevel - log level used by handlebars logger (debug, info, warning, error)
+    * @param {Object} params - Request-level parameters, part of stencil context 
     */
-    constructor(siteSettings, themeSettings, assembler, rendererType, logger = console, logLevel = 'info') {
+    constructor(siteSettings, themeSettings, assembler, rendererType, logger = console, logLevel = 'info', params = {}) {
         this._assembler = assembler || {};
 
         // Build renderer based on type
         switch(rendererType) {
         case 'handlebars-v4':
-            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v4', logger, logLevel);
+            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v4', logger, logLevel, params);
             break;
         case 'handlebars-v3':
         default:
-            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v3', logger, logLevel);
+            this.renderer = new HandlebarsRenderer(siteSettings, themeSettings, 'v3', logger, logLevel, params);
             break;
         }
 
@@ -107,6 +108,25 @@ class Paper {
      */
     setThemeSettings(settings) {
         this.renderer.setThemeSettings(settings);
+    };
+
+
+    /**
+     * Get the requestParams object containing the request parameters
+     *
+     * @return {object} requestParams An object containing the request parameters
+     */
+    getRequestParams() {
+        return this.renderer.getRequestParams();
+    };
+
+    /**
+     * Set the requestParams object containing the request parameters
+     *
+     * @param {object} params An object containing the request parameters
+     */
+    setRequestParams(params) {
+        this.renderer.setRequestParams(params);
     };
 
     /**

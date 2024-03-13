@@ -203,3 +203,16 @@ describe('loadTranslations', () => {
         });
     });
 });
+
+describe('Request Params', function() {
+    it('should set and retrieve request params ', done => {
+        const params = { security: { nonce: '1234' } };
+        const paper = new Paper(null, null, null, 'v4', console, 'error', params);
+        expect(paper.getRequestParams()).to.equal(params);
+
+        const newParams = { security: { nonce: '5678' } };
+        paper.setRequestParams(newParams);
+        expect(paper.getRequestParams()).to.equal(newParams);
+        done();
+    });
+});
