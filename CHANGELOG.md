@@ -1,3 +1,10 @@
+# [4.11.0](https://github.com/bigcommerce/paper/compare/v4.10.4...v4.11.0) (2024-03-13)
+
+
+### Features
+
+* STRF-11819 Pass down to hbs request params ([#355](https://github.com/bigcommerce/paper/issues/355)) ([f8d2a6d](https://github.com/bigcommerce/paper/commit/f8d2a6dbbf7bb0930e75ba5143b241b329553cc5))
+
 ## [4.10.4](https://github.com/bigcommerce/paper/compare/v4.10.3...v4.10.4) (2023-09-18)
 
 
