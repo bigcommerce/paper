@@ -1,3 +1,10 @@
+## [4.11.1](https://github.com/bigcommerce/paper/compare/v4.11.0...v4.11.1) (2024-03-14)
+
+
+### Bug Fixes
+
+* bump hbs to 5.10.1 ([#357](https://github.com/bigcommerce/paper/issues/357)) ([ee902c6](https://github.com/bigcommerce/paper/commit/ee902c6f4a1dce1ca63469eb8aa63aa720d78efa))
+
 # [4.11.0](https://github.com/bigcommerce/paper/compare/v4.10.4...v4.11.0) (2024-03-13)
 
 
