@@ -1,3 +1,10 @@
+## [4.11.2](https://github.com/bigcommerce/paper/compare/v4.11.1...v4.11.2) (2024-04-15)
+
+
+### Bug Fixes
+
+* STRF-11934 ([#360](https://github.com/bigcommerce/paper/issues/360)) ([dca19c5](https://github.com/bigcommerce/paper/commit/dca19c589cba6b19511f939feb69456006d03505))
+
 ## [4.11.1](https://github.com/bigcommerce/paper/compare/v4.11.0...v4.11.1) (2024-03-14)
 
 
