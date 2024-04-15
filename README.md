@@ -41,7 +41,7 @@ paper.loadTheme(path, 'en').then(() => {
         reply(html);
     });
 });
-```
+```  
 
 ## Helpers Reference
 See the [stencil API reference](https://developer.bigcommerce.com/stencil-docs/reference-docs/handlebars-helpers-reference) for documentation on the available helpers.
