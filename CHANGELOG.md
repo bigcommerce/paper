@@ -1,3 +1,10 @@
+# [4.12.0](https://github.com/bigcommerce/paper/compare/v4.11.2...v4.12.0) (2024-04-16)
+
+
+### Features
+
+* STRF-11908 Provide public endpoints for setting templates and translations ([#361](https://github.com/bigcommerce/paper/issues/361)) ([21b9c9b](https://github.com/bigcommerce/paper/commit/21b9c9bc95d4ca70a7752f8623b33a59a1112b16))
+
 ## [4.11.2](https://github.com/bigcommerce/paper/compare/v4.11.1...v4.11.2) (2024-04-15)
 
 
