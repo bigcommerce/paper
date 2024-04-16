@@ -60,7 +60,7 @@ class Paper {
             break;
         }
 
-        this.preProcessor = this.renderer.getPreProcessor();
+        this.preProcessor = this.getPreProcessor();
 
         this.logger = logger;
     }
@@ -198,6 +198,14 @@ class Paper {
         });
     }
 
+    addTemplates(templates) {
+        return this.renderer.addTemplates(templates);
+    }
+
+    getPreProcessor() {
+        return this.renderer.getPreProcessor();
+    }
+
     /**
      * Is the given template loaded?
      *
@@ -215,12 +223,14 @@ class Paper {
      * @return {Promise} Promise to load the translations into the renderer.
      */
     loadTranslations(acceptLanguage) {
-        return this._assembler.getTranslations().then(translations => {
-            const translator = Translator.create(acceptLanguage, translations, this.logger);
-            this.renderer.setTranslator(translator);
-            return translations;
-        });
+        return this._assembler.getTranslations().then(translations => this.addTranslations(translations, acceptLanguage));
     };
+
+    addTranslations(translations, acceptLanguage) {
+        const translator = Translator.create(acceptLanguage, translations, this.logger);
+        this.renderer.setTranslator(translator);
+        return translations;
+    }
 
     /**
      * Render a string with the given context.

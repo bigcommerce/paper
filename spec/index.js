@@ -136,6 +136,17 @@ describe('render()', function() {
                 done();
             });
     });
+
+    it('should add templates to paper', async (done) => {
+        const paper = new Paper(null, null, assembler);
+        paper.addTemplates(paper.getPreProcessor()({
+            'pages/product': '<html>{{> pages/partial}}</html>',
+            'pages/partial': '<p>{{variable}}</p>',
+        }));
+
+        const result = await paper.render('pages/product', context);
+        expect(result).to.be.equal('<html><p>hello world</p></html>');
+    });
 });
 
 describe('renderTheme()', function() {
@@ -173,27 +184,28 @@ describe('renderTheme()', function() {
 
 
 describe('loadTranslations', () => {
+    const translations = {
+        'en': {
+            hello: 'Hello {name}',
+            level1: {
+                level2: 'we are in the second level'
+            }
+        },
+        'fr': {
+            hello: 'Bonjour {name}',
+            level1: {
+                level2: 'nous sommes dans le deuxième niveau'
+            }
+        },
+        'fr-CA': {
+            hello: 'Salut {name}'
+        }
+    };
     it('should load translations in normal flow (transforming and flattening translations)', done => {
         const assembler = {
             getTemplates: () => Promise.resolve({}),
             getTranslations: () => {
-                return Promise.resolve({
-                    'en': {
-                        hello: 'Hello {name}',
-                        level1: {
-                            level2: 'we are in the second level'
-                        }
-                    },
-                    'fr': {
-                        hello: 'Bonjour {name}',
-                        level1: {
-                            level2: 'nous sommes dans le deuxième niveau'
-                        }
-                    },
-                    'fr-CA': {
-                        hello: 'Salut {name}'
-                    }
-                });
+                return Promise.resolve(translations);
             }
         };
         const paper = new Paper(null, null, assembler);
@@ -201,6 +213,12 @@ describe('loadTranslations', () => {
             expect(paper.renderer.getTranslator().getLanguage().locales).to.equal({ hello: 'en', 'level1.level2': 'en' });
             done();
         });
+    });
+
+    it('should add translations to paper', async () => {
+        const paper = new Paper(null, null, {});
+        paper.addTranslations(translations, 'en');
+        expect(paper.renderer.getTranslator().translate('hello', {name: 'Mario'})).to.equal('Hello Mario');
     });
 });
 
