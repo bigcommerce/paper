@@ -1,3 +1,10 @@
+## [4.12.2](https://github.com/bigcommerce/paper/compare/v4.12.1...v4.12.2) (2024-06-13)
+
+
+### Bug Fixes
+
+* bump paper handlebars to 5.10.4 ([#366](https://github.com/bigcommerce/paper/issues/366)) ([ed47fa8](https://github.com/bigcommerce/paper/commit/ed47fa8c02843de8791308ac52ec282d9408f24c))
+
 ## [4.12.1](https://github.com/bigcommerce/paper/compare/v4.12.0...v4.12.1) (2024-05-31)
 
 
