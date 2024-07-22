@@ -1,3 +1,10 @@
+# [4.13.0](https://github.com/bigcommerce/paper/compare/v4.12.2...v4.13.0) (2024-07-22)
+
+
+### Features
+
+* STRF-12284 Add dependabot to paper ([#368](https://github.com/bigcommerce/paper/issues/368)) ([d495549](https://github.com/bigcommerce/paper/commit/d495549bbe133208b215c1717c93fe5e8806cc71))
+
 ## [4.12.2](https://github.com/bigcommerce/paper/compare/v4.12.1...v4.12.2) (2024-06-13)
 
 
