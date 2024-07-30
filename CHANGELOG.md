@@ -1,3 +1,10 @@
+## [4.13.2](https://github.com/bigcommerce/paper/compare/v4.13.1...v4.13.2) (2024-07-30)
+
+
+### Bug Fixes
+
+* STRF-12276 bump paper hbs with compiler fix ([#377](https://github.com/bigcommerce/paper/issues/377)) ([f2889d4](https://github.com/bigcommerce/paper/commit/f2889d4ebdcf050c7fe0ce683ceefb5b38189910))
+
 ## [4.13.1](https://github.com/bigcommerce/paper/compare/v4.13.0...v4.13.1) (2024-07-24)
 
 
