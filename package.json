@@ -41,7 +41,7 @@
     "code": "~4.0.0",
     "eslint": "^7.8.1",
     "husky": "^8.0.1",
-    "lab": "~13.0.1",
+    "lab": "~18.0.2",
     "semantic-release": "^24.1.0",
     "semantic-release-github-pullrequest": "https://github.com/jairo-bc/semantic-release-github-pullrequest",
     "sinon": "~7.5.0"
