@@ -9,6 +9,12 @@
 ### BREAKING CHANGES
 
 * Drop support of node 16, 18
+## [4.13.3](https://github.com/bigcommerce/paper/compare/v4.13.2...v4.13.3) (2024-08-07)
+
+
+### Bug Fixes
+
+* bump paper hbs ([#379](https://github.com/bigcommerce/paper/issues/379)) ([297f8f9](https://github.com/bigcommerce/paper/commit/297f8f912d45ddab0471d716c46ee37142b102b8))
 
 ## [4.13.2](https://github.com/bigcommerce/paper/compare/v4.13.1...v4.13.2) (2024-07-30)
 
