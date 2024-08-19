@@ -1,3 +1,14 @@
+# [5.0.0](https://github.com/bigcommerce/paper/compare/v4.13.3...v5.0.0) (2024-08-19)
+
+
+### Features
+
+* STRF-11900 Drop node 18, add node 20, 22 ([#383](https://github.com/bigcommerce/paper/issues/383)) ([9b7a5a5](https://github.com/bigcommerce/paper/commit/9b7a5a5d5434243ac953ba08112a66184cfcd965))
+
+
+### BREAKING CHANGES
+
+* Drop support of node 16, 18
 ## [4.13.3](https://github.com/bigcommerce/paper/compare/v4.13.2...v4.13.3) (2024-08-07)
 
 
