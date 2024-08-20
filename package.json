@@ -26,7 +26,7 @@
   "homepage": "https://github.com/bigcommerce/paper",
   "dependencies": {
     "@bigcommerce/stencil-paper-handlebars": "6.0.0",
-    "accept-language-parser": "~1.4.1",
+    "accept-language-parser": "~1.5.0",
     "messageformat": "~0.2.2"
   },
   "devDependencies": {
