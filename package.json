@@ -44,6 +44,6 @@
     "lab": "~13.0.1",
     "semantic-release": "^24.1.0",
     "semantic-release-github-pullrequest": "https://github.com/jairo-bc/semantic-release-github-pullrequest",
-    "sinon": "~7.5.0"
+    "sinon": "~18.0.1"
   }
 }
