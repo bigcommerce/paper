@@ -1,3 +1,10 @@
+## [5.0.1](https://github.com/bigcommerce/paper/compare/v5.0.0...v5.0.1) (2024-09-26)
+
+
+### Bug Fixes
+
+* STRF-12234 bump paper-handlebars ([#393](https://github.com/bigcommerce/paper/issues/393)) ([d106865](https://github.com/bigcommerce/paper/commit/d106865ffbbba368b53a53c974bcc88b12fe2781))
+
 # [5.0.0](https://github.com/bigcommerce/paper/compare/v4.13.3...v5.0.0) (2024-08-19)
 
 
