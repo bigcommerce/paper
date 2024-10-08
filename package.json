@@ -27,7 +27,7 @@
   "dependencies": {
     "@bigcommerce/stencil-paper-handlebars": "6.0.2",
     "accept-language-parser": "~1.4.1",
-    "messageformat": "~0.2.2"
+    "messageformat": "~2.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",
