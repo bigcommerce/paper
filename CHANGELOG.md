@@ -1,5 +1,10 @@
-## [5.0.1](https://github.com/bigcommerce/paper/compare/v5.0.0...v5.0.1) (2024-09-26)
+## [5.0.2](https://github.com/bigcommerce/paper/compare/v5.0.1...v5.0.2) (2024-10-08)
 
+### Bug Fixes
+
+* bump paper handlebars version ([#395](https://github.com/bigcommerce/paper/issues/395)) ([a73f908](https://github.com/bigcommerce/paper/commit/a73f90869edb3a42c8112ebd4e686ba2047ab8c6))
+
+## [5.0.1](https://github.com/bigcommerce/paper/compare/v5.0.0...v5.0.1) (2024-09-26)
 
 ### Bug Fixes
 
