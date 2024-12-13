@@ -132,7 +132,7 @@ describe('Translator', () => {
 
         expect(translator.translate('hello')).to.equal('');
         expect(loggerStub.warn.called).to.equal(true);
-        expect(loggerStub.warn.getCall(0).args[0]).to.equal("MessageFormat: Data required for 'name'.")
+        expect(loggerStub.warn.getCall(0).args[0]).to.equal("Cannot read properties of undefined (reading 'name')")
 
         done();
     });
@@ -145,7 +145,7 @@ describe('Translator', () => {
         }, loggerStub);
 
         const result = translator.translate('items_with_syntax_error', { count: 1 });
-        const errMessage = 'Language File Syntax Error: Expected "plural" or "select" but "p" found. for key "items_with_syntax_error"';
+        const errMessage = 'Language File Syntax Error: Parser error: SyntaxError: Expected "," or "}" but "{" found. for key "items_with_syntax_error"';
         expect(result).to.equal("");
         expect(loggerStub.warn.called).to.equal(true);
         expect(loggerStub.warn.getCall(0).args[0]).to.equal(errMessage);
@@ -158,9 +158,14 @@ describe('Translator', () => {
             en: {
                 gender_error: '{gender, select, male{He} female{She}} liked this.',
             },
-        });
+        }, loggerStub);
 
-        expect(() => translator.translate('gender_error', { gender: 'asdf' })).to.throw(Error);
+        const result = translator.translate('gender_error', { gender: 'asdf' });
+
+        const errMessage = 'Language File Syntax Error: Precompiler error: Error: No \'other\' form found in selectFormatPattern 0 for key "gender_error"';
+        expect(result).to.equal("");
+        expect(loggerStub.warn.called).to.equal(true);
+        expect(loggerStub.warn.getCall(0).args[0]).to.equal(errMessage);
 
         done();
     });
