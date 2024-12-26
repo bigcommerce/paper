@@ -1,3 +1,10 @@
+## [5.0.3](https://github.com/bigcommerce/paper/compare/v5.0.2...v5.0.3) (2024-12-26)
+
+
+### Bug Fixes
+
+* **storefront:** STRF-12688 Update messageformat dependency version ([40029e6](https://github.com/bigcommerce/paper/commit/40029e685af325323711d47bc4a65e3e53214222))
+
 ## [5.0.2](https://github.com/bigcommerce/paper/compare/v5.0.1...v5.0.2) (2024-10-08)
 
 ### Bug Fixes
