@@ -26,6 +26,7 @@
   "homepage": "https://github.com/bigcommerce/paper",
   "dependencies": {
     "@bigcommerce/stencil-paper-handlebars": "6.2.4",
+    "@bigcommerce/stencil-paper-handlebars-v2": "git+ssh://git@github.com/bigcommerce/paper-handlebars.git#MERC-9364",
     "accept-language-parser": "~1.4.1",
     "messageformat": "~0.3.1"
   },
