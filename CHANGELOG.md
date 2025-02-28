@@ -1,3 +1,10 @@
+## [5.0.4](https://github.com/bigcommerce/paper/compare/v5.0.3...v5.0.4) (2025-02-28)
+
+
+### Bug Fixes
+
+* bump paper handlebars version to 6.0.3 ([#402](https://github.com/bigcommerce/paper/issues/402)) ([dd90817](https://github.com/bigcommerce/paper/commit/dd908173394eb5ea005812596cfc5e28bf41353f))
+
 ## [5.0.3](https://github.com/bigcommerce/paper/compare/v5.0.2...v5.0.3) (2024-12-26)
 
 
