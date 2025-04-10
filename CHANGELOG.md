@@ -1,3 +1,10 @@
+# [5.1.0](https://github.com/bigcommerce/paper/compare/v5.0.5...v5.1.0) (2025-04-10)
+
+
+### Features
+
+* arguments usage improvements and new typeof helper ([#406](https://github.com/bigcommerce/paper/issues/406)) ([135d979](https://github.com/bigcommerce/paper/commit/135d9793952d912f59db7ad15c617b7492047161))
+
 ## [5.0.5](https://github.com/bigcommerce/paper/compare/v5.0.4...v5.0.5) (2025-03-21)
 
 
