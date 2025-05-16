@@ -1,6 +1,6 @@
 {
   "name": "@bigcommerce/stencil-paper",
-  "version": "5.1.4",
+  "version": "5.1.2",
   "description": "A Stencil plugin to load template files and render pages using backend renderer plugins.",
   "main": "index.js",
   "author": "Bigcommerce",
@@ -25,8 +25,7 @@
   },
   "homepage": "https://github.com/bigcommerce/paper",
   "dependencies": {
-    "@bigcommerce/stencil-paper-handlebars": "6.2.4",
-    "@bigcommerce/stencil-paper-handlebars-v2": "git+ssh://git@github.com/bigcommerce/paper-handlebars.git#MERC-9364",
+    "@bigcommerce/stencil-paper-handlebars": "git+ssh://git@github.com/bigcommerce/paper-handlebars.git#d1abc04f9ac5c998564e0407811a4f088ef8cece",
     "accept-language-parser": "~1.4.1",
     "messageformat": "~0.3.1"
   },
