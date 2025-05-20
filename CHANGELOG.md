@@ -1,3 +1,10 @@
+## [5.1.5](https://github.com/bigcommerce/paper/compare/v5.1.4...v5.1.5) (2025-05-20)
+
+
+### Bug Fixes
+
+* bump paper hbs to 6.3.1 ([#415](https://github.com/bigcommerce/paper/issues/415)) ([02ba428](https://github.com/bigcommerce/paper/commit/02ba428dc3b4d9fdb6de1f3329d0d4db5b885c32))
+
 ## [5.1.4](https://github.com/bigcommerce/paper/compare/v5.1.3...v5.1.4) (2025-04-30)
 
 
