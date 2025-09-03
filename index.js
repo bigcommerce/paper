@@ -1,8 +1,7 @@
 'use strict';
 
 const Translator = require('./lib/translator');
-const HandlebarsRendererOriginal = require('@bigcommerce/stencil-paper-handlebars');
-const HandlebarsRendererV2 = require('@bigcommerce/stencil-paper-handlebars-v2');
+const HandlebarsRenderer = require('@bigcommerce/stencil-paper-handlebars');
 
 /**
 * processor is an optional function to apply during template assembly. The
@@ -46,12 +45,9 @@ class Paper {
     * @param {Object} logger - a console-like logger object
     * @param {String} logLevel - log level used by handlebars logger (debug, info, warning, error)
     * @param {Object} params - Request-level parameters, part of stencil context 
-    * @param {Boolean} useNewPaperLibrary - Flag for switching between Handlebars Renderer versions
     */
-    constructor(siteSettings, themeSettings, assembler, rendererType, logger = console, logLevel = 'info', params = {}, useNewPaperLibrary = false) {
+    constructor(siteSettings, themeSettings, assembler, rendererType, logger = console, logLevel = 'info', params = {}) {
         this._assembler = assembler || {};
-
-        const HandlebarsRenderer = useNewPaperLibrary ? HandlebarsRendererV2 : HandlebarsRendererOriginal;
 
         // Build renderer based on type
         switch(rendererType) {
