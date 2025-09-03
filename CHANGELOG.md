@@ -1,3 +1,10 @@
+# [5.2.0](https://github.com/bigcommerce/paper/compare/v5.1.6...v5.2.0) (2025-08-26)
+
+
+### Features
+
+* bump paper handelbars to v6.4.0 ([27d0e92](https://github.com/bigcommerce/paper/commit/27d0e923b3fb69ec0201d5b3d122e1d7dce24d5a))
+
 ## [5.1.6](https://github.com/bigcommerce/paper/compare/v5.1.5...v5.1.6) (2025-05-28)
 
 ### Bug Fixes
