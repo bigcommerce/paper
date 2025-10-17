@@ -65,6 +65,9 @@ class Paper {
         this.logger = logger;
     }
 
+    getHelpersForExternalUse() {
+        return this.renderer.getHelpersForExternalUse();
+    }
     /**
      * Get the current renderer instance.
      * 
