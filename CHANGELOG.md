@@ -1,3 +1,10 @@
+# [5.4.0](https://github.com/bigcommerce/paper/compare/v5.3.0...v5.4.0) (2025-12-18)
+
+
+### Features
+
+* node 22; trusted publishing ([#425](https://github.com/bigcommerce/paper/issues/425)) ([32ce100](https://github.com/bigcommerce/paper/commit/32ce100b5d56a75cbe895a6395f0a6ea71ed2ef7))
+
 # [5.3.0](https://github.com/bigcommerce/paper/compare/v5.2.0...v5.3.0) (2025-09-03)
 
 
