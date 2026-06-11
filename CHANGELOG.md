@@ -1,3 +1,10 @@
+## [5.4.2](https://github.com/bigcommerce/paper/compare/v5.4.1...v5.4.2) (2026-06-11)
+
+
+### Bug Fixes
+
+* trigger release ([556cc60](https://github.com/bigcommerce/paper/commit/556cc605776ccf16463540183a4cbebade61b5e9))
+
 ## [5.4.1](https://github.com/bigcommerce/paper/compare/v5.4.0...v5.4.1) (2026-03-30)
 
 
