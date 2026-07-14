@@ -1,3 +1,11 @@
+## [5.4.3](https://github.com/bigcommerce/paper/compare/v5.4.2...v5.4.3) (2026-07-14)
+
+
+### Bug Fixes
+
+* **ci:** remove npm@latest upgrade in release workflow ([#434](https://github.com/bigcommerce/paper/issues/434)) ([7e91924](https://github.com/bigcommerce/paper/commit/7e91924f9c619b70ed588e3ef41179f56086c4f4))
+* **deps:** bump @bigcommerce/stencil-paper-handlebars to 6.6.2 ([#433](https://github.com/bigcommerce/paper/issues/433)) ([05c6f06](https://github.com/bigcommerce/paper/commit/05c6f0685b23dedce7903045d46aa2957ecd8e35))
+
 ## [5.4.2](https://github.com/bigcommerce/paper/compare/v5.4.1...v5.4.2) (2026-06-11)
 
 
