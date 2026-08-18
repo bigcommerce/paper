@@ -1,3 +1,10 @@
+## [5.4.5](https://github.com/bigcommerce/paper/compare/v5.4.4...v5.4.5) (2026-08-18)
+
+
+### Bug Fixes
+
+* **deps:** bump @bigcommerce/stencil-paper-handlebars to 6.6.4 ([314245a](https://github.com/bigcommerce/paper/commit/314245a07be72364e0a78847864a9b93efcdb004))
+
 ## [5.4.4](https://github.com/bigcommerce/paper/compare/v5.4.3...v5.4.4) (2026-07-29)
 
 
